@@ -8,5 +8,14 @@ We name this new specification Omni-BOLT, in order to avoid possible conflicts w
 
 >the second step, we will try to be compatible with existing Lightning Nodes around the world, if experts working on BOLT can work together with us. 
 
+# Chapters
+
+[#01 Base Protocol]
+[#02 peer-protocol](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-02-peer-protocol.md)
+
+# Implementation
+
+Implementation of Omni-BOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni)
+
 
 
