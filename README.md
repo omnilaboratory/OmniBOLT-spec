@@ -14,7 +14,7 @@ We name this new specification Omni-BOLT, in order to avoid possible conflicts w
 
 [#02 peer-protocol](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-02-peer-protocol.md)
 
-[#02 OmniLayer Transaction and Script Formats]()
+[#02 OmniLayer Transaction and Script Formats](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-03-OmniLayer%20Transaction%20and%20Script%20Formats)
 
 # Implementation
 
