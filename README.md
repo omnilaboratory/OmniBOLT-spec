@@ -11,6 +11,7 @@ We name this new specification Omni-BOLT, in order to avoid possible conflicts w
 # Chapters
 
 [#01 Base Protocol]
+
 [#02 peer-protocol](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-02-peer-protocol.md)
 
 # Implementation
