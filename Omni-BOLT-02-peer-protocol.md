@@ -33,3 +33,19 @@ After authenticating and initializing a connection ([BOLT #8](https://github.com
 
 ```
 
+If this fails at any stage, or if one node decides the channel terms offered by the other node are not suitable, the channel establishment fails.
+
+Note that multiple channels can operate in parallel, as all channel messages are identified by either a `temporary_channel_id` (before the funding transaction is created) or a `channel_id` (derived from the funding transaction).
+
+**The `open_channel` Message**
+
+This message contains information about a node and indicates its desire to set up a new Omni aware channel. This is the first step toward creating the funding transaction and both versions of the commitment transaction. In order to differ from the BOLT `open_channel` message, we use specified `chain_hash:chain_hash` to mark the Omni assets specific messages:
+
+1. type: -32 (open_channel)
+2. data: 
+    * [`chain_hash`:`chain_hash`] 
+    * [`32*byte`:`temporary_channel_id`]
+    
+
+
+
