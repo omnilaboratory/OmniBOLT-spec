@@ -2,7 +2,7 @@
 
 The peer channel protocol has three phases: establishment, normal operation, and closing.
 
-The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md). 
+The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with essential updates in messages to be compatible with OmniLayer protocol.
 
 
 # Channel
