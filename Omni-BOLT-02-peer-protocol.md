@@ -44,8 +44,19 @@ This message contains information about a node and indicates its desire to set u
 1. type: -32 (open_channel)
 2. data: 
     * [`chain_hash`:`chain_hash`] 
-    * [`32*byte`:`temporary_channel_id`]
-    
+    * [`32*byte`:`temporary_channel_id`]: used to identify this channel on a per-peer basis until the funding transaction is established, at which point it is replaced by the `channel_id`, which is derived from the funding transaction. 
+    * [`u64`:`funding_satoshis`]: the amount the sender is putting into the channel.
+    [u64:push_msat]: an amount of initial funds that the sender is unconditionally giving to the receiver. 
+    [u64:dust_limit_satoshis]
+
+
+The `chain_hash` value denotes the exact blockchain that the opened channel will reside within. This is usually the genesis hash of the respective blockchain. We use in this case the hash of the ["Exodus Address"](https://github.com/OmniLayer/spec#initial-token-distribution-via-the-exodus-address) for Omnilayer, which is 1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P, from which the first Mastercoins were generated during the month of August 2013. PS: `chain_hash` allows nodes to open channels across many distinct blockchains as well as have channels within multiple blockchains opened to the same peer (if it supports the target chains).
+
+The `temporary_channel_id` is used to identify this channel on a per-peer basis until the funding transaction is established, at which point it is replaced by the `channel_id`, which is derived from the funding transaction. 
+
+`funding_satoshis`: the amount the sender is putting into the channel. 
+`push_msat`: an amount of initial funds that the sender is unconditionally giving to the receiver. 
+`dust_limit_satoshis`: the threshold below which outputs should not be generated for this node's commitment or HTLC transactions (i.e. HTLCs below this amount plus HTLC transaction fees are not enforceable on-chain). This reflects the reality that tiny outputs are not considered standard transactions and will not propagate through the Bitcoin network. channel_reserve_satoshis is the minimum amount that the other node is to keep as a direct payment. htlc_minimum_msat indicates the smallest value HTLC this node will accept.
 
 
 
