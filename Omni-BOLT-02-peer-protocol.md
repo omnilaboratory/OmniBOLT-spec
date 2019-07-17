@@ -73,7 +73,7 @@ This message contains information about a node and indicates its desire to set u
 
 
 
- 
+# [Requirement](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements)
 
 
 
