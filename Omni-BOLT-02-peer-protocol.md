@@ -58,10 +58,10 @@ This message contains information about a node and indicates its desire to set u
     
     **basepoint**: The various `_basepoint` fields are used to derive unique keys as described in [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) for each commitment transaction. Varying these keys ensures that the transaction ID of each commitment transaction is unpredictable to an external observer, even if one commitment transaction is seen; this property is very useful for preserving privacy when outsourcing penalty transactions to third parties.
     
-    * [`point`:`revocation_basepoint`]: TBD
-    * [`point`:`payment_basepoint`]: TBD
-    * [`point`:`delayed_payment_basepoint`]: TBD
-    * [`point`:`htlc_basepoint`]: TBD
+    * [`point`:`revocation_basepoint`]:  
+    * [`point`:`payment_basepoint`]:  
+    * [`point`:`delayed_payment_basepoint`]:  
+    * [`point`:`htlc_basepoint`]:  
     * [`point`:`first_per_commitment_point`]: the per-commitment point to be used for the first commitment transaction,
     
     
