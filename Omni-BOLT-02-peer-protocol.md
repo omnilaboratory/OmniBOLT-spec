@@ -87,22 +87,22 @@ This message contains information about a node and indicates its acceptance of t
 
 1. type: -33 (accept_channel)
 2. data:
-    [`32*byte`:`temporary_channel_id`]
-    [`u64`:`dust_limit_satoshis`]
-    [`u64`:`max_htlc_value_in_flight_msat`]
-    [`u64`:`channel_reserve_satoshis`]
-    [`u64`:`htlc_minimum_msat`]
-    [`u32`:`minimum_depth`]
-    [`u16`:`to_self_delay`]
-    [`u16`:`max_accepted_htlcs`]
-    [`point`:`funding_pubkey`]
-    [`point`:`revocation_basepoint]
-    [`point`:`payment_basepoint`]
-    [`point`:`delayed_payment_basepoint`]
-    [`point`:`htlc_basepoint`]
-    [`point`:`first_per_commitment_point`]
-    [`u16`:`shutdown_len`] (option_upfront_shutdown_script)
-    [`shutdown_len*byte`:`shutdown_scriptpubkey`] (option_upfront_shutdown_script)
+    * [`32*byte`:`temporary_channel_id`]
+    * [`u64`:`dust_limit_satoshis`]
+    * [`u64`:`max_htlc_value_in_flight_msat`]
+    * [`u64`:`channel_reserve_satoshis`]
+    * [`u64`:`htlc_minimum_msat`]
+    * [`u32`:`minimum_depth`]
+    * [`u16`:`to_self_delay`]
+    * [`u16`:`max_accepted_htlcs`]
+    * [`point`:`funding_pubkey`]
+    * [`point`:`revocation_basepoint]
+    * [`point`:`payment_basepoint`]
+    * [`point`:`delayed_payment_basepoint`]
+    * [`point`:`htlc_basepoint`]
+    * [`point`:`first_per_commitment_point`]
+    * [`u16`:`shutdown_len`] (option_upfront_shutdown_script)
+    * [`shutdown_len*byte`:`shutdown_scriptpubkey`] (option_upfront_shutdown_script)
     
 
 #[Requirements](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-1)
@@ -112,12 +112,12 @@ This message contains information about a node and indicates its acceptance of t
 
 This message describes the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
 
-1. type: 34 (funding_created)
+1. type: -34 (funding_created)
 2. data:
-    [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
-    [`sha256`:`funding_txid`]: the transaction ID of a non-malleable transaction, and **MUST NOT** broadcast this transaction. To be clarified in Omnilayer context.
-    [`u16`:`funding_output_index`]: To be clarified in Omnilayer context.
-    [`signature`:`signature`]: To be clarified in Omnilayer context.
+    * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
+    * [`sha256`:`funding_txid`]: the transaction ID of a non-malleable transaction, and **MUST NOT** broadcast this transaction. To be clarified in Omnilayer context.
+    * [`u16`:`funding_output_index`]: To be clarified in Omnilayer context.
+    * [`signature`:`signature`]: To be clarified in Omnilayer context.
     
     
 
