@@ -43,20 +43,37 @@ This message contains information about a node and indicates its desire to set u
 
 1. type: -32 (open_channel)
 2. data: 
-    * [`chain_hash`:`chain_hash`] 
+    * [`chain_hash`:`chain_hash`]: The `chain_hash` value denotes the exact blockchain that the opened channel will reside within. This is usually the genesis hash of the respective blockchain. We use in this case the hash of the ["Exodus Address"](https://github.com/OmniLayer/spec#initial-token-distribution-via-the-exodus-address) for Omnilayer, which is 1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P, from which the first Mastercoins were generated during the month of August 2013. PS: `chain_hash` allows nodes to open channels across many distinct blockchains as well as have channels within multiple blockchains opened to the same peer (if it supports the target chains).
     * [`32*byte`:`temporary_channel_id`]: used to identify this channel on a per-peer basis until the funding transaction is established, at which point it is replaced by the `channel_id`, which is derived from the funding transaction. 
     * [`u64`:`funding_satoshis`]: the amount the sender is putting into the channel.
-    [u64:push_msat]: an amount of initial funds that the sender is unconditionally giving to the receiver. 
-    [u64:dust_limit_satoshis]
+    * [`u64`:`push_msat`]: an amount of initial funds that the sender is **unconditionally** giving to the receiver. 
+    * [`u64`:`dust_limit_satoshis`]: the threshold below which outputs should not be generated for this node's commitment or HTLC transactions (i.e. HTLCs below this amount plus HTLC transaction fees are not enforceable on-chain). This reflects the reality that tiny outputs are not considered standard transactions and will not propagate through the Bitcoin/OmniLayer network.
+    * [`u64`:`max_htlc_value_in_flight_msat`]: is a cap on total value of outstanding HTLCs, which allows a node to limit its exposure to HTLCs.
+    * [`u64`:`channel_reserve_satoshis`]: the minimum amount that the other node is to keep as a direct payment.
+    * [`u64`:`htlc_minimum_msat`]: indicates the smallest value HTLC this node will accept. 
+    * [`u32`:`feerate_per_kw`]: indicates the initial fee rate in satoshi per 1000-weight (i.e. 1/4 the more normally-used 'satoshi per 1000 vbytes') that this side will pay for commitment and HTLC transactions, as described in [BOLT #3: fee-calculation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#fee-calculation) (this can be adjusted later with an `update_fee` message).
+    * [`u16`:`to_self_delay`]: the number of blocks that the other node's to-self outputs must be delayed, using OP_CHECKSEQUENCEVERIFY delays; this is how long it will have to wait in case of breakdown before redeeming its own funds.
+    * [`u16`:`max_accepted_htlcs`]: similar to `max_htlc_value_in_flight_msat`, this value limits the number of outstanding HTLCs the other node can offer, **NOT** the total value of HTLCs. 
+    * [`point`:`funding_pubkey`]: the public key in the 2-of-2 multisig script of the funding transaction output.
+    
+    **basepoint**: The various `_basepoint` fields are used to derive unique keys as described in [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) for each commitment transaction. Varying these keys ensures that the transaction ID of each commitment transaction is unpredictable to an external observer, even if one commitment transaction is seen; this property is very useful for preserving privacy when outsourcing penalty transactions to third parties.
+    
+    * [`point`:`revocation_basepoint`]: TBD
+    * [`point`:`payment_basepoint`]: TBD
+    * [`point`:`delayed_payment_basepoint`]: TBD
+    * [`point`:`htlc_basepoint`]: TBD
+    * [`point`:`first_per_commitment_point`]: the per-commitment point to be used for the first commitment transaction,
+    
+    
+    * [`byte`:`channel_flags`]: Only the least-significant bit of `channel_flags` is currently defined: `announce_channel`. This indicates whether the initiator of the funding flow wishes to advertise this channel publicly to the network, as detailed within [BOLT #7: p2p-node-and-channel-discovery](https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md#bolt-7-p2p-node-and-channel-discovery).
+    * [`u16`:`shutdown_len`] (option_upfront_shutdown_script): 
+    * [`shutdown_len*byte`:`shutdown_scriptpubkey`] (option_upfront_shutdown_script): allows the sending node to commit to where funds will go on mutual close, which the remote node should enforce even if a node is compromised later.
+    
+    **[ FIXME: Describe dangerous feature bit for larger channel amounts. ]**
 
 
-The `chain_hash` value denotes the exact blockchain that the opened channel will reside within. This is usually the genesis hash of the respective blockchain. We use in this case the hash of the ["Exodus Address"](https://github.com/OmniLayer/spec#initial-token-distribution-via-the-exodus-address) for Omnilayer, which is 1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P, from which the first Mastercoins were generated during the month of August 2013. PS: `chain_hash` allows nodes to open channels across many distinct blockchains as well as have channels within multiple blockchains opened to the same peer (if it supports the target chains).
 
-The `temporary_channel_id` is used to identify this channel on a per-peer basis until the funding transaction is established, at which point it is replaced by the `channel_id`, which is derived from the funding transaction. 
-
-`funding_satoshis`: the amount the sender is putting into the channel. 
-`push_msat`: an amount of initial funds that the sender is unconditionally giving to the receiver. 
-`dust_limit_satoshis`: the threshold below which outputs should not be generated for this node's commitment or HTLC transactions (i.e. HTLCs below this amount plus HTLC transaction fees are not enforceable on-chain). This reflects the reality that tiny outputs are not considered standard transactions and will not propagate through the Bitcoin network. channel_reserve_satoshis is the minimum amount that the other node is to keep as a direct payment. htlc_minimum_msat indicates the smallest value HTLC this node will accept.
+ 
 
 
 
