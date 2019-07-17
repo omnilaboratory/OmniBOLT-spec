@@ -96,7 +96,7 @@ This message contains information about a node and indicates its acceptance of t
     * [`u16`:`to_self_delay`]
     * [`u16`:`max_accepted_htlcs`]
     * [`point`:`funding_pubkey`]
-    * [`point`:`revocation_basepoint]
+    * [`point`:`revocation_basepoint`]
     * [`point`:`payment_basepoint`]
     * [`point`:`delayed_payment_basepoint`]
     * [`point`:`htlc_basepoint`]
