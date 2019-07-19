@@ -73,9 +73,13 @@ This message contains information about a node and indicates its desire to set u
 
 
 
-# [Requirement](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements)
+# [Requirement]
 
-# [Rationale](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#rationale)
+Requirement is the same to [BOLT-02-requiremnets](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements).
+
+# [Rationale]
+
+Rationale is the same to [BOLT-02-rationale](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#rationale).
 
 # [Future](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#future)
 
@@ -111,6 +115,34 @@ This message contains information about a node and indicates its acceptance of t
 **The `funding_created` Message**
 
 This message describes the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
+
+We focus on omni assets in founding creation. Here are two proposals:
+1. Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.
+2. Alice, Bob and Satoshi create a 2-3 P2SH payment to `scriptPubKey`, where Satoshi takes the responsibility to check/verify all the transactions within the channel. The advantage of this proposal is that when Alice wants to withdraw money from the channel, she does not need the signature from Bob, the only thing she has to do is provide her signature and notify Satoshi to check the channel ledger, and if the money belongs to Alice, Satoshi will provide his signature so that Alice get her money on Omnilayer network.
+
+Proposal 2 has possible vulnerability under the **conspiracy attack**. We will address this issue in the following chapters.
+
+```
+    +-------+                              +-------+
+    |       |--(1)---  open_channel  ----->|       |
+    |       |<-(2)--  accept_channel  -----|       |
+    |       |                              |       |
+    |   A   |--(3)--  funding_created  --->|   B   |
+    |       |<-(4)--  funding_signed  -----|       |
+    |       |                              |       |
+    |       |         channel_A_B          |       | 
+    |       |(4.1)-->deposit_X_USDT        |       |
+    |       |        deposit_Y_USDT <-(4.2)|       |
+    |       |            ......            |       |
+    |       |                              |       |
+    |       |                              |       |
+    |       |--(5)--- funding_locked  ---->|       |
+    |       |<-(6)--- funding_locked  -----|       |
+    +-------+                              +-------+
+
+    - where node Alice is 'funder' and node Bob is 'fundee', but after the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. And of course, each of them can withdraw money if the counterparty agree.
+
+```
 
 1. type: -34 (funding_created)
 2. data:
