@@ -14,9 +14,9 @@ To be self-contained, any messages or definitions that differ from what are defi
 
 [OmniBOLT #01:]() Base Protocol
 
-[OmniBOLT #02:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-02-peer-protocol.md) peer-protocol
+[OmniBOLT #02:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol
 
-[OmniBOLT #03:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/Omni-BOLT-03-OmniLayer%20Transaction%20and%20Script%20Formats.md) OmniLayer Transaction and Script Formats 
+[OmniBOLT #03:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-OmniLayer%20Transaction%20and%20Script%20Formats.md) OmniLayer Transaction and Script Formats 
 
 # Implementation
 
