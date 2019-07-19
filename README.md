@@ -1,4 +1,4 @@
-# OmniBOLT-spec In-Progress Specifications
+# OmniBOLT: In-Progress Specifications
 
 Based on the fundamental theory of Lightning network, Omni-BOLT specification describes how to enable OmniLayer assets to be transferred via ligtning channels, according to the [BOLT (Basis of Lightning Technology) ](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification, which is a layer-2 protocol for off-chain bitcoin transfer by mutual cooperation.
 
@@ -24,3 +24,4 @@ Implementation of Omni-BOLT specification can be found in this repository [Light
 # Contribution
 
 OmniBolt specification is initiated by [Omnilayer.foundation](https://github.com/OmniLayer).
+Any proposal, please raise an issue in this repo.
