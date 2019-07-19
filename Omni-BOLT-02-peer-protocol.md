@@ -1,4 +1,4 @@
-# Omni-BOLT #2: Peer Protocol for Channel Management
+# OmniBOLT #2: Peer Protocol for Channel Management
 
 The peer channel protocol has three phases: establishment, normal operation, and closing.
 
