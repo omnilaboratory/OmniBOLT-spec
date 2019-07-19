@@ -81,7 +81,9 @@ Requirement is the same to [BOLT-02-requiremnets](https://github.com/lightningne
 
 Rationale is the same to [BOLT-02-rationale](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#rationale).
 
-# [Future](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#future)
+# [Future]
+
+Future is the same to [BOLT-02-future](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#future).
 
 It would be easy to have a local feature bit which indicated that a receiving node was prepared to fund a channel, which would reverse this protocol.
 
@@ -140,7 +142,8 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
     |       |<-(6)--- funding_locked  -----|       |
     +-------+                              +-------+
 
-    - where node Alice is 'funder' and node Bob is 'fundee', but after the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. And of course, each of them can withdraw money if the counterparty agree.
+    - where node Alice is 'funder' and node Bob is 'fundee', 
+but after the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. And of course, each of them can withdraw money if the counterparty agree.
 
 ```
 
