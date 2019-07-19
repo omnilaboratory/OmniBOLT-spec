@@ -20,7 +20,7 @@ To be self-contained, any messages or definitions that differ from what are defi
 
 # Implementation
 
-Implementation of Omni-BOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni)
+Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni)
 
 
 # Contribution
