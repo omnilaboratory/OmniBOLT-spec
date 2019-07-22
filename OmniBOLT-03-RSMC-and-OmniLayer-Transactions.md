@@ -86,8 +86,22 @@ step 4: Bob signs C1a and RD1a, sends back to Alice.
 step 5: OLND constructs refund transaction: C1a/RD1a.
  
 The sum of `amount_a` and `amount_b` has to be blow `max_assets` in the `funding_created` message. 
-    
+   
+   
 ## The `commitment_tx` and `commitment_tx_signed` Message
+
+```
+    +-------+                                +-------+
+    |       |--(1)---- commitment_tx  ------>|       |
+    |       |<-(2)-- commitment_tx_signed ---|       |
+    |   A   |          channel_A_B           |   B   |    
+    |       |     construct C2a and RD2a     |       | 
+    |       |                                |       |
+    |       |--(3)-- Alice2's private key -->|       |
+    +-------+                                +-------+
+   
+```
+     
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
@@ -102,7 +116,9 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx`, after OLND rec
     * [`32*byte`:`asset_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`signature`:`receiver_signature`]: signature of Bob.
-    
+
+
+
 After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel.  
 
 
