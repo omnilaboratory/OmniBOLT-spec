@@ -32,4 +32,4 @@ Implementation of OmniBOLT specification can be found in this repository [Lightn
 # Contribution
 
 OmniBolt specification is initiated by [Omnilayer.foundation](https://github.com/OmniLayer).
-Any proposal, please raise an issue in this repo.
+Any proposal, please submit issues in this repo.
