@@ -6,7 +6,7 @@ We name this new specification OmniBOLT, in order to avoid possible conflicts wi
 
 >the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper. 
 
->the second step, we will try to be compatible with existing Lightning Nodes around the world, if experts working on BOLT can work together with us. 
+>the second step, we will try to be compatible with existing Lightning Nodes around the world, and we invite experts working on BOLT to work together with us. 
 
 To be self-contained, any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old parameters to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
 
@@ -22,7 +22,7 @@ We not only just list messages and parameters that are used in our implementatio
 
 OmniBOLT #04: HTLC and payment Routing
 
-
+OmniBOLT #05: Improve liquidity by using USDT
 
 # Implementation
 
