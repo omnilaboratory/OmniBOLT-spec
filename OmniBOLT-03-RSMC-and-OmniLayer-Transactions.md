@@ -1,6 +1,6 @@
 # OmniBOLT #3: RSMC and OmniLayer Transactions
 
-Sometimes we use "money" instead of Omni assets for illustration. Readers just image what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
+Sometimes we use "money" instead of Omni assets for illustration. Readers just image that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
 ## The `funding_created` and `funding_signed` Message 
 
@@ -41,7 +41,12 @@ as long as the two parties sign the correct Revocable Sequence Maturity Contract
  
 In order to avoid malicious counterparty who rejects to sigh any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
-So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, and construct a RSMC, after that, Alice and Bob can transfer Omni assets  
+So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, construct funding transaction but unbroadcasted and construct a RSMC. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
+
+The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions.
+
+![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/images/RSMC-diagram.png "RSMC")
+
 1. type: -34 (funding_created)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
