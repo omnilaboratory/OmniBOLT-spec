@@ -4,7 +4,7 @@ Sometimes we use "money" instead of Omni assets for illustration. Readers just i
 
 ## The `funding_created` and `funding_signed` Message 
 
-This message describes the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
+The two messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
 
 We focus on omni assets in founding creation. Here are two proposals:
 
@@ -90,6 +90,9 @@ The sum of `amount_a` and `amount_b` has to be blow `max_assets` in the `funding
    
 ## The `commitment_tx` and `commitment_tx_signed` Message
 
+The two messages describe a payment inside a channel created by Alice and Bob, upon which HTLC makes it possible for quick payment between any two peers, who do not has a channel yet. We introduce HTLC and corresponding messages in the next chapter.  
+
+### diagram and messages
 ```
     +-------+                                +-------+
     |       |--(1)---- commitment_tx  ------>|       |
@@ -117,11 +120,12 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx`, after OLND rec
     * [`32*byte`:`amount`]: amount of the payment.
     * [`signature`:`receiver_signature`]: signature of Bob.
 
-
+### Cheat and punishment
 
 After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel.  
 
 
+### balance and transaction history
 
 1. type: -353 (get_balance_request)
 2. data:
