@@ -120,7 +120,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx`, after OLND rec
     * [`32*byte`:`amount`]: amount of the payment.
     * [`signature`:`receiver_signature`]: signature of Bob.
 
-### Cheat and punishment
+### cheat and punishment
 
 After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel.  
 
