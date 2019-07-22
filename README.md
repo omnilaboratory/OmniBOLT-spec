@@ -16,7 +16,7 @@ To be self-contained, any messages or definitions that differ from what are defi
 
 [OmniBOLT #02:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, channel open
 
-[OmniBOLT #03:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-Funding-Deposite-Withdraw-and-OmniLayer%20Transactions.md) Funding-Deposite-Withdraw-and-OmniLayer Transactions 
+[OmniBOLT #03:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer Transactions.md) Funding-Deposite-Withdraw-and-OmniLayer Transactions 
 
 # Implementation
 
