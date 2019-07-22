@@ -1,6 +1,8 @@
-# OmniLayer Transaction and Script Formats
+# Funding-Deposite-Withdraw-and-OmniLayer Transactions
 
-### The `funding_created` and `funding_signed` Message**
+Sometimes we use "money" instead of Omni assets for illustration. Readers just image what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
+
+## The `funding_created` and `funding_signed` Message 
 
 This message describes the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
 
@@ -34,10 +36,10 @@ but after the first time deposit from Alice, Alice and Bob both can deposite in 
 ```
 
 **Proposal 1: 2-2 P2SH**:
+ 
+In order to avoid malicious counterparty who rejects to sigh any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
-In order to avoid malicious counterparty who rejects to sigh any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper,  in this specification.
-
-So the `funding_created` does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, and construct a RSMC, after  
+So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, and construct a RSMC, after that, Alice and Bob can transfer Omni assets  
 1. type: -34 (funding_created)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
@@ -88,9 +90,9 @@ So the `funding_created` does not mean both parties really deposite money into t
     * [`unsigned_64byte_integer`:`frozen`]: currently not in use.
 
  
-**The `withdraw` Message**
+## The `withdraw` Message 
  
-# Rationale
+**Rationale**
  
 This message indicates how to withdraw money from a channel, without the need of closing a channel. It comprises the following steps:
 
