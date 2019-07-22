@@ -45,7 +45,7 @@ So the `funding_created` message does not mean both parties really deposite mone
 
 The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions.
 
-![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/images/RSMC-diagram.png "RSMC")
+![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
 
 1. type: -34 (funding_created)
 2. data:
