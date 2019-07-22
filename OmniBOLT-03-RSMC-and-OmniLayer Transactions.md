@@ -1,4 +1,4 @@
-# Funding-Deposite-Withdraw-and-OmniLayer Transactions
+# OmniBOLT #2: RSMC and OmniLayer Transactions
 
 Sometimes we use "money" instead of Omni assets for illustration. Readers just image what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
@@ -31,7 +31,9 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
     +-------+                              +-------+
 
     - where node Alice is 'funder' and node Bob is 'fundee', 
-but after the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. And of course, each of them can withdraw money if the counterparty agree.
+After the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. 
+And of course, each of them can withdraw money if the counterparty agrees, 
+as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
 
 ```
 
