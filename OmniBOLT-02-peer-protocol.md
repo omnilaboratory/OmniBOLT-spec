@@ -1,6 +1,6 @@
 # OmniBOLT #2: Peer Protocol for Channel Management
 
-The peer channel protocol has three phases: establishment, normal operation (commitment transactions, funding transactions [OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md)), and closing.
+The peer channel protocol has three phases: establishment, normal operation ([OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md): commitment transactions, funding transactions), and closing.
 
 The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol.
 
