@@ -50,23 +50,35 @@ The following diagram shows the steps we MUST do before any participants broadca
 1. type: -34 (funding_created)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
-    * [`32*byte:funder_pubKey`]: the omni address of funder Alice.
-    * [`signature`:`funder_signature`]: signature of funder Alice.
-    
+    * [`32*byte`:`funder_pubKey`]: the omni address of funder Alice.
+    * [`32*byte`:`asset_id`]: the id of the Omni asset.
+    * [`32*byte`:`max_assets`]: the maximum assets in this channel, e.g. 1000 USDT max.
+    * [`32*byte`:`amount_a`]: amount of the asset on Alice side.
+     
+Alice creates the funding transaction by providing her public key, asset id and the amount she wants to deposit in this channel. 
+After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this transaction.
  
 1. type: -35 (funding_signed)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
     * [`32*byte`:`funder_pubKey`]: the omni address of funder Alice.
-    * [`signature`:`funder_signature`]: signature of funder Alice.
+    * [`signature`:`asset_id`]: the id of the Omni asset.
+    * [`32*byte`:`amount_a`]: amount of the asset on Alice side.
     * [`32*byte`:`fundee_pubKey`]: the omni address of fundee Bob.
+    * [`32*byte`:`amount_b`]: amount of the asset on Bob side.
     * [`signature`:`fundee_signature`]: signature of funder Bob.
     * [`64*byte???`:`redeemScript`]: redeem script used to generate P2SH address.
     * [`32*byte`:`p2sh_address`]: hash of redeemScript.
     * [`channel_id`:`channel_id`]: final global channel id generated.
   
+Bob signs, and send `funding_signed` message back to OLND, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OLND constructs refund transaction: C1a/RD1a, which pays out from the 2-2 P2SH transaction output:
+
+step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and Bob's signature: Alice2 & Bob.
+step 2: Alice constructs a payment C1a out of Alice & Bob, one output is 60 USDT to `Alice2 & Bob`, and the other output is 40 USDT to Bob.
+step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a sequence number prevent immediate payment if Alice cheat.
+step 4: Bob signs C1a and RD1a, sends back to Alice.
  
-**deposit** message can be sent by both funder and fundee, as long as the amount of assets is blow `max_htlc_value_in_flight_msat` in the `open_channel` message. 
+The sum of `amount_a` and `amount_b` has to be blow `max_assets` in the `funding_created` message. 
     
 1. type: -351 (deposit)
 2. data:
@@ -80,7 +92,7 @@ The following diagram shows the steps we MUST do before any participants broadca
  In 2-3 P2SH, Satoshi will record every deposit, and broadcast it to Alice and Bob for confirmation.
  
  
-1. type: -352 (get_balance)
+1. type: -352 (get_balance_request)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
     * [`32*byte:p2sh_address`]: the p2sh address generated in `funding_signed` message.
