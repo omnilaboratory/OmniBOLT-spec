@@ -12,6 +12,8 @@ To be self-contained, any messages or definitions that differ from what are defi
 
 # Chapters
 
+We not only just list messages and parameters that are used in our implementation, we also complete content that explains why we do so. Most of this spec is strictly follow the rules defined in lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
+
 [OmniBOLT #01:]() Base Protocol
 
 [OmniBOLT #02:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, channel open
