@@ -46,7 +46,9 @@ Note that multiple channels can operate in parallel, as all channel messages are
 
 ### The `open_channel` Message 
 
-This message contains information about a node and indicates its desire to set up a new Omni aware channel. This is the first step toward creating the funding transaction and both versions of the commitment transaction. In order to differ from the BOLT `open_channel` message, we use specified `chain_hash:chain_hash` to mark the Omni assets specific messages:
+This message contains information about a node and indicates its desire to set up a new Omni aware channel. This is the first step toward creating the funding transaction and both versions of the commitment transaction. In order to differ from the BOLT `open_channel` message, we use specified `chain_hash:chain_hash` to mark the Omni assets specific messages.
+
+Comments of this message comes from the original [BOLT #2](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-open_channel-message) spec, we found there is no need to modify the existing design. Readers may check if the two are consistent:
 
 1. type: -32 (open_channel)
 2. data: 
