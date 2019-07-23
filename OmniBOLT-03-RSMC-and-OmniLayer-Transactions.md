@@ -2,7 +2,7 @@
 
 Sometimes we use "money" instead of Omni assets for illustration purpose. Readers just image that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
-From this chapter on, our contex is Omnilayer, not only bitcoin any more.
+From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 ## The `funding_created` and `funding_signed` Message 
 
