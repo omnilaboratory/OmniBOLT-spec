@@ -47,7 +47,7 @@ So the `funding_created` message does not mean both parties really deposite mone
 
 The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions.
 
-![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
+![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png "RSMC-C1a-RD1a")
 
 1. type: -34 (funding_created)
 2. data:
@@ -73,11 +73,11 @@ After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this
     * [`32*byte`:`p2sh_address`]: hash of redeemScript.
     * [`channel_id`:`channel_id`]: final global channel id generated.
   
-Bob signs, and send `funding_signed` message back to OLND, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OLND constructs refund transaction: C1a/RD1a, which pays out from the 2-2 P2SH transaction output:
+Bob signs, and send `funding_signed` message back to OLND, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OLND constructs refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
 
 step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and waiting Bob's signature: Alice2 & Bob.
 
-step 2: Alice constructs a payment C1a out of Alice & Bob, one output is 60 USDT to `Alice2 & Bob`, and the other output is 40 USDT to Bob.
+step 2: Alice constructs a promise payment C1a out of Alice & Bob, one output is 60 USDT to `Alice2 & Bob`, and the other output is 40 USDT to Bob.
 
 step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a sequence number preventing immediate payment if Alice cheat.
 
@@ -105,6 +105,9 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
    
 ```
      
+![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
+
+
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
