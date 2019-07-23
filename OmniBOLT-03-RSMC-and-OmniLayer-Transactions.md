@@ -45,7 +45,8 @@ In order to avoid malicious counterparty who rejects to sigh any payment out of 
 
 So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, construct funding transaction but unbroadcasted and construct a RSMC. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
 
-The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions.
+The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions. BR1a (Breach Remedy) can be created later before the next commitment transaction is contructed.
+
 
 ![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png "RSMC-C1a-RD1a")
 
@@ -94,14 +95,14 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
 
 ### diagram and messages
 ```
-    +-------+                                +-------+
-    |       |--(1)---- commitment_tx  ------>|       |
-    |       |<-(2)-- commitment_tx_signed ---|       |
-    |   A   |          channel_A_B           |   B   |    
-    |       |     construct C2a and RD2a     |       | 
-    |       |                                |       |
-    |       |--(3)-- Alice2's private key -->|       |
-    +-------+                                +-------+
+    +-------+                                 +-------+
+    |       |--(1)---- commitment_tx  ------->|       |
+    |       |<-(2)-- commitment_tx_signed ----|       |
+    |   A   |          channel_A_B            |   B   |    
+    |       |   construct BR1a, C2a and RD2a  |       | 
+    |       |                                 |       |
+    |       |--(3)-- Alice2's private key --->|       |
+    +-------+                                 +-------+
    
 ```
      
@@ -113,8 +114,12 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
     * [`32*byte`:`channel_id`]: the global channel id.
     * [`32*byte`:`asset_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
+    * [`32*byte`:`encrpted_Alice2's private key`]: private key of Alice2, encrypted by Bob's public key.
 
-Alice pays Bob `amount` of omni asset by sending `commitment_tx`, after OLND receieves, Bob signs to approve.
+** private key of Alice2 MUST be encrypted using Bob's public key, so that Bob can decrypt it when recieves.**
+
+Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OLND receieves, construct BR1a(Breach Remedy) and send to Bob. Bob checks the Alice2's signature in BR1a to verify if the private key is correct. If it is, Bob signs C2a/RD2a.
+
  
 1. type: -352 (commitment_tx_signed)
 2. data:
@@ -125,7 +130,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx`, after OLND rec
 
 ### cheat and punishment
 
-After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel.  
+After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction RD1a using Alice2's private key. If Bob does not broadcast RD1a before the sequence number expires, Alice will success in cheating, and get the 60 USDT.
 
 
 ### balance and transaction history
