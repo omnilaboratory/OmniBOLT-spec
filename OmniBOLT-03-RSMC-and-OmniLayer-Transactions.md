@@ -2,6 +2,8 @@
 
 Sometimes we use "money" instead of Omni assets for illustration purpose. Readers just image that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
+From this chapter on, our contex is Omnilayer, not only bitcoin any more.
+
 ## The `funding_created` and `funding_signed` Message 
 
 The two messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the BTC/Omnilayer network.
