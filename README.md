@@ -20,7 +20,7 @@ We not only just list messages and parameters that are used in our implementatio
 
 [OmniBOLT #03:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md) RSMC and OmniLayer Transactions 
 
-OmniBOLT #04: HTLC and payment Routing
+[OmniBOLT #04:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
 
 OmniBOLT #05: Improve liquidity by using USDT
 
