@@ -8,11 +8,11 @@ We name this new specification OmniBOLT, in order to avoid possible conflicts wi
 
 >the second step, we will try to be compatible with existing Lightning Nodes around the world, and we invite experts working on BOLT to work together with us. 
 
-To be self-contained, any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old parameters to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
+To be self-contained, any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old arguments to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
 
 # Chapters
 
-We not only just list messages and parameters that are used in our implementation, we also complete content that explains why we do so. Most of this spec is strictly follow the rules defined in lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
+We not only just list messages and arguments that are used in our implementation, we also complete content that explains why we do so. Most of this spec is strictly follow the rules defined in lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
 
 [OmniBOLT #01:]() Base Protocol
 
