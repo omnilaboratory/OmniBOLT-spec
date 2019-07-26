@@ -1,7 +1,8 @@
 # OmniBOLT #4: HTLC and Payment Routing
 
 >"A bidirectional payment channel only permits secure transfer of funds inside a channel. To be able to construct secure transfers using a network of channels across multiple hops to the nal destination requires an additional construction, a Hashed Timelock Contract (HTLC)."
->Poon & Dryja, <<The Bitcoin Lightning Network: Scalable Off-chain Instant Payments>>
+
+>Poon & Dryja, The Bitcoin Lightning Network: Scalable Off-chain Instant Payments
   
 
 A big and common misleading explanation in chaining the channels using HTLC is that if Alice wants to pay 10 USDT to David, she can use 2 hops to reach David:
