@@ -59,7 +59,7 @@ The following diagram shows the steps we MUST do before any participants broadca
     * [`32*byte`:`asset_id`]: the id of the Omni asset.
     * [`32*byte`:`max_assets`]: the maximum assets in this channel, e.g. 1000 USDT max.
     * [`32*byte`:`amount_a`]: amount of the asset on Alice side.
-    * [`32*byte`:`to be added`]:
+    * [`32*byte`:`to be appended`]:
     
 Alice creates the funding transaction by providing her public key, asset id and the amount she wants to deposit in this channel. 
 After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this transaction.
@@ -76,7 +76,7 @@ After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this
     * [`64*byte???`:`redeemScript`]: redeem script used to generate P2SH address.
     * [`32*byte`:`p2sh_address`]: hash of redeemScript.
     * [`channel_id`:`channel_id`]: final global channel id generated.
-    * [`32*byte`:`to be added`]:
+    * [`32*byte`:`to be appended`]:
   
 Bob signs, and send `funding_signed` message back to OLND, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OLND constructs refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
 
@@ -119,7 +119,7 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
     * [`32*byte`:`asset_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`32*byte`:`encrpted_Alice2's private key`]: private key of Alice2, encrypted by Bob's public key.
-    * [`32*byte`:`to be added`]:
+    * [`32*byte`:`to be appended`]:
 
 ** private key of Alice2 MUST be encrypted using Bob's public key, so that Bob can decrypt it when recieves.**
 
@@ -132,7 +132,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OLN
     * [`32*byte`:`asset_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`signature`:`receiver_signature`]: signature of Bob.
-    * [`32*byte`:`to be added`]:
+    * [`32*byte`:`to be appended`]:
 
 ### cheat and punishment
 
