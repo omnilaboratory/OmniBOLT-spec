@@ -38,5 +38,10 @@ OP_ENDIF
 
 Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)--> Bob]` is then an extra unbroadcasted output from funding transaction embeded together with [RD1a/BR1a](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#the-commitment_tx-and-commitment_tx_signed-message).
 
+![HTLC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram.png "HTLC")
+
+**HED1a**: HTLC Execution Delivery
+**HT1a**: HTLC Timeout
+**HTRD1a**: Timeout Revocable Delivery
 
 
