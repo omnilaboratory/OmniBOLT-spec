@@ -40,8 +40,10 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 ![HTLC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram.png "HTLC")
 
-**HED1a**: HTLC Execution Delivery
-**HT1a**: HTLC Timeout
-**HTRD1a**: Timeout Revocable Delivery
+**HED1a**: HTLC Execution Delivery  
+**HT1a**: HTLC Timeout  
+**HTRD1a**: Timeout Revocable Delivery  
+
+
 
 
