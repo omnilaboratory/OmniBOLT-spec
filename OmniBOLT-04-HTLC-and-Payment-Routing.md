@@ -42,7 +42,9 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 **HED1a**: HTLC Execution Delivery  
 **HT1a**: HTLC Timeout  
-**HTRD1a**: Timeout Revocable Delivery  
+**HTRD1a**: HTLC Timeout Revocable Delivery  
+
+
 
 
 
