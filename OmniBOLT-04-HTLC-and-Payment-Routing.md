@@ -44,8 +44,21 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 **HT1a**: HTLC Timeout  
 **HTRD1a**: HTLC Timeout Revocable Delivery  
 
+## `add_HTLC`
 
+`add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), this message specifies the asset that one peer need to transfer.
 
+1. type: 128 (update_add_htlc)
+2. data:
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
+  * [`u64`:`asset_id`]: the Omni asset id. 
+  * [`u64`:`amount`]: ammout of the asset.
+  * [`sha256`:`payment_hash`]: 
+  * [`u32`:`cltv_expiry`]: 
+  * [`1366*byte`:`onion_routing_packet`]: the same to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), which indicates where the payment is destined.
+
+### Requirements
 
 
 
