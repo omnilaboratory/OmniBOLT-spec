@@ -145,7 +145,7 @@ After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her te
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
     * [`32*byte:p2sh_address`]: the p2sh address generated in `funding_signed` message.
-(**Deprecated**)* [`32*byte`:`who`]: the channel owner, Alice or Bob, can query the balance.
+    * [`32*byte`:`who`](**Deprecated**): the channel owner, Alice or Bob, can query the balance.
     * [`signature`:`signature`]: the signature of Alice or Bob.
     
 1. type: -354 (get_balance_respond)
