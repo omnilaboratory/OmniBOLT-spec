@@ -158,16 +158,25 @@ After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her te
     * [`unsigned_64byte_integer`:`frozen`]: currently not in use.
 
  
-## The `withdraw` Message 
+## The `close_channel` Message 
  
 **Rationale**
  
-This message indicates how to withdraw money from a channel, without the need of closing a channel. It comprises the following steps:
+This message indicates how to withdraw money from a channel, by broadcasting an `Cia, i=1,2,...`. It comprises the following steps:
 
 1. Allice raises a request, to withdraw her money in P2SH, with her proof of her balance.
-2. in 2-3 P2SH model, Satoshi verify Alice's request and proof, 
-2.1 if they are correct, Alice and Satoshi raise a transaction paying from S2SH to Alice's omni address.
-2.2 if they are wrong/incorrect, Satoshi reject the request and notify Bob
+2. Alice waits OLND to approval: 
+2.1 if they are correct, Alice raises a transaction paying from S2SH to Alice's omni address.
+2.2 if they are wrong/incorrect, OLND rejects the request and notify Bob.
+
+1. type: -38 (close_channel)
+2. data:
+    * [`channel_id`:channel_id]
+    * [`u16`:`len`]
+    * [`len`*`byte:scriptpubkey`]
+    * [`signature`:`signature`]: the signature of Alice or Bob.
+
+
 
 ** DEPRECATED **
 1. type: -355 (deposit)
