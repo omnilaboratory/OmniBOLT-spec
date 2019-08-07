@@ -51,7 +51,7 @@ The following diagram shows the steps we MUST do before any participants broadca
 
 
 <p align="center">
-  <img width="600" alt="RSMC-C1a-RD1a" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png">
+  <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png">
 </p>
 
 
