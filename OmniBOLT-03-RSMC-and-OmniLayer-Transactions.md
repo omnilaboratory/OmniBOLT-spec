@@ -52,6 +52,8 @@ The following diagram shows the steps we MUST do before any participants broadca
 
 ![RSMC_C1a_RD1a](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png "RSMC-C1a-RD1a")
 
+<img src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png" width="400" alt="RSMC-C1a-RD1a">
+
 1. type: -34 (funding_created)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
