@@ -50,9 +50,9 @@ So the `funding_created` message does not mean both parties really deposite mone
 The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions. BR1a (Breach Remedy) can be created later before the next commitment transaction is contructed.
 
 
-<img align="left" width="400" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png" alt="RSMC-C1a-RD1a">
+<img align="center" width="400" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png" alt="RSMC-C1a-RD1a">
 
-    
+
 1. type: -34 (funding_created)
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
