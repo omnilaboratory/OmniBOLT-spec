@@ -165,7 +165,7 @@ After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her te
  
 **Rationale**
  
-This message indicates how to withdraw money from a channel, by broadcasting an `Cia, i=1,2,...`. It comprises the following steps:
+This message indicates how to withdraw money from a channel, by broadcasting a `Cna`, which is the latest commitment transaction in this channel. It comprises the following steps:
 
 1. Allice raises a request, to withdraw her money in P2SH, with her proof of her balance.
 2. Alice waits OLND to approval: 
