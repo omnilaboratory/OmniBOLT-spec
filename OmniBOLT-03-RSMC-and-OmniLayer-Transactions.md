@@ -59,8 +59,8 @@ The following diagram shows the steps we MUST do before any participants broadca
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
     * [`32*byte`:`funder_pubKey`]: the omni address of funder Alice.
-    * [`32*byte`:`asset_id`]: the id of the Omni asset.
-    * [`32*byte`:`max_assets`]: the maximum assets in this channel, e.g. 1000 USDT max.
+    * [`32*byte`:`property_id`]: the id of the Omni asset.
+    * [`32*byte`:`max_amount`]: the maximum assets in this channel, e.g. 1000 USDT max.
     * [`32*byte`:`amount_a`]: amount of the asset on Alice side.
     * [`32*byte`:`to be appended`]:
     
@@ -71,7 +71,7 @@ After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this
 2. data:
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
     * [`32*byte`:`funder_pubKey`]: the omni address of funder Alice.
-    * [`signature`:`asset_id`]: the id of the Omni asset.
+    * [`signature`:`property_id`]: the id of the Omni asset.
     * [`32*byte`:`amount_a`]: amount of the asset on Alice side.
     * [`32*byte`:`fundee_pubKey`]: the omni address of fundee Bob.
     * [`32*byte`:`amount_b`]: amount of the asset on Bob side.
@@ -93,7 +93,7 @@ step 4: Bob signs C1a and RD1a, sends back to Alice.
 
 step 5: OLND constructs refund transaction: C1a/RD1a.
  
-The sum of `amount_a` and `amount_b` has to be blow `max_assets` in the `funding_created` message. 
+The sum of `amount_a` and `amount_b` has to be blow `max_amount` in the `funding_created` message. 
    
    
 ## The `commitment_tx` and `commitment_tx_signed` Message
@@ -119,7 +119,7 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
-    * [`32*byte`:`asset_id`]: the id of the Omni asset. 
+    * [`32*byte`:`property_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`32*byte`:`encrpted_Alice2's private key`]: private key of Alice2, encrypted by Bob's public key.
     * [`32*byte`:`to be appended`]:
@@ -132,7 +132,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OLN
 1. type: -352 (commitment_tx_signed)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
-    * [`32*byte`:`asset_id`]: the id of the Omni asset. 
+    * [`32*byte`:`property_id`]: the id of the Omni asset. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`signature`:`receiver_signature`]: signature of Bob.
     * [`32*byte`:`to be appended`]:
