@@ -21,7 +21,7 @@ After authenticating and initializing a connection ([BOLT #8](https://github.com
 
 This consists of the funding node (funder) sending an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. With the channel arguments locked in, the funder is able to create the funding transaction and both versions of the commitment transaction, as described in [OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). The funder then sends the outpoint of the funding output with the `funding_created` message, along with the signature for the fundee's version of the commitment transaction. Once the fundee learns the funding outpoint, it's able to generate the signature for the funder's version of the commitment transaction and send it over using the `funding_signed` message.
 
-During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:asset_id]`) to specify which omni asset is needed in creating this channel, and from where, OmniBOLT differs BOLT. 
+During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_id]`) to specify which omni asset is needed in creating this channel, and from where, OmniBOLT differs BOLT. 
 
 
 ```
