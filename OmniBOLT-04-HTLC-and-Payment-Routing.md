@@ -52,7 +52,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 2. data:
   * [`channel_id`:`channel_id`]
   * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
-  * [`u64`:`property_id`]: the Omni asset id. 
+  * [`8*byte`:`property_id`]: the Omni asset id. 
   * [`u64`:`amount`]: ammout of the asset.
   * [`sha256`:`payment_hash`]: 
   * [`u32`:`cltv_expiry`]: 
