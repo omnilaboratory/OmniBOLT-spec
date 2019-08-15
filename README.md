@@ -12,6 +12,16 @@ OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and e
 
 To be self-contained, for any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old arguments to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
 
+# OmniBOLT Terminology
+
+* `channel`: refers to Poon-Dryja channel in ligtning network.
+* `property`: refers to tokens issued on Omnilayer, the same to "asset".
+* `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
+* `HTLC`: Hash Time-Locked Contract is used to chain multiple channels for transferring tokens from Alice to Bob.
+* `Commitment Transaction`: is created but not broadcast, and may be invalidated by next commitment transaction.
+* `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats, BR will send all her money to Bob.
+* `RD`: Revocable Delivery transaction pays out from the 2-2 P2SH transaction output, when Alice broadcast the latest legitimate commitment transaction. It sends money to Bob immediatly and will send money to Alice after relatively, say 100 blocks, from current block height. 
+
 # Chapters
 
 We not only just list messages and arguments that are used in our implementation, we also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
