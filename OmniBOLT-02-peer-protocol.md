@@ -82,21 +82,21 @@ Comments of this message comes from the original [BOLT #2](https://github.com/li
 
 
 
-**Requirement 
+** Requirement 
 
 Requirement is the same to [BOLT-02-requiremnets](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements).
 
-**Rationale 
+** Rationale 
 
 Rationale is the same to [BOLT-02-rationale](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#rationale).
 
-**Future 
+** Future 
 
 Future is the same to [BOLT-02-future](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#future).
 
  
 
-### The `accept_channel` Message**
+### The `accept_channel` Message 
 
 This message contains information about a node and indicates its acceptance of the new channel. This is the second step toward creating the funding transaction and both versions of the commitment transaction.
 
@@ -123,3 +123,23 @@ This message contains information about a node and indicates its acceptance of t
 #[Requirements](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-1)
 
 
+### The `funding_created` Message
+
+1. type: -34 (funding_created)
+2. data:
+    * [`32*byte`:`temporary_channel_id`]
+    * [`sha256`:`funding_txid`]
+    * [`u16`:`funding_output_index`]
+    * [`u64`:`property_id`]
+    * [`signature`:`signature`]
+    * [`32*byte`:`to be appended`]
+
+
+### The `funding_signed` Message
+
+1. type: -35 (funding_signed)
+2. data:
+    * [`channel_id`:`channel_id`]
+    * [`signature`:`signature`]
+    * [`32*byte`:`to be appended`]
+    
