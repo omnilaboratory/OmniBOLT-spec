@@ -123,23 +123,4 @@ This message contains information about a node and indicates its acceptance of t
 #[Requirements](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-1)
 
 
-### The `funding_created` Message
-
-1. type: -34 (funding_created)
-2. data:
-    * [`32*byte`:`temporary_channel_id`]
-    * [`sha256`:`funding_txid`]
-    * [`u16`:`funding_output_index`]
-    * [`u64`:`property_id`]
-    * [`signature`:`signature`]
-    * [`32*byte`:`to be appended`]
-
-
-### The `funding_signed` Message
-
-1. type: -35 (funding_signed)
-2. data:
-    * [`channel_id`:`channel_id`]
-    * [`signature`:`signature`]
-    * [`32*byte`:`to be appended`]
-    
+ 
