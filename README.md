@@ -36,6 +36,8 @@ OmniBOLT #01: Base Protocol
 
 OmniBOLT #05: Improve liquidity by using USDT
 
+[OmniBOLT #6:] Mortgage Loan Contracts for Crypto Assets 
+
 # Implementation
 
 Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni)
