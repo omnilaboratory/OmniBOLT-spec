@@ -25,7 +25,7 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
     |       |<-(4)--  funding_signed  -----|       |
     |       |                              |       |
     |       |         channel_A_B          |       | 
-    |       |(4.1)-->deposit_X_USDT        |       |
+    | to do |(4.1)-->deposit_X_USDT        |       |
     |       |        deposit_Y_USDT <-(4.2)|       |
     |       |                              |       |
     |       |                              |       |
@@ -34,10 +34,9 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
     |       |<-(6)--- funding_locked  -----|       |
     +-------+                              +-------+
 
-    - where node Alice is 'funder' and node Bob is 'fundee', 
-After the first time deposit from Alice, Alice and Bob both can deposite in this channel any times. 
-And of course, each of them can withdraw money if the counterparty agrees, 
-as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
+    - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee does not allowed to fund the channel. 
+    This is because the limitation of current BTC implementation. 
+    Of course, each of them can withdraw money if the counterparty agrees, as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
 
 ```
 
