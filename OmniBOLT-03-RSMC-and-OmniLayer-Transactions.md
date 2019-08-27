@@ -67,7 +67,7 @@ The following diagram shows the steps we MUST do before any participants broadca
     * [`32*byte`:`to be appended`]:
     
 Alice creates the funding transaction by providing her public key, asset id and the amount she wants to deposit in this channel. 
-After OLND(Omni-ligtning Daemon) receives this message, it asks Bob to sign this transaction.
+After OBD(OmniBOLT Daemon) receives this message, it asks Bob to sign this transaction.
  
 1. type: -35 (funding_signed)
 2. data:
