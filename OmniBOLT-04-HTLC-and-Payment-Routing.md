@@ -44,7 +44,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 **HT1a**: HTLC Timeout  
 **HTRD1a**: HTLC Timeout Revocable Delivery  
 
-## `add_HTLC`
+## `update_add_HTLC`
 
 `update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), this message specifies the asset that one peer need to transfer.
 
