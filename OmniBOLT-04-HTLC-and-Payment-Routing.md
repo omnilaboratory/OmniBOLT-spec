@@ -46,9 +46,9 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 ## `add_HTLC`
 
-`add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), this message specifies the asset that one peer need to transfer.
+`update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), this message specifies the asset that one peer need to transfer.
 
-1. type: 128 (update_add_htlc)
+1. type: -128 (update_add_htlc)
 2. data:
   * [`channel_id`:`channel_id`]
   * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
