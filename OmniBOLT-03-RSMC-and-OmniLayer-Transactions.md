@@ -82,7 +82,7 @@ After OBD(OmniBOLT Daemon) receives this message, it asks Bob to sign this trans
     * [`channel_id`:`channel_id`]: final global channel id generated.
     * [`32*byte`:`to be appended`]:
   
-Bob signs, and send `funding_signed` message back to OLND, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OLND constructs refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
+Bob signs, and send `funding_signed` message back to OBD, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. OBD constructs refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
 
 step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and waiting Bob's signature: Alice2 & Bob.
 
@@ -92,7 +92,7 @@ step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a se
 
 step 4: Bob signs C1a and RD1a, sends back to Alice.
 
-step 5: OLND constructs refund transaction: C1a/RD1a.
+step 5: OBD constructs refund transaction: C1a/RD1a.
  
 The sum of `amount_a` and `amount_b` has to be blow `max_amount` in the `funding_created` message. 
    
@@ -127,7 +127,7 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
 
 ** private key of Alice2 MUST be encrypted using Bob's public key, so that Bob can decrypt it when recieves.**
 
-Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OLND receieves, construct BR1a(Breach Remedy) and send to Bob. Bob checks the Alice2's signature in BR1a to verify if the private key is correct. If it is, Bob signs C2a/RD2a.
+Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OBD receieves, construct BR1a(Breach Remedy) and send to Bob. Bob checks the Alice2's signature in BR1a to verify if the private key is correct. If it is, Bob signs C2a/RD2a.
 
  
 1. type: -352 (commitment_tx_signed)
@@ -140,7 +140,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OLN
 
 ### cheat and punishment
 
-After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction RD1a using Alice2's private key. If Bob does not broadcast RD1a before the sequence number expires, Alice will success in cheating, and get the 60 USDT.
+After Bob signs, OBD constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction RD1a using Alice2's private key. If Bob does not broadcast RD1a before the sequence number expires, Alice will success in cheating, and get the 60 USDT.
 
 
 ### balance and transaction history
@@ -169,9 +169,9 @@ After Bob signs, OLND constructs C2a and RD2a. Simultaneously, Alice send her te
 This message indicates how to withdraw money from a channel, by broadcasting a `Cna`, which is the latest commitment transaction in this channel. It comprises the following steps:
 
 1. Allice raises a request, to withdraw her money in P2SH, with her proof of her balance.
-2. Alice waits OLND to approval: 
+2. Alice waits OBD to approval: 
 2.1 if they are correct, Alice raises a transaction paying from S2SH to Alice's omni address.
-2.2 if they are wrong/incorrect, OLND rejects the request and notify Bob.
+2.2 if they are wrong/incorrect, OBD rejects the request and notify Bob.
 
 1. type: -38 (close_channel)
 2. data:
