@@ -14,6 +14,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 
 # OmniBOLT Terminology
 
+* `OBD`: OmniBOLT daemon.
 * `channel`: refers to Poon-Dryja channel in ligtning network.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
