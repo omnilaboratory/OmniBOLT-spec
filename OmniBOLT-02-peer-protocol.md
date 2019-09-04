@@ -4,7 +4,7 @@ The peer Poon-Dryja channel protocol has three phases: establishment, normal ope
 
 The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The arguments are almost the same to what are defined in BOLT 02, but during our implementation, these arguments may be changed.
 
-Opening a channel has nothing to do with existing LND nodes kniting ligtning network. This procedures only seeks OmniBOLT node running Omni-lightning daemon (OLND), to create a channel according to the requests from clients.  
+Opening a channel has nothing to do with existing LND nodes kniting ligtning network. This procedures only seeks OmniBOLT node running OmniBOLT Daemon (OBD), to create a channel according to the requests from clients.  
 
 
 # Channel
