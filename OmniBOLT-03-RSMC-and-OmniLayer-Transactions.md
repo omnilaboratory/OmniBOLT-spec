@@ -140,7 +140,7 @@ Alice pays Bob `amount` of omni asset by sending `commitment_tx` and , after OBD
 
 ### cheat and punishment
 
-After Bob signs, OBD constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction RD1a using Alice2's private key. If Bob does not broadcast RD1a before the sequence number expires, Alice will success in cheating, and get the 60 USDT.
+After Bob signs, OBD constructs C2a and RD2a. Simultaneously, Alice send her temporary private key Alice2 to Bob. If she cheats by broadcasting C1a, Bob will immedialtly get 60 USDT in the channel. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will success in cheating, and get the 60 USDT.
 
 
 ### balance and transaction history
