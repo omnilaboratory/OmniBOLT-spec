@@ -27,8 +27,11 @@ An HTLC implements this procedure:
 
 If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice Bob]`, otherwise Alice gets her 10 USDT back. 
 
-Simply put: in a particular channel, the one who wants the money, tells the counterparty the `R`. 
+Simply put: 
 
+```
+in a particular channel, the one who wants the money, tells the counterparty the `R`. 
+```
 So the script is simple:
 
 ```
@@ -66,6 +69,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 the same to [requirement of update_add_htlc](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-9).
 
 
+## Terminate HTLC off-chain
 
 
 
