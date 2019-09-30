@@ -70,6 +70,34 @@ the same to [requirement of update_add_htlc](https://github.com/lightningnetwork
 
 
 ## Terminate HTLC off-chain
+After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transaction `C3a` for this purpose.
+
+<p align="center">
+  <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC.png.png">
+</p>
+
+Terminating an HTLC: `update_fulfill_htlc`, `update_fail_htlc`
+
+To supply the preimage:
+
+1. type: -130 (update_fulfill_htlc)
+2. data:
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`hop_id`]
+  * [`u64`:`property_id`]: the Omni asset id. 
+  * [`32*byte`:`payment_preimage`]: the R
+
+For a timed out or route-failed HTLC:
+
+1. type: -131 (update_fail_htlc)
+2. data:
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`id`]
+  * [`u16`:`len`]
+  * [`len*byte`:`reason`]
+
+### Requirements
+the same to [requirement of Removing an HTLC](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-10). 
 
 
 
