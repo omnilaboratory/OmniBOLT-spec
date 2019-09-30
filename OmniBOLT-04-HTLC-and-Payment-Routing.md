@@ -25,7 +25,7 @@ Alice transfers 10 USDT to Bob inside the `[Alice Bob]` channel, then Bob transf
 
 An HTLC implements this procedure:
 
-If Bob can tell Alice R, which has hash image Hash(R) that Alice shared with Bob 3 days ago, together with Alice's commitment transaction whoch pays Bob 5 USDT inside their channel `[Alice Bob]`, then Bob will get the 5 USDT fund, otherwise Alice gets her 10 USDT back. So the script is simple:
+If Bob can tell Alice R, which has hash image Hash(R) that Alice shared with Bob 3 days ago, together with Alice's commitment transaction which pays Bob 5 USDT inside their channel `[Alice Bob]`, then Bob will get the 5 USDT fund, otherwise Alice gets her 10 USDT back. So the script is simple:
 
 ```
 OP_IF
@@ -46,7 +46,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 ## `update_add_HTLC`
 
-`update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), this message specifies the asset that one peer need to transfer.
+`update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`, this message specifies the asset that one peer needs to transfer.
 
 1. type: -128 (update_add_htlc)
 2. data:
@@ -59,6 +59,9 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
   * [`1366*byte`:`onion_routing_packet`]: the same to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), which indicates where the payment is destined.
 
 ### Requirements
+the same to [requirement of update_add_htlc](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-9).
+
+
 
 
 
