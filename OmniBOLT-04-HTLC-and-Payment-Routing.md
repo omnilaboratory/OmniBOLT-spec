@@ -73,7 +73,7 @@ the same to [requirement of update_add_htlc](https://github.com/lightningnetwork
 After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transaction `C3a` for this purpose.
 
 <p align="center">
-  <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC.png.png">
+  <img width="500" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC.png">
 </p>
 
 Terminating an HTLC: `update_fulfill_htlc`, `update_fail_htlc`
