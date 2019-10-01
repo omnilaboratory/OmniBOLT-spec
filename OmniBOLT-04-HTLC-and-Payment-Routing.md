@@ -70,7 +70,7 @@ the same to [requirement of update_add_htlc](https://github.com/lightningnetwork
 
 
 ## Terminate HTLC off-chain
-After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transaction `C3a` for this purpose.
+After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transactions `C3a/C3b` for this purpose.
 
 <p align="center">
   <img width="750" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC-both-sides.png">
