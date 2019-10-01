@@ -53,11 +53,11 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
   <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
-**HED1a**: HTLC Execution Delivery 
-**HT1a**: HTLC Timeout 
-**HBR1a**: HTLC Breach Remedy 
+**HED1a**: HTLC Execution Delivery  
+**HT1a**: HTLC Timeout  
+**HBR1a**: HTLC Breach Remedy  
 **HTRD1a**: HTLC Timeout Revocable Delivery  
-**HTBR1a**: HTLC Timeout Breach Remedy
+**HTBR1a**: HTLC Timeout Breach Remedy  
 
 ## `update_add_HTLC`
 
