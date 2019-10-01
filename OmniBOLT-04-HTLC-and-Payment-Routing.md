@@ -93,7 +93,11 @@ To supply the preimage:
   * [`channel_id`:`channel_id`]
   * [`u64`:`hop_id`]
   * [`u64`:`property_id`]: the Omni asset id. 
+  * [`u64`:`private_key_Alice_4`]: the private key of Alice 4, encrypted by Bob's public key when sending this message to Bob.
+  * [`u64`:`private_key_Alice_5`]: the private key of Alice 5, encrypted by Bob's public key when sending this message to Bob.
   * [`32*byte`:`payment_preimage`]: the R
+
+`private_key_Alice_4` and `private_key_Alice_5` are used in breach remedy transactions created in C2. If Bob find out Alice is cheating, Bob can broad these BR transactions to get the money in temporary multi-sig addresses as punishments to Alice. The procedure are the same to RSMC in chaper 2.
 
 For a timed out or route-failed HTLC:
 
