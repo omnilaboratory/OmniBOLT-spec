@@ -23,6 +23,11 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `Commitment Transaction`: is created but not broadcast, and may be invalidated by next commitment transaction.
 * `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats, BR will send all her money to Bob.
 * `RD`: Revocable Delivery transaction pays out from the 2-2 P2SH transaction output, when Alice broadcast the latest legitimate commitment transaction. It sends money to Bob immediatly and will send money to Alice after relatively, say 100 blocks, from current block height. 
+* `HED`:  HTLC Execution Delivery
+* `HT`: HTLC Timeout
+* `HBR`: HTLC Breach Remedy
+* `HTRD`: HTLC Timeout Revocable Delivery
+* `HTBR`: HTLC Timeout Breach Remedy
 
 # Chapters
 
