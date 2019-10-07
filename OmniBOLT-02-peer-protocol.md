@@ -4,39 +4,47 @@ The peer Poon-Dryja channel protocol has three phases: establishment, normal ope
 
 The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The arguments are almost the same to what are defined in BOLT 02, but during our implementation, these arguments may be changed.
 
-Opening a channel has nothing to do with existing LND nodes kniting ligtning network. This procedures only seeks OmniBOLT node running OmniBOLT Daemon (OBD), to create a channel according to the requests from clients.  
+Opening a channel has nothing to do with existing LND nodes kniting ligtning network. This procedures only seeks OmniBOLT node running a daemon (OBD), to create a channel according to the requests from clients.  
 
 
 # Channel
 
 ## [`Channel ID`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#definition-of-channel_id)
-Some messages use a `channel_id` to identify the channel. It's derived from the funding transaction by combining the `funding_txid` and the `funding_output_index`, using big-endian exclusive-OR (i.e. `funding_output_index` alters the last 2 bytes).
+The concept of channel ID is the same to the definition in BOLT. It is a global unique identification for a channel, used by wallets to locate and connect to users' account. Before a final channel id is created, a temporary id normally used before funding real BTC and tokens into the channel to be established.
 
-Prior to channel establishment, a `temporary_channel_id` is used, which is a random nonce.
-
-Note that as duplicate `temporary_channel_id`s may exist from different peers, APIs which reference channels by their channel id before the funding transaction is created are inherently unsafe. The only protocol-provided identifier for a channel before funding_created has been exchanged is the (`source_node_id`, `destination_node_id`, `temporary_channel_id`) tuple. Note that any such APIs which reference channels by their channel id before the funding transaction is confirmed are also not persistent - until you know the script pubkey corresponding to the funding output nothing prevents duplicative channel ids.
+The temporaty ids may be duplicated. In current implementation, one instance of OBD will not generate duplicated temp id, and one OBD may manage thousands of light clients(users). Only a channel id has been finalized, it can be braodcast, and can be used in operations from other OBD instances. 
 
 ## [Channel Establishment]()
-After authenticating and initializing a connection ([BOLT #8](https://github.com/lightningnetwork/lightning-rfc/blob/master/08-transport.md) and [BOLT #1](https://github.com/lightningnetwork/lightning-rfc/blob/master/01-messaging.md), respectively), channel establishment may begin. 
 
-This consists of the funding node (funder) sending an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. With the channel arguments locked in, the funder is able to create the funding transaction and both versions of the commitment transaction, as described in [OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). The funder then sends the outpoint of the funding output with the `funding_created` message, along with the signature for the fundee's version of the commitment transaction. Once the fundee learns the funding outpoint, it's able to generate the signature for the funder's version of the commitment transaction and send it over using the `funding_signed` message.
+Since OmniBOLT uses a channel to transfer and exchange amonge multiple tokens, and on bitcoin network, only BTC can be the transaction fee. So here comes the difference between OmniBOLT and other lightning specifications: We need extra messages to deposit fees into a channel to be established.
 
-During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_id]`) to specify which omni asset is needed in creating this channel, and from where, OmniBOLT differs BOLT. 
+Creating a channel consists of:
+
+* funding node (funder) sending an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. 
+* The funder creates the funding BTC transaction and get the approval from fundee. 
+* The funder creates the funding token transaction and both versions of the commitment transaction, as described in [OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). 
+* The funder then sends the outpoint of the funding output with the `funding_created` message, along with the signature for the fundee's version of the commitment transaction. Once the fundee learns the funding outpoint, it's able to generate the signature for the funder's version of the commitment transaction and send it over using the `funding_signed` message.
+
+During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_id]`) to specify which omni asset is needed in creating this channel. 
 
 
 ```
-    +-------+                              +-------+
-    |       |--(1)---  open_channel  ----->|       |
-    |       |<-(2)--  accept_channel  -----|       |
-    |       |                              |       |
-    |   A   |--(3)--  funding_created  --->|   B   |
-    |       |<-(4)--  funding_signed  -----|       |
-    |       |                              |       |
-    |       |--(5)--- funding_locked  ---->|       |
-    |       |<-(6)--- funding_locked  -----|       |
-    +-------+                              +-------+
+    +-------+                                  +-------+
+    |       |--(1)----   open_channel    ----->|       |
+    |       |<-(2)----  accept_channel   ------|       |
+    |       |                                  |       |
+    |   A   |--(3)--  funding BTC created  --->|   B   |
+    |       |<-(4)--  funding BTC signed  -----|       |
+    |       |                                  |       |
+    |       |--(5)-- funding Tokens created -->|       |
+    |       |<-(6)-- funding Tokens signed  ---|       |
+    |       |                                  |       |
+    |       |--(7)-----  funding_locked  ----->|       |
+    |       |<-(8)-----  funding_locked  ------|       |
+    +-------+                                  +-------+
 
-    - where node A is 'funder' and node B is 'fundee'
+    - where node A is 'funder' and node B is 'fundee'. 
+    - extra funding is needed as transaction fee, from where OmniBOLT differs BOLT
 
 ```
 
