@@ -7,10 +7,10 @@ The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwor
 Opening a channel has nothing to do with existing LND nodes kniting ligtning network. This procedures only seeks OmniBOLT node running a daemon (OBD), to create a channel according to the requests from clients.  
 
 
-# Channel
+ 
 
-## [`Channel ID`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#definition-of-channel_id)
-The concept of channel ID is the same to the definition in BOLT. It is a global unique identification for a channel, used by wallets to locate and connect to users' account. Before a final channel id is created, a temporary id normally used before funding real BTC and tokens into the channel to be established.
+# `Channel ID` 
+The concept of channel ID is the same to the definition in [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#definition-of-channel_id). It is a global unique identification for a channel, used by wallets to locate and connect to users' account. Before a final channel id is created, a temporary id normally used before funding real BTC and tokens into the channel to be established.
 
 The temporaty ids may be duplicated. In current implementation, one instance of OBD will not generate duplicated temp id, and one OBD may manage thousands of light clients(users). Only a channel id has been finalized, it can be braodcast, and can be used in operations from other OBD instances. 
 
