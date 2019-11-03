@@ -43,7 +43,7 @@ OmniBOLT #01: Base Protocol
 
 OmniBOLT #05: Improve liquidity by using USDT
 
-[OmniBOLT #6:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) Mortgage Loan Contracts for Crypto Assets 
+[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) Mortgage Loan Contracts for Crypto Assets 
 
 OmniBOLT #07: Construct transactions on OmniLayer
 
