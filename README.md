@@ -45,6 +45,8 @@ OmniBOLT #05: Improve liquidity by using USDT
 
 [OmniBOLT #6:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) Mortgage Loan Contracts for Crypto Assets 
 
+OmniBOLT #07: Construct transactions on OmniLayer
+
 # Implementation and API for wallet
 
 Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni), as well as the API online documentation can be found [here](https://api.omnilab.online).
