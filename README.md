@@ -1,5 +1,5 @@
 # OmniBOLT: In-Progress Specifications
-[![](https://img.shields.io/badge/license-MIT-blue)](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Lab-orange)]() [![](https://img.shields.io/badge/project-LightningOnOmni-brightgreen)](https://github.com/LightningOnOmnilayer/LightningOnOmni)
+[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/LightningOnOmnilayer/LightningOnOmni)
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
