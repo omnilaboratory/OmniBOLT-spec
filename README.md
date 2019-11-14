@@ -1,7 +1,7 @@
 # OmniBOLT: In-Progress Specifications
 [![](https://img.shields.io/badge/license-MIT-blue)](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Lab-orange)]() [![](https://img.shields.io/badge/project-LightningOnOmni-brightgreen)](https://github.com/LightningOnOmnilayer/LightningOnOmni)
 
-* `Contact`: Neo Carmack(neocarmack@omnilab.online)
+* `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
 Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be transferred via ligtning channels, and how can OmniLayer assets benefit from the noval quick payment theory. According to the layer-2 protocol [BOLT (Basis of Lightning Technology) ](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we propose this OmniLayer specific protocol to expand the horizons of the basic theory, to support wider perspective of assets.    
 
