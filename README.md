@@ -9,7 +9,7 @@ We name this new specification OmniBOLT, in order to avoid possible conflicts wi
 
 >the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper. 
 
->the second step, we will try to be compatible with existing Lightning Nodes around the world, and we invite experts working on BOLT to work together with us. 
+>the second step, we will try to be compatible with existing Lightning Nodes around the world, and we sincerely invite experts working on BOLT to work together with us. 
 
 OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time. 
 
@@ -17,7 +17,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 
 # OmniBOLT Terminology
 
-* `OBD`: OmniBOLT daemon.
+* `OBD`: OmniBOLT Daemon.
 * `channel`: refers to Poon-Dryja channel in ligtning network.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
