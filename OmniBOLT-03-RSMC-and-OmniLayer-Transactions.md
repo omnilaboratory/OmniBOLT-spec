@@ -180,18 +180,5 @@ This message indicates how to withdraw money from a channel, by broadcasting a `
     * [`len`*`byte:scriptpubkey`]
     * [`signature`:`signature`]: the signature of Alice or Bob.
 
-
-
-** DEPRECATED **
-1. type: -355 (deposit)
-2. data:
-    * [`32*byte`:`channel_id`]: the global channel id.
-    * [`32*byte`:`p2sh_address`]: the p2sh address generated in `funding_signed` message.
-    * [`32*byte`:`deposite_transaction_id`]: deposite transaction id.
-    * [`32*byte`:`when`]: the time of the transaction get confirmed.
-    * [`32*byte`:`where`]: from which omni address this transaction is raised. 
-    * [`signature`:`funder_signature`]: the signature of the funder to prove himself.
-    
- In 2-3 P2SH, Satoshi will record every deposit, and broadcast it to Alice and Bob for confirmation.
  
  
