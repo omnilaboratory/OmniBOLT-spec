@@ -198,7 +198,7 @@ This message indicates how to withdraw money from a channel, by broadcasting a `
 2.2 if they are wrong/incorrect, OBD rejects the request and notify Bob.  
 
 
-Before close a channel, all HTLCs pending in this channel shall be removed, after which close_channel can be successfully executed.
+Before closing a channel, all HTLCs pending in this channel shall be removed, after which close_channel can be successfully executed.
 
 1. type: -38 (close_channel)  
 2. data:
