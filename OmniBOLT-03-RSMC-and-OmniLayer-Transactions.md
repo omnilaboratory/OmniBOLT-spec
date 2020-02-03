@@ -120,7 +120,7 @@ step 5: OBD constructs refund transaction: C1a/RD1a.
 The sum of `amount_a` and `amount_b` has to be blow `max_amount` in the `funding_created` message. 
    
    
-## The `commitment_tx` and `Revoke and Acknowledge Commitment Transaction` Message
+## The `commitment_tx` and `revoke and acknowledge commitment transaction` Message
 
 The two messages describe a payment inside a channel created by Alice and Bob, upon which HTLC makes it possible for quick payment between any two peers, who do not has a channel yet. We introduce HTLC and corresponding messages in the next chapter.  
 
