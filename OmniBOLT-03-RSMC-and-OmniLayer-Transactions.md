@@ -174,7 +174,8 @@ After Bob signs, OBD constructs C2a and RD2a. Simultaneously, Alice send her tem
     * [`32*byte`:`p2sh_address`]: the p2sh address generated in `funding_signed` message.
     * [`32*byte`:`who`](**Deprecated**): the channel owner, Alice or Bob, can query the balance.
     * [`signature`:`signature`]: the signature of Alice or Bob.
-    
+
+
 1. type: -354 (get_balance_respond)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
@@ -195,6 +196,7 @@ This message indicates how to withdraw money from a channel, by broadcasting a `
 2. Alice waits OBD to approval:  
 2.1 if they are correct, Alice raises a transaction paying from S2SH to Alice's omni address.  
 2.2 if they are wrong/incorrect, OBD rejects the request and notify Bob.  
+
 
 1. type: -38 (close_channel)  
 2. data:
