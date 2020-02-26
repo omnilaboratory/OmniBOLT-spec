@@ -21,15 +21,15 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `channel`: refers to Poon-Dryja channel in ligtning network.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
-* `HTLC`: Hash Time-Locked Contract is used to chain multiple channels for transferring tokens from Alice to Bob.
+* `HTLC`: Hash Time-Locked Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
 * `Commitment Transaction`: is created but not broadcast, and may be invalidated by next commitment transaction.
-* `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats, BR will send all her money to Bob.
+* `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats by broadcasting an elder commmitment transaction, BR will send all her money to Bob.
 * `RD`: Revocable Delivery transaction pays out from the 2-2 P2SH transaction output, when Alice broadcast the latest legitimate commitment transaction. It sends money to Bob immediatly and will send money to Alice after relatively, say 100 blocks, from current block height. 
 * `HED`:  HTLC Execution Delivery
 * `HT`: HTLC Timeout
-* `HBR`: HTLC Breach Remedy
-* `HTRD`: HTLC Timeout Revocable Delivery
-* `HTBR`: HTLC Timeout Breach Remedy
+* `HBR`: HTLC Breach Remedy, the breach remedy transaction in HTLC
+* `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
+* `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
 
 # Chapters
 
@@ -52,6 +52,10 @@ OmniBOLT #07: Construct transactions on OmniLayer
 # Implementation and API for wallet
 
 Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/LightningOnOmnilayer/LightningOnOmni), as well as the API online documentation can be found [here](https://api.omnilab.online).
+
+Javascript API: [here](https://github.com/LightningOnOmnilayer/DebuggingTool/blob/master/js/obdapi.js).
+
+GUI debugging tool: [here](https://github.com/LightningOnOmnilayer/DebuggingTool).
 
 
 # Contribution
