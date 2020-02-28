@@ -4,7 +4,7 @@
 
 > -- https://www.investopedia.com/terms/a/atomic-swaps.asp
   
-In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, refunded to original account. The latter action ensures to remove counterparty risk.  
+In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer. If one needs to trade his tokens, say USDT, for some one else's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, but refunded to original account. The latter action ensures to remove counterparty risk.  
 
 The standard swap procedure between channels is:
 
@@ -46,73 +46,63 @@ The standard swap procedure between channels is:
 
 In step 3, Alice sends R to Bob, hence she can unlock transaction 2 to get her 1 BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his 900 USDT in the channel `[Alice, USDT, Bob]`.  
 
-No participant is able to cheat. After inputting R in each channel, the transaction 1 and 2 turn into general commitment transactions, which is the same procedure that how an HTLC transforms to a commitment transaction.
+No participant is able to cheat. After inputting R in each channel, the transaction 1 and 2 turn into general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
 
 In channel `[Alice, USDT, Bob]`, Alice create an HTLC and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
 
 <p align="center">
-  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
+  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
-At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` and its mirror transactions on Alice side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days
+At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` and its mirror transactions on Alice side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days.
 
 <p align="center">
-  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
+  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
 </p>
 
 
 
-## `update_add_HTLC`
+## `swap`
 
-`update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`, this message specifies the asset that one peer needs to transfer.
+`swap` specifies the asset that one peer needs to transfer.
 
-1. type: -128 (update_add_htlc)
+1. type: -80 (swap)
 2. data:
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
-  * [`u64`:`property_id`]: the Omni asset id. 
-  * [`u64`:`amount`]: ammout of the asset.
-  * [`sha256`:`payment_hash`]: 
-  * [`u32`:`cltv_expiry`]: 
-  * [`1366*byte`:`onion_routing_packet`]: the same to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), which indicates where the payment is destined.
+  * [`channel_id`:`channel_id_from`]: Alice initiate the swap procedure by creating an HTLSC.
+  * [`channel_id`:`channel_id_to`]: Bob who Alice want to trade token with.
+  * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
+  * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
+  * [`u64`:`amount`]: ammout of the property that is sent.
+  * [`u64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`u64`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_from`. 
+  * [`u64`:`hashed_R`]: Hash(R).     
+  * [`u64`:`time_locker`]: For example, 3 days. 
+ 
 
-### Requirements
-the same to [requirement of update_add_htlc](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-9).
+## `swap_accepted`
 
+`swap_accepted` specifies the asset that one peer needs to transfer.
 
-## Terminate HTLC off-chain
-After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transactions `C3a/C3b` for this purpose.
-
-<p align="center">
-  <img width="750" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC-both-sides.png">
-</p>
-
-Terminating an HTLC: `update_fulfill_htlc`, `update_fail_htlc`
-
-To supply the preimage:
-
-1. type: -130 (update_fulfill_htlc)
+1. type: -81 (swap_accepted)
 2. data:
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]
-  * [`u64`:`property_id`]: the Omni asset id. 
-  * [`u64`:`private_key_Alice_4`]: the private key of Alice 4, encrypted by Bob's public key when sending this message to Bob.
-  * [`u64`:`private_key_Alice_5`]: the private key of Alice 5, encrypted by Bob's public key when sending this message to Bob.
-  * [`32*byte`:`payment_preimage`]: the R
+  * [`channel_id`:`channel_id_from`]: Alice initiate the swap procedure by creating an HTLSC.
+  * [`channel_id`:`channel_id_to`]: Bob who Alice want to trade token with.
+  * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
+  * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
+  * [`u64`:`amount`]: ammout of the `property_receieved` that is sent in `channel_id_to`.
+  * [`u64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`u64`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_to`. 
+  * [`u64`:`hashed_R`]: Hash(R).     
+  * [`u64`:`time_locker`]: For example, 2 days, which must be less than the `time_locker` in message `swap`. 
 
-`private_key_Alice_4` and `private_key_Alice_5` are used in breach remedy transactions created in C2. If Bob find out Alice is cheating, Bob can broad these BR transactions to get the money in temporary multi-sig addresses as punishments to Alice. The procedure are the same to RSMC in chaper 2.
-
-For a timed out or route-failed HTLC:
-
-1. type: -131 (update_fail_htlc)
-2. data:
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`id`]
-  * [`u16`:`len`]
-  * [`len*byte`:`reason`]
-
-### Requirements
-the same to [requirement of Removing an HTLC](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-10). 
+Bob in `channel_id_to` has to monitor the `transaction_id` in channel `channel_id_from`, to see whether or not the corresponding transactions, like RD, HED, HTRD, etc, have been correctly created. After he validates the transactions, he will create HTLSC according to the arguments `amount` in channel `channel_id_to`, and then reply Alice with message `swap_accepted`.
 
 
+Alice receives the message `swap_accepted`. If anything is not exactly correct, Alice will not send R to get her assets in `channel_id_to`, hence Bob is not able to get this asset in `channel_id_from`. After a timeframe, the two channels revock to their previous state.
 
+### Remark
+ 
+
+
+ 
+ 
