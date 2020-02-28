@@ -1,4 +1,4 @@
-# OmniBOLT #6: Mortgage Loan Contracts for Crypto Assets
+# OmniBOLT #6: DEX, Mortgage Loan for Crypto Assets and more
 
 Following this simple rule, we can build the mortgage loan contract:
 
@@ -9,3 +9,7 @@ You deposit something valuable as mortgage in an escrow account, and I lend mone
 # MLC (Mortgage Loan Contract)
 
 To be done
+
+# Decentralized Exchange
+
+

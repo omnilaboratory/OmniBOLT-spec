@@ -54,7 +54,7 @@ OmniBOLT #01: Base Protocol
 
 [OmniBOLT #05:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
-[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) Mortgage Loan Contracts for Crypto Assets 
+[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Mortgage Loan for Crypto Assets and more examples
 
 OmniBOLT #07: Construct transactions on OmniLayer
 
