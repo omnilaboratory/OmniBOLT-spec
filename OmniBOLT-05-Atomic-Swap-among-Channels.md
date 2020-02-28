@@ -4,13 +4,13 @@
 
 > -- https://www.investopedia.com/terms/a/atomic-swaps.asp
   
-In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, refunded to original account. The latter action ensures to remove counterparty risk. 
+In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, refunded to original account. The latter action ensures to remove counterparty risk.  
 
 The standard swap procedure between channels is:
 
 ```
-         Alice                                                            Bob
-[Alice ---1000 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
+         Alice                                                           Bob
+[Alice ---900 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
     +----------------+                                           +----------------+
     |     create     |                                           |                |
     |      Tx 1      |----(1)---  tell Bob Tx 1 created   -----> |     create     |
@@ -18,23 +18,25 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     |     Locked     |<---(2)--  Acknowledge and create Tx 2 --- |     Locked     |
     |       by       |                                           |       by       |
-    |     Hash(R)    |                                           |      Hash(R)   |
-    |      and       |                                           |       and      |
+    |     Hash(R),   |                                           |      Hash(R)   |
     | Time-Locker t1 |                                           | Time-Locker t2 |
+    |       and      |                                           |       and      |
+    |   Bob's Sig    |                                           |   Alice's Sig  |
     |                |                                           |     t2 < t1    |
     |                |                                           |                |
     |                |                                           |                |
-    |                |---(3)-----   Send R to get BTC     -----> | Alice+ 1 BTC   |
-    | Bob+ 1000 USDT |<--(4)-----   Send R to get USDT    -----  |                |
+    |                |                                           |                |
+    |                |----(3)----   Send R to get BTC     -----> | Alice + 1 BTC  |
+    | Bob + 900 USDT |<---(4)----   Send R to get USDT    ------ |                |
     |                |                                           |                |
     |                |                                           |                |
-    |                |---(5)--        or time out,               |                |
-    |                |		 refund on both sides      ----->|                |
+    |                |----(5)----     or time out,               |                |
+    |                |		   refund on both sides   -----> |                |
     |                |                                           |                |
     +----------------+                                           +----------------+
 
-    - where Tx 1 transfers 1000 USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R) and t1. 
-    - Tx 2 transfers 1 BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R) and t2, `t2 < t1` . 
+    - where Tx 1 transfers 1000 USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R), t1 and Bob's signature. 
+    - Tx 2 transfers 1 BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R), t2(`t2 < t1`) and Alice's signature . 
     
 
 ```  
@@ -42,41 +44,23 @@ The standard swap procedure between channels is:
 
 ## Hashed TimeLock Swap Contract
 
-An HTLC implements this procedure:
+In step 3, Alice sends R to Bob, hence she can unlock transaction 2 to get her 1 BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his 900 USDT in the channel `[Alice, USDT, Bob]`.  
 
-If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice Bob]`, otherwise Alice gets her 10 USDT back. 
+No participant is able to cheat. After inputting R in each channel, the transaction 1 and 2 turn into general commitment transactions, which is the same procedure that how an HTLC transforms to a commitment transaction.
 
-Simply put: 
-
-```
-in a particular channel, the one who wants the money, tells the counterparty the `R`. 
-```
-So the script is simple:
-
-```
-OP_IF
-    OP_HASH256 <HASH 256(R)> OP_EQUALVERIFY
-    2 <Alice2> <Bob2> OP_CHECKMULTISIG
-OP_ELSE
-    2 <Alice1> <Bob1> OP_CHECKMULTISIG
-OP_ENDIF
-```
-
-Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)--> Bob]` is then an extra unbroadcasted output from funding transaction embeded together with [RD1a/BR1a](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#the-commitment_tx-and-commitment_tx_signed-message).
-
-<!-- 
-![HTLC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png "HTLC")
--->
+In channel `[Alice, USDT, Bob]`, Alice create an HTLC and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
 
 <p align="center">
   <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
-**HED1a**: HTLC Execution Delivery  
-**HT1a**: HTLC Timeout  
-**HBR1a**: HTLC Breach Remedy  
-**HTRD1a**: HTLC Timeout Revocable Delivery  
-**HTBR1a**: HTLC Timeout Breach Remedy  
+At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` and its mirror transactions on Alice side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days
+
+<p align="center">
+  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
+</p>
+
+
 
 ## `update_add_HTLC`
 
