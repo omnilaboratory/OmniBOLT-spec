@@ -19,13 +19,13 @@ It is confusing, because there is no concept of personal account in ligtning. Th
 [A, USDT, B] stands for the channel built by A and B, funded by USDT.
 ```
 
-Alice transfers 10 USDT to Bob inside the `[Alice Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob Carol]` channel, and finally Carol 10 USDT to David in `[Bob Carol]`.
+Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol 10 USDT to David in `[Bob, USDT, Carol]`.
 
 ## Hashed TimeLock Contract
 
 An HTLC implements this procedure:
 
-If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice Bob]`, otherwise Alice gets her 10 USDT back. 
+If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 10 USDT back. 
 
 Simply put: 
 
