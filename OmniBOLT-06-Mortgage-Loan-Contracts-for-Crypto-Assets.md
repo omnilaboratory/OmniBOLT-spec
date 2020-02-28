@@ -1,4 +1,4 @@
-# OmniBOLT #6: DEX, Mortgage Loan for Crypto Assets and more
+# OmniBOLT #6: DEX, Mortgage Loan for Crypto Assets and more Applications
 
 Following this simple rule, we can build the mortgage loan contract:
 
