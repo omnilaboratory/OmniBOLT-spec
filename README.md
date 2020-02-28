@@ -5,15 +5,22 @@
 
 Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be transferred via ligtning channels, and how can OmniLayer assets benefit from the noval quick payment theory. According to the layer-2 protocol [BOLT (Basis of Lightning Technology) ](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we propose this OmniLayer specific protocol to expand the horizons of the basic theory, to support wider perspective of assets.    
 
-We name this new specification OmniBOLT, in order to avoid possible conflicts with BOLT. We break down our task into two major steps: 
+We name this new specification OmniBOLT, in order to avoid possible conflicts with BOLT. We break down our task into two major steps:  
 
->the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper. 
+>the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper.  
 
->the second step, we will try to be compatible with existing Lightning Nodes around the world, and we sincerely invite experts working on BOLT to work together with us. 
+>the second step, we will try to be compatible with existing Lightning Nodes around the world, and we sincerely invite experts working on BOLT to work together with us.  
 
-OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time. 
+OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
 
 To be self-contained, for any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old arguments to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
+
+# Advantages
+* Instant payment of smart assets issued on OmniLayer. 
+* Cross channel atomic swap of different assets.
+* Decentralized exchange on top of lightning channels with quick exchange speed. 
+* Morgage loan contract based on atomic swap.
+* More flexible contracts for DeFi.
 
 # OmniBOLT Terminology
 
@@ -31,6 +38,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
 * `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
 * `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
+
 
 # Chapters
 
