@@ -16,7 +16,7 @@ It is confusing, because there is no concept of personal account in ligtning. Th
 ```
 [Alice --(10 USDT)--> Bob] ==(Bob has two channels)== [Bob --(10 USDT)--> Carol] ==(Carol has two channels)== [Carol --(10 USDT)--> David]
 
-[A B] stands for the channel built by A and B
+[A, USDT, B] stands for the channel built by A and B, funded by USDT.
 ```
 
 Alice transfers 10 USDT to Bob inside the `[Alice Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob Carol]` channel, and finally Carol 10 USDT to David in `[Bob Carol]`.

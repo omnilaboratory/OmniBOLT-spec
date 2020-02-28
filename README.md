@@ -18,7 +18,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 # OmniBOLT Terminology
 
 * `OBD`: OmniBOLT Daemon.
-* `channel`: refers to Poon-Dryja channel in ligtning network.
+* `channel`: A channel refers to Poon-Dryja channel in ligtning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
 * `HTLC`: Hash Time-Locked Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
@@ -30,6 +30,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `HBR`: HTLC Breach Remedy, the breach remedy transaction in HTLC
 * `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
 * `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
+* `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
 
 # Chapters
 
@@ -43,7 +44,7 @@ OmniBOLT #01: Base Protocol
 
 [OmniBOLT #04:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
 
-OmniBOLT #05: Improve liquidity by using USDT
+[OmniBOLT #05:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
 [OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) Mortgage Loan Contracts for Crypto Assets 
 

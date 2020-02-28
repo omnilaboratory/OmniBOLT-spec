@@ -1,11 +1,10 @@
-# OmniBOLT #4: HTLC and Payment Routing
+# OmniBOLT #5: Atomic Swap Protocol among Channels
 
->*"A bidirectional payment channel only permits secure transfer of funds inside a channel. To be able to construct secure transfers using a network of channels across multiple hops to the final destination requires an additional construction, a Hashed Timelock Contract (HTLC)."*
+>*An atomic swap is a smart contract technology that enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.*
 
-> -- Poon & Dryja, The Bitcoin Lightning Network: Scalable Off-chain Instant Payments
+> -- https://www.investopedia.com/terms/a/atomic-swaps.asp
   
-
-A big and common misleading explanation in chaining the channels using HTLC is that if Alice wants to pay 10 USDT to David, she can use 2 hops to reach David:
+In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, 
 
 ```
 Alice ---(10 USDT)---> Bob ---(10 USDT)---> Carol ---(10 USDT)---> David
