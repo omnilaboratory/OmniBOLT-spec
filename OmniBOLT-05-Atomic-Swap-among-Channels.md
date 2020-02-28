@@ -4,23 +4,43 @@
 
 > -- https://www.investopedia.com/terms/a/atomic-swaps.asp
   
-In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, 
+In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer, so if one needs to trade his tokens, say USDT, wither other's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, refunded to original account. The latter action ensures to remove counterparty risk. 
+
+The standard swap procedure between channels is:
 
 ```
-Alice ---(10 USDT)---> Bob ---(10 USDT)---> Carol ---(10 USDT)---> David
-```
+         Alice                                                            Bob
+[Alice ---1000 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
+    +----------------+                                           +----------------+
+    |     create     |                                           |                |
+    |      Tx 1      |----(1)---  tell Bob Tx 1 created   -----> |     create     |
+    |                |                                           |      Tx 2      | 
+    |                |                                           |                |
+    |     Locked     |<---(2)--  Acknowledge and create Tx 2 --- |     Locked     |
+    |       by       |                                           |       by       |
+    |     Hash(R)    |                                           |      Hash(R)   |
+    |      and       |                                           |       and      |
+    | Time-Locker t1 |                                           | Time-Locker t2 |
+    |                |                                           |     t2 < t1    |
+    |                |                                           |                |
+    |                |                                           |                |
+    |                |---(3)-----   Send R to get BTC     -----> | Alice+ 1 BTC   |
+    | Bob+ 1000 USDT |<--(4)-----   Send R to get USDT    -----  |                |
+    |                |                                           |                |
+    |                |                                           |                |
+    |                |---(5)--        or time out,               |                |
+    |                |		 refund on both sides      ----->|                |
+    |                |                                           |                |
+    +----------------+                                           +----------------+
 
-It is confusing, because there is no concept of personal account in ligtning. The only building block lightning uses is channel. So the correct hops are:
+    - where Tx 1 transfers 1000 USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R) and t1. 
+    - Tx 2 transfers 1 BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R) and t2, `t2 < t1` . 
+    
 
-```
-[Alice --(10 USDT)--> Bob] ==(Bob has two channels)== [Bob --(10 USDT)--> Carol] ==(Carol has two channels)== [Carol --(10 USDT)--> David]
+```  
+  
 
-[A B] stands for the channel built by A and B
-```
-
-Alice transfers 10 USDT to Bob inside the `[Alice Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob Carol]` channel, and finally Carol 10 USDT to David in `[Bob Carol]`.
-
-## Hashed TimeLock Contract
+## Hashed TimeLock Swap Contract
 
 An HTLC implements this procedure:
 

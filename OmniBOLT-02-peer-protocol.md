@@ -30,17 +30,19 @@ During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_
 
 ```
     +-------+                                  +-------+
-    |       |--(1)----   open_channel    ----->|       |
-    |       |<-(2)----  accept_channel   ------|       |
+    |       |---(1)----  open_channel    ----->|       |
+    |       |<--(2)---  accept_channel   ------|       |
     |       |                                  |       |
-    |   A   |--(3)--  funding BTC created  --->|   B   |
-    |       |<-(4)--  funding BTC signed  -----|       |
+    |   A   |---(3)-- funding BTC created ---->|   B   |
+    |       |<--(4)--  funding BTC signed  ----|       |
     |       |                                  |       |
-    |       |--(5)-- funding Tokens created -->|       |
-    |       |<-(6)-- funding Tokens signed  ---|       |
+    |       |---(5)- funding Tokens created -->|       |
+    |       |<--(6)-- funding Tokens signed ---|       |
     |       |                                  |       |
-    |       |--(7)-----  funding_locked  ----->|       |
-    |       |<-(8)-----  funding_locked  ------|       |
+    |       |---(7)----  funding_locked  ----->|       |
+    |       |<--(8)----  funding_locked  ------|       |
+    |       |                                  |       |
+    |       |--------   wait for close   ----->|       |
     +-------+                                  +-------+
 
     - where node A is 'funder' and node B is 'fundee'. 
