@@ -18,19 +18,19 @@ Acturally an HTLSC creats an escrow accounts for participants in a loan. We assu
 
 So Bob initiates a swap (HTLSC 1):
 
-1) Bob --> Alice: swap(amount = 1 BTC, property = USDT, exchange_rate = 900, time_locker = 30 days, Hash(R1), ...).
+1) Bob --> Alice: swap(amount = 1 BTC, property = USDT, exchange_rate = 900, time_locker = 30 days, Hash(R1), ...).  
 This creates HTLSC in channel `[Alice, BTC, Bob]`.
 
-2) Alice --> Bob: swap_accpted(amount = 900 USDT, exchange_rate = 900, time_locker = 20 days, Hash(R1), ...) 
+2) Alice --> Bob: swap_accpted(amount = 900 USDT, exchange_rate = 900, time_locker = 20 days, Hash(R1), ...).  
 This creates HTLSC in channel `[Alice, USDT, Bob]`.
 
 
 Meanwhile, Bob needs to create the redeem swap (HTLSC 2) to get his 1 BTC back:
 
-1) Bob --> Alice: swap(amount = 900 USDT, property = BTC, exchange_rate = 1/900, time_locker = 60 days, Hash(R2), ...).
+1) Bob --> Alice: swap(amount = 900 USDT, property = BTC, exchange_rate = 1/900, time_locker = 60 days, Hash(R2), ...).  
 This creates HTLSC in channel `[Alice, USDT, Bob]`.
 
-1) Alice --> Bob: swap_accpted(amount = 1 BTC, exchange_rate = 1/900, time_locker = 50 days, Hash(R2), ...) 
+1) Alice --> Bob: swap_accpted(amount = 1 BTC, exchange_rate = 1/900, time_locker = 50 days, Hash(R2), ...).  
 This creates HTLSC in channel `[Alice, BTC, Bob]`.
 
 Only when the participants accepted the two swaps, and their OBDs helps to create all the corresponding transaction required by HTLSC, Bob is able to use R1 to get his 900 USDT by HTLSC 1 in channel `[Alice, USDT, Bob]`, hence Alice gets 1 BTC as collateral from Bob. 
@@ -73,8 +73,8 @@ Ofcourse, Alice can require a loan rate according to her knowledge of the price 
 
 This example is one stage swap, which is quite straight farward:  
 
-1) Alice issue smart asset "PET" on Omnilayer, for each token represents a crypto cat.  
-2) Bob establish USDT channel and PET channel with Alice, and fund the USDT channel.  
+1) Alice issues smart asset "PET" on Omnilayer, for each token represents a crypto cat.  
+2) Bob establishes an USDT channel and a PET channel with Alice, and funds the USDT channel.  
 3) Bob creats a HTLSC to pay Alice 100 USDT for one cat.  
 
 That's it :-)  
