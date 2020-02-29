@@ -9,9 +9,10 @@ In general, atomic swaps take place between different block chains, for exchangi
 The standard swap procedure between channels is:
 
 ```
-         Alice                                                           Bob
+     Alice in channel                                             Bob in channel
 [Alice ---900 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
     +----------------+                                           +----------------+
+    |                |                                           |                |
     |     create     |                                           |                |
     |      Tx 1      |----(1)---  tell Bob Tx 1 created   -----> |     create     |
     |                |                                           |      Tx 2      | 
@@ -31,7 +32,7 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     |                |                                           |                |
     |                |----(5)----     or time out,               |                |
-    |                |		   refund on both sides   -----> |                |
+    |                |		   refund to both sides   -----> |                |
     |                |                                           |                |
     +----------------+                                           +----------------+
 
@@ -44,7 +45,9 @@ The standard swap procedure between channels is:
 
 ## Hashed TimeLock Swap Contract
 
-In step 3, Alice sends R to Bob, hence she can unlock transaction 2 to get her 1 BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his 900 USDT in the channel `[Alice, USDT, Bob]`.  
+Hashed TimeLock Swap Contract (HTLSC) consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.  
+
+Simply there are 5 steps in a swap. In step 3, Alice sends R to Bob, hence she can unlock transaction 2 to get her 1 BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his 900 USDT in the channel `[Alice, USDT, Bob]`.  
 
 No participant is able to cheat. After inputting R in each channel, the transaction 1 and 2 turn into general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
 
@@ -100,8 +103,8 @@ Bob in `channel_id_to` has to monitor the `transaction_id` in channel `channel_i
 
 Alice receives the message `swap_accepted`. If anything is not exactly correct, Alice will not send R to get her assets in `channel_id_to`, hence Bob is not able to get this asset in `channel_id_from`. After a timeframe, the two channels revock to their previous state.
 
-### Remark
- 
+## Remark
+Atomic swap is a foundation of lots of blockchain application. Next chapter will see some examples, which are intuitive and will help our readers to build much more complex applications for real world businesses. 
 
 
  

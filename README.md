@@ -16,6 +16,9 @@ OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and e
 To be self-contained, for any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old arguments to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
 
 # Advantages
+
+Not only BTC instant payment is supported as current implementation of lightning network, but also:  
+ 
 * Instant payment of smart assets issued on OmniLayer. 
 * Cross channel atomic swap of different assets.
 * Decentralized exchange on top of lightning channels with quick exchange speed. 
@@ -28,7 +31,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `channel`: A channel refers to Poon-Dryja channel in ligtning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
-* `HTLC`: Hash Time-Locked Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
+* `HTLC`: Hashed Time-Lock Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
 * `Commitment Transaction`: is created but not broadcast, and may be invalidated by next commitment transaction.
 * `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats by broadcasting an elder commmitment transaction, BR will send all her money to Bob.
 * `RD`: Revocable Delivery transaction pays out from the 2-2 P2SH transaction output, when Alice broadcast the latest legitimate commitment transaction. It sends money to Bob immediatly and will send money to Alice after relatively, say 100 blocks, from current block height. 
@@ -38,6 +41,7 @@ To be self-contained, for any messages or definitions that differ from what are 
 * `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
 * `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
 * `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
+* `HTLSC`: Hashed TimeLock Swap Contract, which consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.
 
 
 # Chapters
@@ -54,7 +58,7 @@ OmniBOLT #01: Base Protocol
 
 [OmniBOLT #05:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
-[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Mortgage Loan for Crypto Assets and more applications
+[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Mortgage Loan for Crypto Assets, online store and more applications
 
 OmniBOLT #07: Construct transactions on OmniLayer
 
