@@ -1,11 +1,11 @@
-# OmniBOLT #6: DEX, Mortgage Loan for Crypto Assets, online store and more Applications
+# OmniBOLT #6: DEX, Collateral Lending Contract, online store and more Applications
 
 Following examples use multi-stage atomic swaps for specific scenarios. The procedures shall be implemented as a peiece of program written in a turing complete language, like Javascript or Solidity, calling obd api to complete the foundamental tasks. All participants shall run the programs to check if all the transactions are valid and if the counterparties are honest.  
 
 
 
-## Mortgage Loan Contract (MLC)
-Mortgage loan contract serves this certain purpose:  
+## Collateral Lending Contract (CLC)
+Collateral Lending Contract serves this certain purpose:  
 
 >“
 You deposit something valuable as mortgage in an escrow account, and I lend money to you according to a proper LTV(Loan to Value). If you repay the loan within agreed deadline, i will return your mortgage. If you don’t, your mortgage will be mine.

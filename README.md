@@ -23,7 +23,7 @@ Not only BTC instant payment is supported as current implementation of lightning
 * Cross channel atomic swap of different assets.
 * Decentralized exchange on top of lightning channels with quick exchange speed. 
 * Morgage loan contract based on atomic swap.
-* More flexible contracts for DeFi. Interested readers shall directly go to [chapter 6: DEX, Mortgage Loan for Crypto Assets, online store ...](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+* More flexible contracts for DeFi. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
 
 # OmniBOLT Terminology
 
@@ -58,7 +58,7 @@ OmniBOLT #01: Base Protocol
 
 [OmniBOLT #05:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
-[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Mortgage Loan for Crypto Assets, online store and more applications
+[OmniBOLT #06:](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
 
 OmniBOLT #07: Construct transactions on OmniLayer
 
