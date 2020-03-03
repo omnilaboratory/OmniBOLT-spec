@@ -42,7 +42,7 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
 
 **Proposal 1: 2-2 P2SH**:
  
-In order to avoid malicious counterparty who rejects to sigh any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
+In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
 So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, construct funding transaction but unbroadcasted and construct a RSMC. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
 
