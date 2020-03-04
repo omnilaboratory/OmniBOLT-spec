@@ -15,7 +15,7 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     |     create     |                                           |                |
     |     HTLC 1     |----(1)---  tell Bob Tx 1 created   -----> |     create     |
-    |                |                                           |     HTLX 2     | 
+    |                |                                           |     HTLC 2     | 
     |                |                                           |                |
     |     Locked     |<---(2)--  Acknowledge and create Tx 2 --- |     Locked     |
     |       by       |                                           |       by       |
@@ -76,8 +76,8 @@ At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` an
   * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
   * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
   * [`u64`:`amount`]: ammout of the property that is sent.
-  * [`u64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
-  * [`u64`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_from`. 
+  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`string`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_from`. 
   * [`u64`:`hashed_R`]: Hash(R).     
   * [`u64`:`time_locker`]: For example, 3 days. 
  
@@ -93,8 +93,8 @@ At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` an
   * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
   * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
   * [`u64`:`amount`]: ammout of the `property_receieved` that is sent in `channel_id_to`.
-  * [`u64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
-  * [`u64`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_to`. 
+  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`string`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_to`. 
   * [`u64`:`hashed_R`]: Hash(R).     
   * [`u64`:`time_locker`]: For example, 2 days, which must be less than the `time_locker` in message `swap`. 
 
