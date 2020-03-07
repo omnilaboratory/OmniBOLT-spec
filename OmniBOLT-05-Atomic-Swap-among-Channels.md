@@ -9,7 +9,7 @@ In general, atomic swaps take place between different block chains, for exchangi
 The standard swap procedure between channels is:
 
 ```
-     Alice in channel                                             Bob in channel
+    Alice creats HTLC 1                                           Bob creats HTLC 2
 [Alice ---900 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
     +----------------+                                           +----------------+
     |                |                                           |                |
