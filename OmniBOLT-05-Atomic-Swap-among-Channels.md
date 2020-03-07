@@ -42,6 +42,41 @@ The standard swap procedure between channels is:
 
 ```  
   
+Apparently it is not necessary that Alice and Bob have direct channel between each other:
+
+
+```
+   Alice creats HTLC 1                                           Bob creats HTLC 2
+[Alice ---900 USDT---> David_1]                              [Bob ---1 BTC---> Carol_1]
+    +----------------+                                           +----------------+  
+    |     HTLC 1     |----(1)---  tell Bob Tx 1 created   -----> |                |
+    |                |<---(2)--  Acknowledge and create Tx 2 --- |     HTLC 2     | 
+    +----------------+                                           +----------------+
+            .                                                             .  
+            .                                                             .  
+            .                                                             .  
+            .                                                             .  
+            .                                                             .     
+
+[David_n ---900 USDT---> Bob]                                [Carol_m ---1 BTC---> Alice] 
+    +----------------+                                           +----------------+
+    |     HTLC 1     |                                           |     HTLC 2     |
+    +----------------+                                           +----------------+
+ 
+                                                                 +----------------+
+         Alice        ----(3)----Send R to Bob to get BTC -----> | Alice + 1 BTC  |
+                                                                 +----------------+
+    +----------------+
+    | Bob + 900 USDT |<---(4)----   Use R to get USDT    -------        Bob
+    +----------------+ 
+                                          
+    +----------------+                                           +----------------+
+    |                |----(5)----     or time out,               |                |
+    |                |		   refund to both sides   -----> |                | 
+    +----------------+                                           +----------------+
+
+
+```  
 
 ## Hashed TimeLock Swap Contract
 
