@@ -10,7 +10,7 @@ The standard swap procedure between channels is:
 
 ```
     Alice creats HTLC 1                                           Bob creats HTLC 2
-[Alice ---900 USDT---> Bob]                                 [Alice <---1 BTC--- Bob]
+[Alice --- X USDT---> Bob]                                    [Alice <--- Y BTC--- Bob]
     +----------------+                                           +----------------+
     |                |                                           |                |
     |     create     |                                           |                |
@@ -27,8 +27,8 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     |                |                                           |                |
     |                |                                           |                |
-    |                |----(3)----   Send R to get BTC     -----> | Alice + 1 BTC  |
-    | Bob + 900 USDT |<---(4)----   Send R to get USDT    ------ |                |
+    |                |----(3)----   Send R to get BTC     -----> | Alice + Y BTC  |
+    | Bob + X USDT   |<---(4)----   Send R to get USDT    ------ |                |
     |                |                                           |                |
     |                |                                           |                |
     |                |----(5)----     or time out,               |                |
@@ -36,8 +36,8 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     +----------------+                                           +----------------+
 
-    - where HTLC 1 transfers 900 USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R), t1 and Bob's signature. 
-    - HTLC 2 transfers 1 BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R), t2(`t2 < t1`) and Alice's signature . 
+    - where HTLC 1 transfers X USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R), t1 and Bob's signature. 
+    - HTLC 2 transfers Y BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R), t2(`t2 < t1`) and Alice's signature . 
     
 
 ```  
@@ -47,7 +47,7 @@ Apparently it is not necessary that Alice and Bob have direct channels between t
 
 ```
    Alice creats HTLC 1                                           Bob creats HTLC 2
-[Alice ---900 USDT---> David_1]                              [Bob ---1 BTC---> Carol_1]
+[Alice --- X USDT---> David_1]                              [Bob --- Y BTC---> Carol_1]
     +----------------+                                           +----------------+  
     |     HTLC 1     |----(1)---  tell Bob Tx 1 created   -----> |                |
     |                |<---(2)--  Acknowledge and create Tx 2 --- |     HTLC 2     | 
@@ -58,16 +58,16 @@ Apparently it is not necessary that Alice and Bob have direct channels between t
             .                                                             .  
             .                                                             .     
 
-[David_n ---900 USDT---> Bob]                                [Carol_m ---1 BTC---> Alice] 
+[David_n --- X USDT---> Bob]                                [Carol_m ---Y BTC---> Alice] 
     +----------------+                                           +----------------+
     |     HTLC 1     |                                           |     HTLC 2     |
     +----------------+                                           +----------------+
  
                                                                  +----------------+
-         Alice        ----(3)----Send R to Bob to get BTC -----> | Alice + 1 BTC  |
+         Alice        ----(3)----Send R to Bob to get BTC -----> | Alice + Y BTC  |
                                                                  +----------------+
     +----------------+
-    | Bob + 900 USDT |<---(4)----   Use R to get USDT    -------        Bob
+    | Bob + X USDT   |<---(4)----   Use R to get USDT    -------        Bob
     +----------------+ 
                                           
     +----------------+                                           +----------------+
@@ -82,7 +82,7 @@ Apparently it is not necessary that Alice and Bob have direct channels between t
 
 Hashed TimeLock Swap Contract (HTLSC), which defines a swap, consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.  
 
-Simply there are 5 steps in a swap. In step 3, Alice sends R to Bob, hence she can unlock HTLC 2 to get her 1 BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his 900 USDT in the channel `[Alice, USDT, Bob]`.  
+Simply there are 5 steps in a swap. In step 3, Alice sends R to Bob, hence she can unlock HTLC 2 to get her Y BTC in the channel `[Alice, BTC, Bob]`. Therefor Bob knows R, and use R to unlock his X USDT in the channel `[Alice, USDT, Bob]`.  
 
 No participant is able to cheat. After inputting R in each channel, the transaction 1 and 2 turn into general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
 
@@ -111,7 +111,7 @@ At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` an
   * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
   * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
   * [`u64`:`amount`]: ammout of the property that is sent.
-  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out X USDT in exchange of Y BTC, the exchange rate is X/Y.
   * [`string`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_from`. 
   * [`u64`:`hashed_R`]: Hash(R).     
   * [`u64`:`time_locker`]: For example, 3 days. 
@@ -128,7 +128,7 @@ At the same time, Bob creates another HTLC in the channle `[Alice, BTC, Bob]` an
   * [`u64`:`property_sent`]: Omni asset (id), which is sent out to Bob.
   * [`u64`:`property_receieved`]: the Omni asset (id), which is required to the counter party (Bob) 
   * [`u64`:`amount`]: ammout of the `property_receieved` that is sent in `channel_id_to`.
-  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out 900 USDT in exchange of 1 BTC, the exchange rate is 900/1.
+  * [`float64`:`exchange_rate`]: `= property_sent/property_receieved`. For example, sending out X USDT in exchange of 1 BTC, the exchange rate is X/1.
   * [`string`:`transaction_id`]: HTLSC transaction ID, which is the one sending asset in `channel_id_to`. 
   * [`u64`:`hashed_R`]: Hash(R).     
   * [`u64`:`time_locker`]: For example, 2 days, which must be less than the `time_locker` in message `swap`. 
