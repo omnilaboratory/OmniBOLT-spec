@@ -28,7 +28,7 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     |                |                                           |                |
     |                |----(3)----   Send R to get BTC     -----> | Alice + Y BTC  |
-    | Bob + X USDT   |<---(4)----   Send R to get USDT    ------ |                |
+    | Bob + X USDT   |<---(4)----   Use R to get USDT     ------ |                |
     |                |                                           |                |
     |                |                                           |                |
     |                |----(5)----     or time out,               |                |
@@ -36,8 +36,8 @@ The standard swap procedure between channels is:
     |                |                                           |                |
     +----------------+                                           +----------------+
 
-    - where HTLC 1 transfers X USDT to Bob in channel `[Alice, USDT, Bob]`, locked by Hash(R), t1 and Bob's signature. 
-    - HTLC 2 transfers Y BTC to Alice in channel `[Alice, BTC, Bob]`, locked by Hash(R), t2(`t2 < t1`) and Alice's signature . 
+    - where `HTLC 1` transfers X USDT to Bob in channel `[Alice, USDT, Bob]`, locked by `Hash(R)`, `t1` and Bob's signature. 
+    - `HTLC 2` transfers Y BTC to Alice in channel `[Alice, BTC, Bob]`, locked by `Hash(R)`, `t2`(`t2 < t1`) and Alice's signature . 
     
 
 ```  
