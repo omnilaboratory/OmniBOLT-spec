@@ -92,9 +92,9 @@ Simply there are 5 steps in a swap.
 **Step 5**: If Alice changes her mind, refuse to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and in USDT channels are all refund to the original account. No one in these trnasactions will take lose.   
  
 
-No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` turn into general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
+No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform to general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
 
-In chain `[Alice, USDT, David_1] --> ... --> [David_1, USDT, Bob]`, Alice creates `HTLC 1` and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
+In chain `[Alice, USDT, David_1] --> ... --> [David_n, USDT, Bob]`, Alice creates `HTLC 1` and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
 
 <p align="center">
   <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
