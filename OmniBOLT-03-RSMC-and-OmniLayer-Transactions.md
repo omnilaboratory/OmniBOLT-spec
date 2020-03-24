@@ -50,7 +50,7 @@ The following diagram shows the steps we MUST do before any participants broadca
 
 
 <p align="center">
-  <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png">
+  <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png">
 </p>
 
 
@@ -137,7 +137,7 @@ The two messages describe a payment inside a channel created by Alice and Bob, u
    
 ```
      
-![RSMC](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
+![RSMC](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
 
 
 1. type: -351 (commitment_tx)

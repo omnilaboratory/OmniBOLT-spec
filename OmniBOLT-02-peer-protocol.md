@@ -1,6 +1,6 @@
 # OmniBOLT #2: Peer Protocol for Channel Management
 
-The peer Poon-Dryja channel protocol has three phases: establishment, normal operation ([OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md): commitment transactions, funding transactions), and closing.
+The peer Poon-Dryja channel protocol has three phases: establishment, normal operation ([OmniBOLT #3](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md): commitment transactions, funding transactions), and closing.
 
 The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The arguments are almost the same to what are defined in BOLT 02, but during our implementation, these arguments may be changed.
 
@@ -22,7 +22,7 @@ Creating a channel consists of:
 
 * funding node (funder) sending an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. 
 * The funder creates the funding BTC transaction and get the approval from fundee. 
-* The funder creates the funding token transaction and both versions of the commitment transaction, as described in [OmniBOLT #3](https://github.com/LightningOnOmnilayer/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). 
+* The funder creates the funding token transaction and both versions of the commitment transaction, as described in [OmniBOLT #3](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). 
 * The funder then sends the outpoint of the funding output with the `funding_created` message, along with the signature for the fundee's version of the commitment transaction. Once the fundee learns the funding outpoint, it's able to generate the signature for the funder's version of the commitment transaction and send it over using the `funding_signed` message.
 
 During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_id]`) to specify which omni asset is needed in creating this channel. 
