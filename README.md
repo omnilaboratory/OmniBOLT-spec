@@ -1,5 +1,5 @@
 # OmniBOLT: In-Progress Specifications
-[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/omnilaboratory/LightningOnOmni)
+[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/omnilaboratory/obd)
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
@@ -64,7 +64,7 @@ OmniBOLT #07: Construct transactions on OmniLayer
 
 # Implementation and API for wallet
 
-Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/omnilaboratory/LightningOnOmni), as well as the API online documentation can be found [here](https://api.omnilab.online).
+Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/omnilaboratory/obd), as well as the API online documentation can be found [here](https://api.omnilab.online).
 
 Javascript API: [here](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js).
 
