@@ -43,14 +43,14 @@ OP_ELSE
 OP_ENDIF
 ```
 
-Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)--> Bob]` is then an extra unbroadcasted output from funding transaction embeded together with [RD1a/BR1a](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#the-commitment_tx-and-commitment_tx_signed-message).
+Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)--> Bob]` is then an extra unbroadcasted output from funding transaction embeded together with [RD1a/BR1a](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#the-commitment_tx-and-commitment_tx_signed-message).
 
 <!-- 
-![HTLC](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png "HTLC")
+![HTLC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png "HTLC")
 -->
 
 <p align="center">
-  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
+  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
 **HED1a**: HTLC Execution Delivery  
@@ -81,7 +81,7 @@ the same to [requirement of update_add_htlc](https://github.com/lightningnetwork
 After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transactions `C3a/C3b` for this purpose.
 
 <p align="center">
-  <img width="768" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC-both-sides.png">
+  <img width="768" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC-both-sides.png">
 </p>
 
 Terminating an HTLC: `update_fulfill_htlc`, `update_fail_htlc`

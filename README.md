@@ -1,5 +1,5 @@
 # OmniBOLT: In-Progress Specifications
-[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/omnilaboratory/obd)
+[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/omnilaboratory/obd)
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
@@ -23,7 +23,7 @@ Not only BTC instant payment is supported as current implementation of lightning
 * Cross channel atomic swap of different assets.
 * Decentralized exchange on top of lightning channels with quick exchange speed. 
 * Collateral Lending Contract based on atomic swap.
-* More flexible contracts for DeFi. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+* More flexible contracts for DeFi. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
 
 # OmniBOLT Terminology
 
@@ -50,15 +50,15 @@ We not only just list messages and arguments that are used in our implementation
 
 OmniBOLT #01: Base Protocol
 
-[OmniBOLT #02:](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, Poon-Dryja channel open
+[OmniBOLT #02:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, Poon-Dryja channel open
 
-[OmniBOLT #03:](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md) RSMC and OmniLayer Transactions 
+[OmniBOLT #03:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md) RSMC and OmniLayer Transactions 
 
-[OmniBOLT #04:](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
+[OmniBOLT #04:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
 
-[OmniBOLT #05:](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
+[OmniBOLT #05:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
-[OmniBOLT #06:](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
+[OmniBOLT #06:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
 
 OmniBOLT #07: Construct transactions on OmniLayer
 

@@ -92,18 +92,18 @@ Simply there are 5 steps in a swap.
 **Step 5**: If Alice changes her mind, refuse to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and in USDT channels are all refund to the original account. No one in these trnasactions will take lose.   
  
 
-No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform to general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
+No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform to general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
 
 In chain `[Alice, USDT, David_1] --> ... --> [David_n, USDT, Bob]`, Alice creates `HTLC 1` and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
 
 <p align="center">
-  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
+  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
 At the same time, Bob creates `HTLC 2` in the chain `[Bob, BTC, Carol_1] --> ... --> [Carol_n, BTC, Alice]` and its mirror transactions on Alice side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days.
 
 <p align="center">
-  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
+  <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
 </p>
 
 
@@ -147,7 +147,7 @@ Bob in `channel_id_to` has to monitor the `transaction_id` in channel `channel_i
 Alice receives the message `swap_accepted`. If anything is not exactly correct, Alice will not send R to get her assets in `channel_id_to`, hence Bob is not able to get this asset in `channel_id_from`. After a timeframe, the two channels revock to their previous state.
 
 ## Remark
-Atomic swap is a foundation of lots of blockchain applications. [Next chapter](https://github.com/omnilaboratory/Omni-BOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) will see some examples, which are intuitive and will help our readers to build much more complex applications for real world businesses. 
+Atomic swap is a foundation of lots of blockchain applications. [Next chapter](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) will see some examples, which are intuitive and will help our readers to build much more complex applications for real world businesses. 
 
 
  
