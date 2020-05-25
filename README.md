@@ -17,13 +17,13 @@ To be self-contained, for any messages or definitions that differ from what are 
 
 # Advantages
 
-Not only BTC instant payment is supported as current implementation of lightning network, but also:  
+Not only BTC circulation is supported as current implementation of BOLT, but also:  
  
-* Instant payment of smart assets issued on OmniLayer. 
+* Instant payment of smart assets issued on OmniLayer and Etherium(soon future). 
 * Cross channel atomic swap of different assets.
-* Decentralized exchange on top of lightning channels with quick exchange speed. 
+* Decentralized exchange on top of lightning channels with quick exchange speed and almost zero fee. 
 * Collateral Lending Contract based on atomic swap.
-* More flexible contracts for DeFi. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+* More flexible contracts for various DeFi scenarios. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
 
 # OmniBOLT Terminology
 
