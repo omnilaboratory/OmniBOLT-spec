@@ -17,26 +17,25 @@ We focus on omni assets in founding creation. Here are two proposals:
 Proposal 2 has possible vulnerability under the **conspiracy attack**. We will address this issue in the following chapters.
 
 ```
-    +-------+                              +-------+
-    |       |--(1)---  open_channel  ----->|       |
-    |       |<-(2)--  accept_channel  -----|       |
-    |       |                              |       |
-    |   A   |--(3)--  funding_created  --->|   B   |
-    |       |<-(4)--  funding_signed  -----|       |
-    |       |                              |       |
-    |       |         channel_A_B          |       | 
-    | to do |(4.1)-->deposit_X_USDT        |       |
-    |       |        deposit_Y_USDT <-(4.2)|       |
-    |       |                              |       |
-    |       |                              |       |
-    |       |                              |       |
-    |       |--(5)--- funding_locked  ---->|       |
-    |       |<-(6)--- funding_locked  -----|       |
-    +-------+                              +-------+
+    +-------+                                  +-------+
+    |       |---(1)----  open_channel    ----->|       |
+    |       |<--(2)---  accept_channel   ------|       |
+    |       |                                  |       |
+    |   A   |---(3)-- funding BTC created ---->|   B   |
+    |       |<--(4)--  funding BTC signed  ----|       |
+    |       |                                  |       |
+    |       |---(5)- funding Tokens created -->|       |
+    |       |<--(6)-- funding Tokens signed ---|       |
+    |       |                                  |       |
+    |       |---(7)----  funding_locked  ----->|       |
+    |       |<--(8)----  funding_locked  ------|       |
+    |       |                                  |       |
+    |       |<-------   wait for close   ----->|       |
+    +-------+                                  +-------+
 
-    - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee does not allowed to fund the channel. 
+    - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee is not allowed to fund the channel. 
     This is because the limitation of current BTC implementation. 
-    Of course, each of them can withdraw money if the counterparty agrees, as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
+    - Of course, each of them can withdraw money if the counterparty agrees, as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
 
 ```
 
