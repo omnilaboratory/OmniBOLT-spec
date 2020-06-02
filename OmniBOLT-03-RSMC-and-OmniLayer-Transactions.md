@@ -150,10 +150,8 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
     * [`byte`:`approval`]: payee accepts or rejects this payment.
-    * [`32*byte`:`commitment_tx_hash`]: Payer's commitement tx hash. 
-
-    * [`32*byte`:`amount`]: amount of the payment.
-    * [`signature`:`receiver_signature`]: signature of Bob. 
+    * [`32*byte`:`amount`]: amount of the payment.  
+    * [`32*byte`:`commitment_tx_hash`]: Payer's commitement tx hash.  
     * [`32*byte`:`last_temp_address_private_key`]: payee gives up the private key of his previous temp multi-sig address in C(n)b.
     * [`32*byte`:`curr_temp_address_pub_key`]: payee's current temp address pubkey.
     * [`32*byte`:`signed_to_counterparty_tx_hex`]: payee signs the `to_counterparty_tx_hex` sent by payer.
