@@ -4,7 +4,7 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
-## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Message 
+## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
 
 The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
 
@@ -94,7 +94,7 @@ Bob's OBD verifies the btc funding transaction by its hex, and replies Alice tha
 1. type: -34 (asset_funding_created)
 2. data:
     * [`32*byte`:`c1a_rsmc_hex`]: The constructed first rsmc transaction hex.
-    * [`u64`:`funding_omni_hex`]: The funding omni asset transaction hex, with which Bob can extract all the asset information, including funding output indx, amount, token, etc. Bob then is able to verify the funding transaction. This is better than merely send Bob a funding_output_index in [BOLT-02-funding_created message](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-funding_created-message).
+    * [`u64`:`funding_omni_hex`]: The funding omni asset transaction hex, with which Bob can extract all the asset information, including funding output indx, amount, token, etc. Bob then is able to verify the funding transaction. Be noticed that in [BOLT-02-funding_created message](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-funding_created-message), funder sends fundee a funding_output_index for validation.  
     * [`32*byte`:`rsmc_temp_address_pub_key`]: Internal multisig address <Alice2 & Bob> used by c1a.
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
     
