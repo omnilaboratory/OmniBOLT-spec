@@ -133,6 +133,13 @@ The two messages describe a payment inside one channel created by Alice and Bob,
      
 ![RSMC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
 
+There are two outputs of a commitment transaction:  
+[to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output): 0. Alice2 & Bob 60,  
+[to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
+
+`to local output` sends funds back to the owner of this commitment transaction and thus must be timelocked using for example sequence number =1000. By breach remedy transaction, this money will be sent to the counterparty(Bob) immediatly(without delay), if Alice tries to broadcast C1a to claim more money after she pays by C2a.  
+
+The transaction based on `to local output` is named RSMC transaction. Alice must send the hex of RSMC `rsmc_hex` to Bob to verify. The transaction based on `to remote output` is named `counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign. In message -352, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
 1. type: -351 (commitment_tx)
 2. data:
@@ -158,7 +165,7 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
     * [`32*byte`:`signed_rsmc_hex`]: payee signs the `rsmc_hex` sent by payer.
     * [`32*byte`:`rsmc_hex`]: payee's rsmc transaction hex, used in constructing mirror transaction on payee's obd. 
     * [`32*byte`:`to_counterparty_tx_hex`]: payee's to_counterparty_tx_hex, used in constructing mirror transaction on payee's obd. 
-    * [`32*byte`:`payer_rd_hex`]: payee signs `signed_rsmc_hex`, and send it back to payer to construct the RD transaction.
+    * [`32*byte`:`payer_rd_hex`]: payee signs based on `signed_rsmc_hex`, and send it back to payer to construct the RD transaction.
  
 
 ## Cheat and Punishment
