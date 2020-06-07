@@ -139,7 +139,7 @@ There are two outputs of a commitment transaction:
 
 `to local output` sends funds back to the owner of this commitment transaction and thus must be timelocked using for example sequence number =1000. By breach remedy transaction, this money will be sent to the counterparty(Bob) immediatly(without delay), if Alice tries to broadcast C1a to claim more money after she pays by C2a.  
 
-The transaction based on `to local output` is named RSMC transaction. Alice must send the hex of RSMC `rsmc_hex` to Bob to verify. The transaction based on `to remote output` is named `counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign. In message -352, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
+Alice must send the hex `rsmc_hex` of the transaction based on `to local output` to Bob to verify and sign. The transaction based on `to remote output` is named `counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
 1. type: -351 (commitment_tx)
 2. data:
