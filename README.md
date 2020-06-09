@@ -9,7 +9,7 @@ We name this new specification OmniBOLT, in order to avoid possible conflicts wi
 
 >the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper.  
 
->the second step, we will try to be compatible with existing Lightning Nodes around the world, and we sincerely invite experts working on BOLT to work together with us.  
+>the second step, we will try to be compatible with existing Lightning network, and we sincerely invite experts working on BOLT to work together with us.  
 
 OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
 
@@ -24,6 +24,41 @@ Not only BTC circulation is supported as current implementation of BOLT, but als
 * Decentralized exchange on top of lightning channels with quick exchange speed and almost zero fee. 
 * Collateral Lending Contract based on atomic swap.
 * More flexible contracts for various DeFi scenarios. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+ 
+
+# Chapters and Protocol Suite
+
+We not only just list messages and arguments that are used in our implementation, but also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
+
+OmniBOLT #01: Base Protocol
+
+[OmniBOLT #02:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, Poon-Dryja channel open
+
+[OmniBOLT #03:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md) RSMC and OmniLayer Transactions 
+
+[OmniBOLT #04:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
+
+[OmniBOLT #05:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
+
+[OmniBOLT #06:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
+
+OmniBOLT #07: Construct transactions on OmniLayer
+
+<p align="center">
+  <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
+</p>
+
+# Technology Guide
+[OmniBOLT Technology Guide Part I](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/docs/OmniBOLT-Technology-guide-part-I-2020-05-01_en.pdf) offers quick understanding of the rationale, concepts, architecture of OmniBOLT.  
+
+# Implementation and API for wallet
+
+Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/omnilaboratory/obd), as well as the API online documentation can be found [here](https://api.omnilab.online).
+
+Javascript API: [here](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js).
+
+GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
+
 
 # OmniBOLT Terminology
 
@@ -42,33 +77,6 @@ Not only BTC circulation is supported as current implementation of BOLT, but als
 * `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
 * `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
 * `HTLSC`: Hashed TimeLock Swap Contract, which consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.
-
-
-# Chapters
-
-We not only just list messages and arguments that are used in our implementation, we also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
-
-OmniBOLT #01: Base Protocol
-
-[OmniBOLT #02:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, Poon-Dryja channel open
-
-[OmniBOLT #03:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md) RSMC and OmniLayer Transactions 
-
-[OmniBOLT #04:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-04-HTLC-and-Payment-Routing.md) HTLC and payment Routing
-
-[OmniBOLT #05:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
-
-[OmniBOLT #06:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
-
-OmniBOLT #07: Construct transactions on OmniLayer
-
-# Implementation and API for wallet
-
-Implementation of OmniBOLT specification can be found in this repository [LightningOnOmnilayer](https://github.com/omnilaboratory/obd), as well as the API online documentation can be found [here](https://api.omnilab.online).
-
-Javascript API: [here](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js).
-
-GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
 
 
 # Contribution
