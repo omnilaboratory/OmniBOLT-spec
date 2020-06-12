@@ -1,4 +1,4 @@
-# OmniBOLT: In-Progress Specifications
+# OmniBOLT: Facilitates smart assets lightning transactions
 [![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-OmniBOLT%20Daemon-orange)](https://github.com/omnilaboratory/obd)
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
