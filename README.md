@@ -6,7 +6,7 @@
 OmniBOLT is a lightning network specification, enabling faster and lower cost transactions of smart crypto assets, providing more flexible contracts for upper layer decentralized finance applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC operations on the graph/network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).  
  
  
-# Advantages
+## Advantages
 
 Not only BTC circulation is supported as current implementation of [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md), but also:  
  
@@ -17,14 +17,14 @@ Not only BTC circulation is supported as current implementation of [BOLT](https:
 	* Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
  
 
-# Why OmniBOLT
+## Why OmniBOLT
 
 Decentralized finance industry requires a much more flexible, extensible and cheap smart assets circulation solution to solve the main chain scalability problem. 
 
 Meanwhile, Omnilayer is a proven secure, stable and anti-censor technology, so that constructing lightning channel on top of it automatically acquires the ability of issuing properties, temper resistent, and on-chain settlement. This greatly extends the ability of original lightning technology.  
  
 
-# How it works:
+## How it works:
 
 <p align="center">
   <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
@@ -37,7 +37,7 @@ Meanwhile, Omnilayer is a proven secure, stable and anti-censor technology, so t
 OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
  
 
-# Chapters and Protocol Suite
+## Chapters and Protocol Suite
 
 We not only just list messages and arguments that are used in our implementation, but also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
 
@@ -57,7 +57,7 @@ OmniBOLT #07: Construct transactions on OmniLayer
 
 
 
-# Technology Guide
+## Technology Guide
 [OmniBOLT Technology Guide Part I](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/docs/OmniBOLT-Technology-guide-part-I-2020-05-01_en.pdf) offers quick understanding of the rationale, concepts, architecture of OmniBOLT.  
 
 # Implementation and API for wallet
@@ -70,7 +70,7 @@ GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
  
 
 
-# Contribution
+## Contribution
 
 OmniBolt specification is initiated by [Omnilayer.foundation](https://github.com/OmniLayer).
 Any proposal, please submit issues in this repo.
