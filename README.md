@@ -1,36 +1,47 @@
 # OmniBOLT: In-Progress Specifications
-[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-LightningOnOmni-orange)](https://github.com/omnilaboratory/obd)
+[![](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/LICENSE) [![](https://img.shields.io/badge/made%20by-Omni%20Foundation-blue)]() [![](https://img.shields.io/badge/project-OmniBOLT%20Daemon-orange](https://github.com/omnilaboratory/obd)
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
-Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be transferred via ligtning channels, and how can OmniLayer assets benefit from the noval quick payment theory. According to the layer-2 protocol [BOLT (Basis of Lightning Technology) ](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we propose this OmniLayer specific protocol to expand the horizons of the basic theory, to support wider perspective of assets.    
-
-We name this new specification OmniBOLT, in order to avoid possible conflicts with BOLT. We break down our task into two major steps:  
-
->the first step, we run nodes that are omni assets aware: for example, users can creat channels for USDT, which is issued on Omnilayer and BTC netowrk, then they will be able to transfer USDT more quick and more cheaper.  
-
->the second step, we will try to be compatible with existing Lightning network, and we sincerely invite experts working on BOLT to work together with us.  
-
-OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
-
-To be self-contained, for any messages or definitions that differ from what are defined in original BOLT specification, we will include both new and old arguments to form complete messages. For those messages that are the same to BOLT, we just link to the original address where they are defined.    
-
+OmniBOLT is a lightning network specification, enabling faster and lower cost transactions of smart crypto assets, providing more flexible contracts for upper layer decentralized finance applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC operations on the graph/network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).  
+ 
+ 
 # Advantages
 
-Not only BTC circulation is supported as current implementation of BOLT, but also:  
+Not only BTC circulation is supported as current implementation of [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md), but also:  
  
 * Instant payment of smart assets issued on OmniLayer and Etherium(soon future). 
-* Cross channel atomic swap of different assets.
-* Decentralized exchange on top of lightning channels with quick exchange speed and almost zero fee. 
-* Collateral Lending Contract based on atomic swap.
-* More flexible contracts for various DeFi scenarios. Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+* Cross channel atomic swap for various crypto assets.
+* Decentralized exchange on top of stable coin enabled lightning channels. 
+* Collateral Lending Contract and more flexible contracts for various DeFi scenarios based on atomic swap, without any extra cost of transaction fee or any intermediary;  
+	* Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
+ 
+
+# Why OmniBOLT
+
+Decentralized finance industry requires a much more flexible, extensible and cheap smart assets circulation solution to solve the main chain scalability problem. 
+
+Meanwhile, Omnilayer is a proven secure, stable and anti-censor technology, so that constructing lightning channel on top of it automatically acquires the ability of issuing properties, temper resistent, and on-chain settlement. This greatly extends the ability of original lightning technology.  
+ 
+
+# How it works:
+
+<p align="center">
+  <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
+</p>
+
+1. On-chain protocol is Omnilayer, which is the issuance and settlement level;  
+2. OmniBOLT 2, 3, 4 form the main network protocols;   
+3. Applications level consists of contracts for various applications; 
+
+OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
  
 
 # Chapters and Protocol Suite
 
 We not only just list messages and arguments that are used in our implementation, but also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
 
-OmniBOLT #01: Base Protocol
+[OmniBOLT #01](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-01-basic-protocol-and-Terminology.md): Base Protocol and Terminology
 
 [OmniBOLT #02:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md) peer-protocol, Poon-Dryja channel open
 
@@ -44,9 +55,7 @@ OmniBOLT #01: Base Protocol
 
 OmniBOLT #07: Construct transactions on OmniLayer
 
-<p align="center">
-  <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
-</p>
+
 
 # Technology Guide
 [OmniBOLT Technology Guide Part I](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/docs/OmniBOLT-Technology-guide-part-I-2020-05-01_en.pdf) offers quick understanding of the rationale, concepts, architecture of OmniBOLT.  
@@ -58,25 +67,7 @@ Implementation of OmniBOLT specification can be found in this repository [Lightn
 Javascript API: [here](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js).
 
 GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
-
-
-# OmniBOLT Terminology
-
-* `OBD`: OmniBOLT Daemon.
-* `channel`: A channel refers to Poon-Dryja channel in ligtning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
-* `property`: refers to tokens issued on Omnilayer, the same to "asset".
-* `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
-* `HTLC`: Hashed Time-Lock Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
-* `Commitment Transaction`: is created but not broadcast, and may be invalidated by next commitment transaction.
-* `BR`: Breach Remedy transaction is used in RSMC, that if Alice cheats by broadcasting an elder commmitment transaction, BR will send all her money to Bob.
-* `RD`: Revocable Delivery transaction pays out from the 2-2 P2SH transaction output, when Alice broadcast the latest legitimate commitment transaction. It sends money to Bob immediatly and will send money to Alice after relatively, say 100 blocks, from current block height. 
-* `HED`:  HTLC Execution Delivery
-* `HT`: HTLC Timeout
-* `HBR`: HTLC Breach Remedy, the breach remedy transaction in HTLC
-* `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
-* `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
-* `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
-* `HTLSC`: Hashed TimeLock Swap Contract, which consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.
+ 
 
 
 # Contribution
