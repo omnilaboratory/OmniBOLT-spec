@@ -21,7 +21,7 @@ Not only BTC circulation is supported as current implementation of [BOLT](https:
 
 Decentralized finance industry requires a much more flexible, extensible and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology to this problem, but currently only BTC(and some of its forks) is supported. 
 
-Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is proven secure and stable. So that constructing lightning channels on top of it automatically acquires the ability of issuing assets, temper resistence, and on-chain settlement, with which OmniBOLT greatly widen the perspective of the original lightning theory and technology.  
+Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is proven secure and stable. So that constructing lightning channels on top of it automatically acquires the ability of issuing assets, temper resistant, and on-chain settlement, with which OmniBOLT greatly widens the perspective of the original lightning theory and technology.  
  
 
 ## How it works:
