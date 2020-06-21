@@ -3,7 +3,7 @@
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
-OmniBOLT is a lightning network specification, enabling faster and lower cost transactions of smart crypto assets, providing more flexible contracts for upper layer decentralized finance applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC operations on the graph/network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).  
+OmniBOLT is a lightning network specification, enabling faster and lower cost transactions of smart crypto assets, providing more flexible contracts for upper layer decentralized finance applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).  
  
  
 ## Advantages
