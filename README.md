@@ -3,12 +3,14 @@
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
-OmniBOLT is a lightning network specification, enabling faster and lower cost transactions of smart crypto assets, providing more flexible contracts for upper layer decentralized finance applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).  
- 
- 
-## Advantages
+Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be circulated via ligtning channels, and how can smart assets benefit from this noval quick payment theory.
 
-Not only BTC circulation is supported as current implementation of [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md), but also:  
+In addition, OmniBOLT provides more flexible contracts for upper layer decentralized applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).
+
+
+ 
+ 
+## Advantages  
  
 * Instant payment of smart assets issued on OmniLayer and Etherium(soon future). 
 * Cross channel atomic swap for various crypto assets.
@@ -19,9 +21,9 @@ Not only BTC circulation is supported as current implementation of [BOLT](https:
 
 ## Why OmniBOLT
 
-Decentralized finance industry requires a much more flexible, extensible and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology to this problem, but currently only BTC(and some of its forks) is supported. 
+Decentralized finance industry requires a much more flexible, extensible and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology to this problem. According to the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support wider range of assets for upper layer applications: payment, game, finance or scenerios need stable coins.  
 
-Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is proven secure and stable. So that constructing lightning channels on top of it automatically acquires the ability of issuing assets, temper resistant, and on-chain settlement, with which OmniBOLT greatly widens the perspective of the original lightning theory and technology.  
+Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is proven secure and stable. Constructing lightning channels on top of it automatically acquires the ability of issuing assets, temper resistant, and on-chain settlement. This is where OmniBOLT built upon.
  
 
 ## How it works:
