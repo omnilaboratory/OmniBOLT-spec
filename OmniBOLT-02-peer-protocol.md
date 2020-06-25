@@ -88,9 +88,8 @@ We don't specify which asset will be in this channel during creating, so there i
 
  
     **basepoint is ignored**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. But OmniBOLT does not involve third party watch towers, we apply Hierarchical Deterministic(HD) pathes to generate pub/priv key pairs for all the transactions and there is no outsourcing of monitoring revockable transactions and punishing cheating activities. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the motivation and mechanism. 
-
-<!-- what the fuck. I can not write "ignored" as comments, otherwise, this line disappears: * [`point`:`revocation_basepoint`]: ignored. -->
-    * [`point`:`revocation_basepoint`]:
+ 
+    * [`point`:`revocation_basepoint`]: not used.
     * [`point`:`payment_basepoint`]:
     * [`point`:`delayed_payment_basepoint`]:
     * [`point`:`htlc_basepoint`]:
