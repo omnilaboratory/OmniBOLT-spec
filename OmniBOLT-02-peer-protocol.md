@@ -11,7 +11,7 @@ In the soon future, OmniBOLT will update to ["Omni Layer Safe Segregated Witness
 # Channel
 The peer Poon-Dryja channel protocol has three phases: establishment, normal operation (commitment transactions, funding transactions, HTLCs, Collateral lending, etc), and closing.
 
-The basic oprations are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The arguments are similar to what are defined in BOLT 02, but OmniBOLT does not involve any third party watch tower for monitoring and punishing, the key generation mechanism is different, so that the various `_basepoint` fields are not used. During our implementation, these fields may be changed.  
+The basic logics are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The fields are similar to what are defined in BOLT 02, but [OmniBOLT (chapter 7) does not involve any third party watch tower](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for monitoring and punishing, the key generation mechanism is different, so that the various `_basepoint` fields are not used when creates channels. During our implementation, these fields may be changed.  
   
 
 ## `Channel ID` 
@@ -86,8 +86,8 @@ We don't specify which asset will be in this channel during creating, so there i
     * [`u16`:`max_accepted_htlcs`]: similar to `max_htlc_value_in_flight_msat`, this value limits the number of outstanding HTLCs the other node can offer, **NOT** the total value of HTLCs. 
     * [`point`:`funding_pubkey`]: the public key in the 2-of-2 multisig script of the funding transaction output.
     
-<!--    **basepoint**: The various `_basepoint` fields are used to derive unique keys as described in [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) for each commitment transaction. Varying these keys ensures that the transaction ID of each commitment transaction is unpredictable to an external observer, even if one commitment transaction is seen; this property is very useful for preserving privacy when outsourcing penalty transactions to third parties.
-    -->
+<!--    **basepoint**: The various `_basepoint` fields are used to derive unique keys as described in [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) for each commitment transaction. Varying these keys ensures that the transaction ID of each commitment transaction is unpredictable to an external observer, even if one commitment transaction is seen; this property is very useful for preserving privacy when outsourcing penalty transactions to third parties. -->
+
 	**basepoint**: [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. But in OmniBOLT, we apply Hierarchical Deterministic(HD) pathes to generate pub/priv key pairs for all the transactions and there is no out sourcing of monitoring revockable transactions and punishing cheating activities. Reader shall go to [chapter 7 Hierarchical Deterministic (HD) wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the motivation and mechanism.  
 
     * [`point`:`revocation_basepoint`]: ignored.  
