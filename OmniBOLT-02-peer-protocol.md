@@ -87,13 +87,14 @@ We don't specify which asset will be in this channel during creating, so there i
     * [`point`:`funding_pubkey`]: the public key in the two-of-two multisig script of the funding transaction output.  
 
  
-    **basepoint is ignored**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. But OmniBOLT does not involve third party watch towers, we apply Hierarchical Deterministic(HD) pathes to generate pub/priv key pairs for all the transactions and there is no outsourcing of monitoring revockable transactions and punishing cheating activities. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the motivation and mechanism.  
- 
-    * [`point`:`revocation_basepoint`]: 
-    * [`point`:`payment_basepoint`]: 
-    * [`point`:`delayed_payment_basepoint`]: 
-    * [`point`:`htlc_basepoint`]: 
-    * [`point`:`first_per_commitment_point`]: 
+    **basepoint is ignored**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. But OmniBOLT does not involve third party watch towers, we apply Hierarchical Deterministic(HD) pathes to generate pub/priv key pairs for all the transactions and there is no outsourcing of monitoring revockable transactions and punishing cheating activities. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the motivation and mechanism. 
+
+<!-- what the fuck. I can not write "ignored" as comments, otherwise, this line disappears: * [`point`:`revocation_basepoint`]: ignored. -->
+    * [`point`:`revocation_basepoint`]:
+    * [`point`:`payment_basepoint`]:
+    * [`point`:`delayed_payment_basepoint`]:
+    * [`point`:`htlc_basepoint`]:
+    * [`point`:`first_per_commitment_point`]:
   
     * [`byte`:`channel_flags`]: Only the least-significant bit of `channel_flags` is currently defined: `announce_channel`. This indicates whether the initiator of the funding flow wishes to advertise this channel publicly to the network, as detailed within [BOLT #7: p2p-node-and-channel-discovery](https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md#bolt-7-p2p-node-and-channel-discovery).
     * [`u16`:`shutdown_len`] (option_upfront_shutdown_script): 
