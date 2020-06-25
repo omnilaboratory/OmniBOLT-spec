@@ -84,26 +84,14 @@ We don't specify which asset will be in this channel during creating, so there i
     * [`u32`:`feerate_per_kw`]: indicates the initial fee rate in satoshi per 1000-weight (i.e. 1/4 the more normally-used 'satoshi per 1000 vbytes') that this side will pay for commitment and HTLC transactions, as described in [BOLT #3: fee-calculation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#fee-calculation) (this can be adjusted later with an `update_fee` message).
     * [`u16`:`to_self_delay`]: the number of blocks that the other node's to-self outputs must be delayed, using OP_CHECKSEQUENCEVERIFY delays; this is how long it will have to wait in case of breakdown before redeeming its own funds.
     * [`u16`:`max_accepted_htlcs`]: similar to `max_htlc_value_in_flight_msat`, this value limits the number of outstanding HTLCs the other node can offer, **NOT** the total value of HTLCs. 
-    * [`point`:`funding_pubkey`]: the public key in the 2-of-2 multisig script of the funding transaction output.
-  
-<!--    **basepoint**: The various `_basepoint` fields are used to derive unique keys as described in [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) for each commitment transaction. Varying these keys ensures that the transaction ID of each commitment transaction is unpredictable to an external observer, even if one commitment transaction is seen; this property is very useful for preserving privacy when outsourcing penalty transactions to third parties. 
+    * [`point`:`funding_pubkey`]: the public key in the 2-of-2 multisig script of the funding transaction output. 
 
-    **basepoint is ignored**: [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. But OmniBOLT does not involve third party watch towers, we apply Hierarchical Deterministic(HD) pathes to generate pub/priv key pairs for all the transactions and there is no outsourcing of monitoring revockable transactions and punishing cheating activities. Reader shall go to [chapter 7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the motivation and mechanism.
--->
     * [`point`:`revocation_basepoint`]: ignored.
     * [`point`:`payment_basepoint`]: ignored. 
     * [`point`:`delayed_payment_basepoint`]: ignored.
-    * [`point`:`htlc_basepoint`]:ignored.
-    * [`point`:`first_per_commitment_point`]: ignored.
+    * [`point`:`htlc_basepoint`]: ignored.
+    * [`point`:`first_per_commitment_point`]: ignored.  
     
-    
-    * [`byte`:`channel_flags`]: Only the least-significant bit of `channel_flags` is currently defined: `announce_channel`. This indicates whether the initiator of the funding flow wishes to advertise this channel publicly to the network, as detailed within [BOLT #7: p2p-node-and-channel-discovery](https://github.com/lightningnetwork/lightning-rfc/blob/master/07-routing-gossip.md#bolt-7-p2p-node-and-channel-discovery).
-    * [`u16`:`shutdown_len`] (option_upfront_shutdown_script): 
-    * [`shutdown_len*byte`:`shutdown_scriptpubkey`] (option_upfront_shutdown_script): allows the sending node to commit to where funds will go on mutual close, which the remote node should enforce even if a node is compromised later.
-    
-    **[ FIXME: Describe dangerous feature bit for larger channel amounts. ]**
-
-
 
 ** Requirement 
 
