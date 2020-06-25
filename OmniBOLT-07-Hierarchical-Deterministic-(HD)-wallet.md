@@ -63,13 +63,20 @@ The difference between an OBD invoice and LND invoice is that obd invoice has sp
 The human-readable part of an obd invoice consists of three sections:
 
 prefix: ob + SLIP-0173 registered Human Readable Part (prefix):  
-obo for Omni/BTC mainnet, obto for Omni/BTC testnet, obort for Omni/BTC regtest  
+<!-- obo for Omni/BTC mainnet, obto for Omni/BTC testnet, obort for Omni/BTC regtest   -->
 
-asset ID: the asset id.   
+|          |  Omni/BTC Mainnet  |  Omni/BTC Testnet  |  Omni/BTC Regtest  |
+|----------|  ----------------  |  ----------------  |  ----------------  |
+|  prefix  |       obo 		| 	obto 	     |       obort 	  |
+ 
+
+asset ID: the omni asset id.   
+
 amount: optional, number in that currency, followed by an optional multiplier letter. The unit encoded here is one token, for example: 1 usdt or 0.1 usdt.  
 
 ### Reference
 
 * [slip-0173: registered-human-readable-parts](https://github.com/satoshilabs/slips/blob/master/slip-0173.md#registered-human-readable-parts)
 * [OLE-300: human-readable-part](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#human-readable-part)
+* [BOLT-11: payment encoding](https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md#bolt-11-invoice-protocol-for-lightning-payments)
  
