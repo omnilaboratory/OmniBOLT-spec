@@ -62,7 +62,7 @@ The difference between an OBD invoice and LND invoice is that obd invoice has sp
 
 The human-readable part of an obd invoice consists of three sections:
 
-prefix: ob + SLIP-0173 registered Human Readable Part (prefix):  
+prefix: ob + [SLIP-0173 registered Human Readable Part (prefix)](https://github.com/satoshilabs/slips/blob/master/slip-0173.md#registered-human-readable-parts):  
 <!-- obo for Omni/BTC mainnet, obto for Omni/BTC testnet, obort for Omni/BTC regtest   -->
 
 |          |  Omni/BTC Mainnet  |  Omni/BTC Testnet  |  Omni/BTC Regtest  |
