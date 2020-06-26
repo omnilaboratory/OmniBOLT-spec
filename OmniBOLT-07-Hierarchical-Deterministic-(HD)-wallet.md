@@ -1,13 +1,25 @@
 # OmniBOLT #7: Hierarchical Deterministic(HD) wallet, Invoice Encoding.
 
-## Motivation
+
+# Table of Contents
+ * [Hierarchical Deterministic(HD) wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#motivation)
+ 	* [Motivation](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#motivation)
+ 	* [Mneminic word and hardened HD chain](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#mneminic-word-and-hardened-hd-chain)
+
+ * [Invoice encoding](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#invoice-encoding)
+ 	* [Human readable part](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#human-readable-part)
+ * [Reference](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#reference)
+ 
+## Hierarchical Deterministic(HD) wallet
+
+### Motivation
 
 An HTLC includes 20+ transactions and generates many temporary addresses to receive, store, and send assets. Each of transactions constructed to transfer assets from these addresses requires signature by private key of the owner. And more importantly by the design of lightning network, constructing new commitment transaction requires to hand over the private key of previous commitment transaction, it is necessary to specify the standard key generation will simplify interoperability between light clients and obd nodes.  
 
 OmniBOLT does not outsource trustless watching for revoked transactions and penalty to any third party watch tower. Peers shall moinitor for themselves. 
 
 
-## Mneminic word and hardened HD chain
+### Mneminic word and hardened HD chain
 
 The only thing for a user to be recorded in some safe places is the mnemonic words(12 words), which is used to generate all the pub/priv key pairs during the life cycle of channels owned by the user. Mnemonic words are generated at the first time when the user creates his wallet on an OBD.  
 
@@ -74,7 +86,7 @@ asset ID: the omni asset id.
 
 amount: optional, number in that currency, followed by an optional multiplier letter. The unit encoded here is one token, for example: 1 usdt or 0.1 usdt.  
 
-### Reference
+## Reference
 
 * [slip-0173: registered-human-readable-parts](https://github.com/satoshilabs/slips/blob/master/slip-0173.md#registered-human-readable-parts)
 * [OLE-300: human-readable-part](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#human-readable-part)
