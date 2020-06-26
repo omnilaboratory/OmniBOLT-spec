@@ -2,14 +2,17 @@
 
 
 # Table of Contents
- * [Hierarchical Deterministic(HD) wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#motivation)
+ * [Hierarchical Deterministic(HD) wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#hierarchical-deterministichd-wallet)
  	* [Motivation](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#motivation)
  	* [Mneminic word and hardened HD chain](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#mneminic-word-and-hardened-hd-chain)
+	* [Implementation](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#Implementation)
+ 
 
  * [Invoice encoding](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#invoice-encoding)
  	* [Human readable part](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#human-readable-part)
  * [Reference](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#reference)
  
+
 ## Hierarchical Deterministic(HD) wallet
 
 ### Motivation
@@ -65,10 +68,15 @@ but not on the change and address index level.
 
 Non-hardened child key will [compromise the parant keys](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#security). Since The private key of a commitment transaction shall be handed over to the counterparty when new commitment transaction is created, we apply hardened key, generated up to the account level, for every temporary multi-sig address.  
 
+### Implementation
+
+[Javascript API:](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js). This JS SDK exposes API set that manages mnemonic codes and pub/priv key generation. Plus it helps developers to construct and sign transactions required by lightning channel.  
+
 
 ## Invoice encoding
 
 The difference between an OBD invoice and LND invoice is that obd invoice has specified asset id in human readable part. Remaining parts are the same to [specified in LND](https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md#bolt-11-invoice-protocol-for-lightning-payments).
+
 
 ### Human readable part
 
