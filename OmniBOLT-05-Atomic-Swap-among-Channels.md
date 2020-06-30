@@ -87,9 +87,9 @@ Simply there are 5 steps in a swap.
 **Step 0**: Alice creats `HTLC 1` to pay Bob X USDT. `HTLC 1` is locked by `Hash(R)` and time locker `t1`.  
 **Step 1**: Alice notifies Bob the details of `HTLC 1`.  
 **Step 2**: Bob either acknowledges and creates `HTLC 2` to pay Alice Y BTC, or ignors the message, in which case `HTLC 1` will be automatically canceled after timeframe `t1`.  `HTLC 2` is also locked by `Hash(R)`.  
-**Step 3**: Alice has to check the redeem script `HTLC 2`, to see whether or not the `HTLC 2` is locked by `Hash(R)`. If Bob is cheating, he could use a faked `Hash(R')` in redeem script. Therefor when Alice apply `R` to unlock her fund in BTC channel, she will get nothing but expose the secrete `R` to Bob. In this step, Alice apply `R` in her BTC channel to get her BTC fund.  
+**Step 3**: In this step, Alice apply `R` in her BTC channel to get her BTC fund. She has to check the redeem script `HTLC 2`, to see whether or not the `HTLC 2` is locked by `Hash(R)`. If Bob is cheating, he could use a faked `Hash(R')` in redeem script. Therefor when Alice apply `R` to unlock her fund in BTC channel, she will get nothing but expose the secrete `R` to Bob.   
 **Step 4**: After Alice exposes `R` to Bob, Bob then can use `R` to get his fund in his USDT channel.  
-**Step 5**: If Alice changes her mind, refuse to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and in USDT channels are all refund to the original account. No one in these trnasactions will take lose.   
+**Step 5**: If Alice changes her mind, refuse to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and in USDT channels are all refund to the original accounts. No one in this swap will take lose.   
  
 
 No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform to general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
