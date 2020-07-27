@@ -8,8 +8,7 @@ Based on the fundamental theory of Lightning network, OmniBOLT specification des
 
 In addition, OmniBOLT provides more flexible contracts for upper layer decentralized applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).
 
-
-[TOC]
+ 
 ## Advantages  
  
 * Instant payment of smart assets issued on OmniLayer and Etherium(soon future). 
@@ -18,7 +17,7 @@ In addition, OmniBOLT provides more flexible contracts for upper layer decentral
 * Collateral Lending Contract and more flexible contracts for various DeFi scenarios based on atomic swap, without any extra cost of transaction fee or any intermediary;  
 	* Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
  
-[TOC]
+ 
 ## Why OmniBOLT
 
 Decentralized finance industry requires a much more flexible, extensible and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology to this problem. According to the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support wider range of assets for upper layer applications: payment, game, finance or scenerios need stable coins.  
