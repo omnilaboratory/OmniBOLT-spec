@@ -2,10 +2,11 @@
 
 
 # Table of Contents
- * [Hierarchical Deterministic(HD) wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#hierarchical-deterministichd-wallet)
- 	* [Motivation](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#motivation)
- 	* [Mneminic word and hardened HD chain](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#mneminic-word-and-hardened-hd-chain)
-	* [Implementation](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#Implementation)
+ * [Hierarchical Deterministic(HD) wallet](#hierarchical-deterministichd-wallet)
+ 	* [Motivation](#motivation)
+ 	* [Mneminic word and hardened HD chain](#mneminic-word-and-hardened-hd-chain)
+        * [Non Custodial OmniBOLT Daemon](#non-custodial-omniBOLT-daemon)
+	* [Client SDK Implementation](#client-sdk-implementation)
  
 
  * [Invoice encoding](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#invoice-encoding)
