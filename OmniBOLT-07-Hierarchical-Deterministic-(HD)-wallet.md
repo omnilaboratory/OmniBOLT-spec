@@ -4,9 +4,9 @@
 # Table of Contents
  * [Hierarchical Deterministic(HD) wallet](#hierarchical-deterministichd-wallet)
  	* [Motivation](#motivation)
- 	* [Mneminic word and hardened HD chain](#mneminic-word-and-hardened-hd-chain)
-        * [Non Custodial OmniBOLT Daemon](#non-custodial-omniBOLT-daemon)
+ 	* [Mneminic word and hardened HD chain](#mneminic-word-and-hardened-hd-chain) 
 	* [Client SDK Implementation](#client-sdk-implementation)
+ * [Non Custodial OmniBOLT Daemon](#non-custodial-omnibolt-daemon)
  
 
  * [Invoice encoding](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md#invoice-encoding)
@@ -18,9 +18,8 @@
 
 ### Motivation
 
-An HTLC includes 20+ transactions and generates many temporary addresses to receive, store, and send assets. Each of transactions constructed to transfer assets from these addresses requires signature by private key of the owner. And more importantly by the design of lightning network, constructing new commitment transaction requires to hand over the private key of previous commitment transaction, it is necessary to specify the standard key generation will simplify interoperability between light clients and obd nodes.  
-
-OmniBOLT does not outsource trustless watching for revoked transactions and penalty to any third party watch tower. Peers shall moinitor for themselves. 
+The life cycle of an HTLC includes 20+ transactions and generates many temporary addresses to receive, store, and send assets. Each of these transactions constructed to transfer assets from these addresses requires signature by private keys of the transaction owner. And more importantly by the design of lightning network, constructing new transaction requires to hand over the private key of previous commitment transaction, it is necessary to specify a proper key generation process, to simplify interoperability between light clients and obd nodes.  
+ 
 
 
 ### Mneminic word and hardened HD chain
@@ -70,63 +69,72 @@ but not on the change and address index level.
 Non-hardened child key will [compromise the parant keys](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#security). Since The private key of a commitment transaction shall be handed over to the counterparty when new commitment transaction is created, we apply hardened key, generated up to the account level, for every temporary multi-sig address.  
 
 
-### Non Custodial OmniBOLT Daemon
+### Client SDK Implementation
+
+[Javascript SDK:](https://github.com/omnilaboratory/DebuggingTool/tree/master/sdk). This JS SDK exposes API set that manages mnemonic codes and pub/priv key generation. Plus it helps developers to construct and sign transactions required by lightning channel.  
+
+
+## Non Custodial OmniBOLT Daemon
+ 
 
 ```
 					  ______                             
 				      ___/-     \____
 				     /     -   /     \___-------- | tracker |:records the quality of nodes' service.  
-				  __|         /            \-------------------| tracker |   
+				  __|         /            \-------------------| tracker |  
 				 |       obd network        \   
-			  -------|___________________________|----- 
-                         /                                         \
-                        /                                           \
-                    | obd |                                       | obd | 
-                       |		                             |  
-        -----------------------------                  ------------------------------ 
-        |              |	    |   	       |             |              |
-    +--------+    +--------+    +--------+         +--------+    +--------+    +--------+
-    | wallet |    | wallet |    | wallet |	   | wallet |    | wallet |    | wallet |
-    +--------+    +--------+    +--------+         +--------+    +--------+    +--------+
-    | obd SDK |
-    |  seeds  |                   .....................
-    |  keys   |
+			  -------|___________________________|-----   
+                         /                                         \   
+                        /                                           \   
+                    | obd |                                       | obd |   
+                       |		                             |    
+        -----------------------------                  ------------------------------   
+        |              |	    |   	       |             |              |  
+    +--------+    +--------+    +--------+         +--------+    +--------+    +--------+  
+    | wallet |    | wallet |    | wallet |	   | wallet |    | wallet |    | wallet |  
+    +--------+    +--------+    +--------+         +--------+    +--------+    +--------+  
+    | obd SDK |                                                                | obd SDK |  
+    |  seeds  |                   .....................                        |  seeds  |  
+    |  keys   |                                                                |  keys   |  
 
 ```
 
-OBD(OmniBOLT daemon) runs in non-custodial mode, which means clients' seeds and keys are not generated by or stored in obd, but in their own local storage. Every time a client(wallet) needs to sign a transaction, it receives hex from the obd it connects, uses corresponding private keys to sign, and send the hex back to obd. The keys will never expose to the network. OBD, together with omnicore, validates the signature, but has no knowledge of clients' private information. So that even if the obd server has been hacked, users' transaction data are still secure: hackers can not make any transaction to steal without users' seed or key. 
+OBD(OmniBOLT daemon) runs in non-custodial mode, which means clients' seeds and keys are not generated by or stored in obd, but in their own local storage, managed by client SDK. Every time a client(wallet) needs to sign a transaction, it receives hex from the obd it connects, uses corresponding private keys to sign, and send the signature back to obd. The keys will never expose to the network. OBD, together with omnicore, validates the signature, but has no knowledge of clients' private information. So that even if the obd server has been hacked, users' transaction data are still secure: hackers can not make any transaction to steal without users' seed or key. 
 
-Users don't need to trust any obd node, even the nodes you deploy for yourself.
 
-OBD is designed for both liquidity providers and individual users.
+Users don't need to trust any obd node, even those nodes you deploy by yourself.
+
+OBD is designed for both liquidity providers and individual users: 
+
 
 **liquidity provider**  
 
-The business model for a liquidity provider is straight forword. He earns channel fees by providing funded channels and connects to as many clients as possible. Liquidity providers shall make sure the service quality of their nodes, especially the quality of being constantly online to earn more money. These liquidity providers brings the network not only liquid but also better connectivity. 
+The business model for a liquidity providers is straight forword. They connect to as many clients as possible, and earn channel fees by providing funded channels. Liquidity providers shall make sure the service quality of their nodes, especially the quality of being constantly online to earn more money. These liquidity providers brings the network not only liquid but also better connectivity. 
 
-More importantly, when you(the wallet client) go offline, the obd keeps monitoring you counterparties activities, and execute penalty for broadcasting outdated transactions if there are any. Ofcourse user can outsource to any obd, which is the part of the functionality of a watch tower.  
+More importantly, when you(the wallet client) go offline, these kind of obd keeps monitoring you counterparties activities, and execute penalty for punishing cheating activities if there are any, which are basic functions of a lignting node.  
 
-We recommend users to connect to liquidity providers and regularly backup channel data to local device.
+We recommend users to connect to liquidity providers' nodes and regularly backup channel data to local device.
 
 
 **individual user**  
 
 If you have complete knowledge of how block chain and lightning network works, you will try to run your own full obd node. Which means you shall install omnicore/btccore, syc chain data, manage the network security and connectivity. 
 
-If you have concerns that your node may be offline, you are able to outsource to any obd node which has high service quality. Then at this moment, the obd is a watch tower.
+If you have concerns that your node(not your client wallet) may be offline, you are able to outsource to any obd node which has high service quality historically. Then at this moment, that obd is a watch tower for you.
 
 
 **remark**
 
-Currently being released version of obd does not recommend third party watch towers, because the business model for independent watch tower is not quite clear yet. Running a full node of obd and keep it secure, being constantly online and serving tons of anonimours outsourcing will be costly. How much shall be charged, how to evaluate service quality, these problems requires community consesus.
+(07.09.2020)  
 
-What we suggest is that users community can crowd fund a cloud server to run a full obd node. Your community will be charged fee by the cloud computing company. And it is the only fee the community shall pay, which is cheap and transparent. This trustless obd node will also handle all your daily transactions. 
+Currently being released version of obd does not specify a role of third party watch towers, because the business model for independent watch tower is not quite clear yet. Running a full node of obd and keep it secure, being constantly online and serving tons of anonimours outsourcing will be costly. How much fee shall be charged, how to evaluate service quality, these problems requires community consensus.
 
 
+What we suggest is that users' community can crowd fund a cloud server to run a full obd node. Your community will be charged fee by the cloud computing company. And it is the only fee the community shall pay, which is cheap and transparent. This trustless obd node will also handle all your daily transactions. 
 
-### Client SDK Implementation
 
-[Javascript SDK:](https://github.com/omnilaboratory/DebuggingTool/tree/master/sdk). This JS SDK exposes API set that manages mnemonic codes and pub/priv key generation. Plus it helps developers to construct and sign transactions required by lightning channel.  
+Or simply connects to liquidity providers' nodes, who earn money by serving as relays of payments, so they are already motivated to be online constantly. Monitoring and punishing services will be free, because these kind of nodes earn much much more money by providing liquidity. This the income of liquidity service shall be sufficient to cover the cost of running constantly online full nodes. 
+
 
 
 ## Invoice encoding
