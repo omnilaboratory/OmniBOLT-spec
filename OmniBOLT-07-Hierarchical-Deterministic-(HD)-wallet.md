@@ -129,15 +129,18 @@ If you have complete knowledge of how block chain and lightning network works, y
 
 (07.09.2020)  
 
-Currently being released version of obd does not specify a role of third party watch towers, because the business model for independent watch tower is not quite convincing yet. Running a full node of obd and keep it secure, being constantly online and serving tons of anonimours outsourcing need professional skills and will be costly. How much fee shall be charged, how to evaluate service quality, these problems requires community consensus. If watch tower maintainer can not make enough money to cover his operation cost, he will not be motivated. 
+Currently being released version of obd does not specify a role of third party watch towers, because the business model for independent watch tower is not quite convincing yet. Running a full node of obd and keep it secure, being constantly online and serving tons of anonimours outsourcing need professional skills and will be costly. How much fee shall be charged, how to evaluate service quality, these problems requires community consensus. If watch tower maintainer can not make enough money to cover his operational cost, he will not be motivated. 
 
+**Option 1:** 
 
 You can simply connect to liquidity providers' nodes, who serve as relays of payments, construct payment paths for individual clients, and earn channel fee. This part of channel fee will be significantly huge than merely monitoring cheating activities. They are already motivated to offer high quality services, including protecting clients from cheating activities, so that they can make more money during their serivce life cycle.  
 
 For this reason, we just consider watch tower a value added service of liquidity provider, which can be almost free, comparing to huge amount of channel fee that they are able to earn. 
 
+**Option 2:** 
 
 Another option is that users' community can crowd fund a cloud server to run a full obd node. Your community will be charged fee by the cloud computing company. And it is the only fee the community shall pay, which is cheap and transparent. This trustless obd node will also handle all your daily transactions. Because of limited number person in your community, there won't be huge amount of transactions to be managed, and less cheating will be punished, maintaining a node for your small group will not suppose to be challenging.
+ 
 
 If you have better suggestions or other convincing points, please join our slack channel to discuss:  
 https://omnibolt.slack.com/archives/CNJ0PMUMV
