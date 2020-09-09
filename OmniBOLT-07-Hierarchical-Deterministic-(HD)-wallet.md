@@ -125,7 +125,7 @@ We recommend users to connect to liquidity providers' nodes and regularly backup
 If you have complete knowledge of how block chain and lightning network works, you will try to run your own full obd node. Which means you shall install omnicore/btccore, syc chain data, manage the network security and availability. 
 
 
-**remark**
+### **remark**
 
 (07.09.2020)  
 
