@@ -4,9 +4,10 @@
 
 ## introduction
 
-Automatic market maker (AMM for short) model on lightning network holds significant advantage comparing to onchain AMM exchanges:  
+Automatic market maker (AMM for short) model on lightning network holds significant advantage comparing to onchain AMM[1] exchanges:  
 
-There is no gas fee for each swap because of off-chain nature.  
+1. There is no gas fee for each swap because of the off-chain nature.  
+2. Token swap is quick.  
 
 Uniswap, Curve, and Balancer, which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper. 
 
@@ -19,14 +20,14 @@ AMM on lightning network operates on the same constant product model, but the in
 
 LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have direct channel. Hops on the payment path offer liquidity and receive a portion of fee if the payment is success.  
 
-In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposit his tokens into the contract will get a commission according to the proportion of his contribution in the token pool.  
+In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get a commission according to the proportion of his contribution in the token pool.  
 
 Naturally, funded channels in lightning network form a liquidity pool, the only difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited together in one address.  
  
 
 ## peer discovery and token trades
 
-When a OmniBOLT node is online, it has to announce itself to the network, let the neighbors to know its token type, amount of channels and liquidity. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[1].
+When a OmniBOLT node is online, it has to announce itself to the network, let the neighbors to know its token type, amount of channels and liquidity. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[2].
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
 
@@ -42,7 +43,7 @@ Step 3. Finish the atomic swap.
 
 ## Adding liquidity
 
-Not all the tokens funded in channel can be liquidity. Adding liquidity must
+Not all the tokens funded in channel can be liquidity reserves. Adding liquidity must according to 
 
  
 
@@ -51,7 +52,9 @@ Not all the tokens funded in channel can be liquidity. Adding liquidity must
 Removing liquidity is simple: close channel and withdraw tokens to the mainchain. Trackers will discover the inactivity of a closed channel and will update the 
 
 ## reference
-1. [Connect to a tracker](https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker): https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker
+
+1. VitalikButerin.Thex*y=kmarketmakermodel.https://ethresear.ch/t/improving-front-running-resistance-of-x-y-k-market-makers.  
+2. [Connect to a tracker](https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker): https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker  
  
 
  
