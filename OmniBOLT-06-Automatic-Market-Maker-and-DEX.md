@@ -4,7 +4,7 @@
 
 ## introduction
 
-Automatic market maker (AMM for short) model on lightning network holds significant advantage comparing to onchain AMM[1] exchanges:  
+Automatic market maker (AMM for short) model on lightning network holds significant advantages comparing to onchain AMM[1] exchanges:  
 
 1. There is no gas fee for each swap because of the off-chain nature.  
 2. Token swap is quick.  
@@ -27,6 +27,8 @@ Naturally, funded channels in lightning network form a liquidity pool, the only 
 
 ## peer discovery and token trades
 
+Trackers, in the design of OmniBOLT network, plays an important role in maitain the global constant product model.  
+
 When a OmniBOLT node is online, it has to announce itself to the network, let the neighbors to know its token type, amount of channels and liquidity. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[2].
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
@@ -41,15 +43,19 @@ Step 3. Finish the atomic swap.
 
 
 
-## Adding liquidity
+## adding liquidity
 
 Not all the tokens funded in channel can be liquidity reserves. Adding liquidity must according to 
 
  
 
-## Removing liquidity
+## removing liquidity
 
 Removing liquidity is simple: close channel and withdraw tokens to the mainchain. Trackers will discover the inactivity of a closed channel and will update the 
+
+## oracle
+To feed the real time external price for trading. To be done.  
+
 
 ## reference
 
