@@ -42,7 +42,7 @@ The standard swap procedure between channels is:
 
 ```  
   
-Apparently it is not necessary that Alice and Bob have direct channels between them:
+Apparently it is not necessary that Alice and Bob have a direct channel between them:
 
 
 ```
