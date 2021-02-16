@@ -27,9 +27,9 @@ Naturally, funded channels in lightning network form a liquidity pool, the only 
 
 ## peer discovery and token trades
 
-Trackers, in the design of OmniBOLT network, plays an important role in maitain the global constant product model.  
+Trackers, in the design of OmniBOLT network, play an important role in maitaining the global constant product model.  
 
-When a OmniBOLT node is online, it has to announce itself to the network, let the neighbors to know its token type, amount of channels and liquidity. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[2].
+When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, let its neighbors to know its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[2].
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
 
