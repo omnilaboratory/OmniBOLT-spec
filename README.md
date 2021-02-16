@@ -4,7 +4,7 @@
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
-Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be circulated via ligtning channels, and how can smart assets benefit from this noval quick payment theory.
+Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be circulated via lightning channels, and how can smart assets benefit from this noval quick payment theory.
 
 In addition, OmniBOLT provides more flexible contracts for upper layer decentralized applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).
 
@@ -14,9 +14,11 @@ In addition, OmniBOLT provides more flexible contracts for upper layer decentral
 * Instant payment of smart assets issued on OmniLayer and Etherium(soon future). 
 * Cross channel atomic swap for various crypto assets.
 * Decentralized exchange on top of stable coin enabled lightning channels. 
+<!--
 * Collateral Lending Contract and more flexible contracts for various DeFi scenarios based on atomic swap, without any extra cost of transaction fee or any intermediary;  
 	* Interested readers shall directly go to [chapter 6: DEX, Collateral Lending Contract, online store ...](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) to seek more examples.
- 
+ -->
+* Automatic market maker and liquidity pool for DEX.
  
 ## Why OmniBOLT
 
@@ -52,7 +54,10 @@ We not only just list messages and arguments that are used in our implementation
 
 [OmniBOLT #05:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md) Atomic Swap Protocol among Channels
 
+<!--
 [OmniBOLT #06:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) DEX, Collateral Lending Contract, online store and more applications
+-->
+[OmniBOLT #06:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Automatic-Market-Maker-and-DEX.md) Automatic Market Maker, Liquidity Pool and DEX
 
 [OmniBOLT #07:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md)  Hierarchical Deterministic (HD) wallet, Invoice Encoding
 
