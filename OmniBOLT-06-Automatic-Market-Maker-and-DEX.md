@@ -8,7 +8,7 @@ Automatic market maker (AMM for short) model on lightning network holds signific
 
 1. There is no gas fee for each swap because of the off-chain nature.  
 2. Token swap is quick.  
-3. Liquidity is for both payment and trading.  
+3. Liquidity is for both payment and trading. We use **AMM liquidity** and **payment liquidity** to distinguish the two attributes of a channel fund.  
 
 Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
 
@@ -65,9 +65,11 @@ But adding liquidity to AMM pool is different. Not all the tokens funded in chan
 
 Step 1: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
 
-Step 2: If she fund more USDT, the extra tokens will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+Step 2: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
 
-Step 3. Alice updates her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+Step 3. Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+
+The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from oracle.  
 
 
 
