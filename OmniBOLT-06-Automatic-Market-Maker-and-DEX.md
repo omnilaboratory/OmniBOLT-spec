@@ -62,7 +62,7 @@ Then a tracker maintains all nodes' balances and hence it is able to calculate t
 
 Alice plans to sell out `x'` token A for certain number of token B at fee rate `3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
 
-Step 1. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
+**Step 1**. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
 
 ```
 fee = x * 3%  
@@ -75,11 +75,11 @@ exchange_rate = x'/y'
 ``` 
 
 
-Step 2: The tracker seeks multiple nodes, which together can provide `y'` token B, returns Alice the payment paths.  
+**Step 2**: The tracker seeks multiple nodes, which together can provide `y'` token B, returns Alice the payment paths.  
 
-Step 3. Alice create atomic [swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and send them to these nodes repectively, where `exchange_rate` is the price of token B at the moment of trade. 
+**Step 3**. Alice create atomic [swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and send them to these nodes repectively, where `exchange_rate` is the price of token B at the moment of trade. 
 
-Step 4. Finish the atomic swaps with all these nodes, get `y'` tokens in **payment balance**.  
+**Step 4**. Finish the atomic swaps with all these nodes, get `y'` tokens in **payment balance**.  
 
 ```
 Suppose x'/y' = 2, Alice sells out 10 A:  
@@ -101,7 +101,7 @@ B pool = x*y/(x + x' - 3%x')
 new invariant = (A pool) * (B pool) = (x + x')*x*y/(x + x' - 3%x')
 ```
 
-The invariant increase after every trade. 
+The invariant increases after every trade. 
 
 **Like the characteristics of lightning network, AMM is suitable for small transactions.**  
 
@@ -123,11 +123,11 @@ Adding liquidity to lightning network is simple: just open a channel with your c
 
 But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
 
-Step 1: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
+**Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
 
-Step 2: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+**Step 2**: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
 
-Step 3. Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
 
 The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from oracle.  
 
