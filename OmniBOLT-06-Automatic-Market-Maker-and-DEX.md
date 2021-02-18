@@ -14,7 +14,9 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. This paper outlines the core mechanics of how AMM on LN works. We suppose readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
+AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM.  
+
+This paper outlines the core mechanics of how AMM on LN works. We suppose readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
 ## liquidity pool
@@ -58,13 +60,52 @@ If you run your own tracker, it needs time to collect all the nodes information 
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
 
-Alice plans to sell out `x'` token A at `price(B) = x/y`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price will be updated to `price(B) = (x+x')/(y-y')`. 
+Alice plans to sell out `x'` token A for certain number of token B at fee rate `3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
 
-Step 1. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `price(B)` hence decide how much token B that Alice can get.  
+Step 1. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
 
-Step 2. Alice create an atomic [swap](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and send it to Bob, where `exchange_rate` is the price of token B calculated above. 
+```
+fee = x * 3%  
+A pool = x + x' - 3%x'  
+B pool = x*y/(A pool)  
 
-Step 3. Finish the atomic swap.  
+y' = y - B pool  
+
+exchange_rate = x'/y'  
+``` 
+
+
+Step 2: The tracker seeks multiple nodes, which together can provide `y'` token B, returns Alice the payment paths.  
+
+Step 3. Alice create atomic [swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and send them to these nodes repectively, where `exchange_rate` is the price of token B at the moment of trade. 
+
+Step 4. Finish the atomic swaps with all these nodes, get `y'` tokens in **payment balance**.  
+
+```
+Suppose x'/y' = 2, Alice sells out 10 A:  
+
+          |--atomic swap---> Bob: 2 A for 4 B
+          |
+Alice ----|--atomic swap---> David: 4.5 A for 9 B 
+          |
+          |--atomic swap---> Carol: 3.5 A for 7 B
+
+```
+
+Fees are allocated to all nodes on the paths, and are still in **AMM balance** of each node:  
+
+```
+A pool = x + x'
+B pool = x*y/(x + x' - 3%x')
+
+new invariant = (A pool) * (B pool) = (x + x')*x*y/(x + x' - 3%x')
+```
+
+The invariant increase after every trade. 
+
+**Like the characteristics of lightning network, AMM is suitable for small transactions.**  
+
+
 
 
 ## fee structure
