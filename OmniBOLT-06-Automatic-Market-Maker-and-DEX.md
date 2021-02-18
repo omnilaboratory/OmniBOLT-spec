@@ -1,13 +1,14 @@
 # OmniBOLT #6: Automatic Market Maker model, Liquidity Pool and DEX on Lightning Network 
 
-* this work is not finalized yet. 
+* This work is in progress. 
 
 ## introduction
 
-Automatic market maker (AMM for short) model on lightning network holds significant advantages comparing to onchain AMM[1] exchanges:  
+Automatic market maker (AMM for short) model on lightning network holds significant advantages comparing to onchain AMM[1,6] exchanges:  
 
 1. There is no gas fee for each swap because of the off-chain nature.  
 2. Token swap is quick.  
+3. Liquidity is for both payment and trading.  
 
 Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
 
@@ -29,7 +30,7 @@ Naturally, funded channels in lightning network form a liquidity pool, the only 
 
 Trackers, in the design of OmniBOLT network, play an important role in maitaining the global constant product model.  
 
-When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notify its neighbors to know its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
+When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notifying its neighbors to updates its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
 
 If you run your own tracker, it needs time to collect all the nodes information in the network, communicate with them to build the graph. The longer the nodes are online, the more complete the graph topology information is.  
 
@@ -51,28 +52,39 @@ Step 3. Finish the atomic swap.
 
 Token A to token B trads: 0.3% fee paid in A. This fee will be apportioned among the nodes in [atomic swap payment path](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md)[7], which means although the pool has many many liquidity providers, for each transaction, not all the providers will get paid.  
 
-Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop, then this node earns the swap fee. 
+Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop and earns the swap fee. 
 
 If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each track shall publish its path/node selection policy.  
 
 
 ## adding liquidity
 
-Add liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
+Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. Adding liquidity must use the  current of exchange rate at the moment of deposit[6].  The exchange rate is calculate from global `x/y`, feed by the tracker:  
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
 
-Suppose Alice fund her token A channel `x'`, then she should fund her token B channel `y'= y(x+x')/x  - y`.  If she fund more token B,the extra token B will be used as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+Step 1: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
+
+Step 2: If she fund more USDT, the extra tokens will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+
+Step 3. Alice updates her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+
+
 
 Adding liquidity costs BTC gas fee.  
 
 ## removing liquidity
 
-Removing liquidity is simple: close channel and withdraw tokens to the mainchain. Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
+There are two ways to remove liquidity:  
+1. close channel and withdraw tokens to the mainchain.  
+2. pay tokens to someone else: the token paid will be in another investor's balance. But if the investor chooses to keep these token in pool, the global liquidity will not change.
 
-Suppose Alice cloeses her BTC channel, then the BTC-USDT pair will have more USDT in pool. Its tracker randomly selects some USDT channels in the graph, mark portion of channel fund to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged.  
+Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
 
-There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs. 
+Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund, `y'` to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged, where `y' = y - y(x-x')/x`.  
+
+There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
+
 
 ## oracle
 To feed the real time external price for trading. To be done.  
