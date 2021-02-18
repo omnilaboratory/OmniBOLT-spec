@@ -8,7 +8,7 @@ Automatic market maker (AMM for short) model on lightning network holds signific
 
 1. There is no gas fee for each swap because of the off-chain nature.  
 2. Token swap is quick.  
-3. Liquidity is for both payment and trading. We use **AMM liquidity** and **payment liquidity** to distinguish the two attributes of a channel fund.  
+3. Liquidity is for both payment and trading.  
 
 Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
 
@@ -24,7 +24,26 @@ LN already has funded channels to support multi-hop HTLC payment. Channels funde
 In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get a commission according to the proportion of his contribution in the token pool.  
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited together in one address.  
- 
+
+We use **AMM balance** and **payment balance** to distinguish the two attributes of channel funds.  
+
+```
+for a 100 USDT channel: [Alice, 100 USDT, Bob]
+    e.g. Alice's local balance: 30 USDT as AMM balance, and 25 USDT as payment balance.  
+         Bob's local balance: 45 USDT as payment balance. 
+``` 
+
+For each payment, use the funds from payment balance first, and then use the funds from AMM balance if the funds in the payment balance is not enough.
+
+After paying to Bob 30 USDT, the channel balance is like: 
+```
+for a 100 USDT channel: [Alice, 100 USDT, Bob]
+    e.g. Alice's local balance: 25 USDT as AMM balance, and 0 USDT as payment balance.  
+         Bob's local balance: 70 USDT as payment balance, 5 USDT as AMM balance.  
+```
+
+The global AMM liquidity will not change, if Bob don't manually mark the 5 USDT as payment balance.  
+
 
 ## trackers and peer discovery 
 
