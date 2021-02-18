@@ -12,9 +12,9 @@ Automatic market maker (AMM for short) model on lightning network holds signific
 
 Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
 
-Liquidity prividers are incentivized by receiving the transaction fee (0.3% in general).  
+Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure are completely different than the onchain AMM. This paper outlines the core mechanics of how AMM on LN works. We suppose readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
+AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. This paper outlines the core mechanics of how AMM on LN works. We suppose readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
 ## liquidity pool
@@ -23,7 +23,7 @@ LN already has funded channels to support multi-hop HTLC payment. Channels funde
 
 In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get a commission according to the proportion of his contribution in the token pool.  
 
-Naturally, funded channels in lightning network form a liquidity pool, the only difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited together in one address.  
+Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited together in one address.  
  
 
 ## trackers and peer discovery 
