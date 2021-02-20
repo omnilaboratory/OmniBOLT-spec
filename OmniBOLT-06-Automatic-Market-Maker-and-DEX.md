@@ -60,13 +60,13 @@ If you run your own tracker, it needs time to collect all the nodes information 
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
 
-Alice plans to sell out `x'` token A for certain number of token B at fee rate `3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
+Alice plans to sell out `x'` token A for certain number of token B at fee rate `0.3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
 
 **Step 1**. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
 
 ```
-fee = x * 3%  
-A pool = x + x' - 3%x'  
+fee = x * 0.3%  
+A pool = x + x' - 0.3%x'  
 B pool = x*y/(A pool)  
 
 y' = y - B pool  
@@ -96,9 +96,9 @@ Fees are allocated to all nodes on the paths, and are still in **AMM balance** o
 
 ```
 A pool = x + x'
-B pool = x*y/(x + x' - 3%x')
+B pool = x*y/(x + x' - 0.3%x')
 
-new invariant = (A pool) * (B pool) = (x + x')*x*y/(x + x' - 3%x')
+new invariant = (A pool) * (B pool) = (x + x')*x*y/(x + x' - 0.3%x')
 ```
 
 The invariant increases after every trade. 
@@ -114,7 +114,7 @@ Token A to token B trads: 0.3% fee paid in A. This fee will be apportioned among
 
 Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop and earns the swap fee. 
 
-If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each track shall publish its path/node selection policy.  
+If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
 
 
 ## adding liquidity
