@@ -80,5 +80,5 @@ GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
 
 ## Contribution
 
-OmniBolt specification is initiated by [Omnilayer.foundation](https://github.com/OmniLayer).
+OmniBolt specification is incubated by [Omnilayer.foundation](https://github.com/OmniLayer).
 Any proposal, please submit issues in this repo.
