@@ -14,47 +14,128 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM.  
+AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. 
 
 This paper outlines the core mechanics of how AMM on LN works. We suppose readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
 ## liquidity pool
 
-LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have direct channel. Hops on the payment path offer liquidity and receive a portion of fee if the payment is success.  
+LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
 
-In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get a commission according to the proportion of his contribution in the token pool.  
+In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get  commission fee according to the proportion of his contribution in the token pool.  
+ 
+<p align="center">
+  <img width="768" alt="Global Pool" src="imgs/Global-Pool.png">
+</p>
 
-Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited together in one address.  
+Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited into one address.  
+
+## limit order
+
+```
+orderMessage  
+{  
+    tokenSell: “USDT”  
+    amount: 20  
+    networkA: obd  
+    tokenBuy: “BTC”  
+    networkB: lnd  
+    ratio: {  
+	USDT: 60000  
+	BTC: 1  
+	}  
+}   
+
+```
+
+**tokenSell**: The token for sale  
+
+**amount**: The amount of token for sale  
+
+**networkA**: the network name(ID) the token is issued  
+
+**tokenBuy**: The token wanted  
+    
+**networkB**: the network name(ID) the token wanted is issued  
+
+**ratio**: The price   
+
+
+## sign an order
+
+<p align="center">
+  <img width="768" alt="Global Pool" src="imgs/Sign-Order.png">
+</p>
+
+
+## channel state transition 
 
 We use **AMM balance** and **payment balance** to distinguish the two attributes of channel funds.  
 
+<p align="center">
+  <img width="768" alt="Global Pool" src="imgs/Channel-States-new.png">
+</p>
+
 ```
-for a 100 USDT channel: [Alice, 100 USDT, Bob]
-    e.g. Alice's local balance: 30 USDT as AMM balance, and 25 USDT as payment balance.  
-         Bob's local balance: 45 USDT as payment balance. 
+for a 75 USDT channel: [Alice, 75 USDT, Bob]
+    e.g. Alice's local balance: 50 USDT before signing an order.  
+         Bob's local balance: 25 USDT as payment balance. 
 ``` 
 
-For each payment, use the funds from payment balance first, and then use the funds from AMM balance if the funds in the payment balance is not enough.
+ 
 
-After paying to Bob 30 USDT, the channel balance is like: 
+**Step 1**: After signing an order for selling out 20 USDT, the channel state is like: 
 ```
-for a 100 USDT channel: [Alice, 100 USDT, Bob]
-    e.g. Alice's local balance: 25 USDT as AMM balance, and 0 USDT as payment balance.  
-         Bob's local balance: 70 USDT as payment balance, 5 USDT as AMM balance.  
+Alice's local balance: 20 USDT as AMM balance, and 30 USDT as payment balance.  
+Bob's local balance: 25 USDT as payment balance.  
 ```
 
-The global AMM liquidity will not change, if Bob don't manually mark the 5 USDT as payment balance.  
+**Step 2**: After successfully selling out the 20 USDT, and getting Bitcoins in another channel, the channel state changes to:
+```
+Alice's local balance: 30 USDT as payment balance.  
+Bob's local balance: 20 USDT as AMM balance, 25 USDT as payment balance.  
+```
+
+OR  
+**Step 2**: Alice withdraws the order, then the channel state changes back to the origin.  
+ 
 
 
-## trackers and peer discovery 
+The global AMM liquidity will not change, if Bob don't manually mark the 20 USDT as payment balance.  
+
+
+## trackers running a matching engine 
 
 Trackers, in the design of OmniBOLT network, play an important role in maitaining the global constant product model.  
 
 When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notifying its neighbors to updates its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
 
-If you run your own tracker, it needs time to collect all the nodes information in the network, communicate with them to build the graph. The longer the nodes are online, the more complete the graph topology information is.  
+If you run your own tracker, it needs time to collect all the nodes information among the network, communicate with them to build the graph. The longer the tracker is online, the more complete the graph topology information is.  
 
+
+<p align="center">
+  <img width="768" alt="Global Pool" src="imgs/Matching-Engine.png">
+</p>
+
+1. When recieves an order A from obd 1, tracker searches its local database for matching.  
+2. If can not find matching orders, it seeks its neightbors in DHT network for order A.  
+3. If the tracker collects matching orders that can (partially) fill the order A, it pushes the nodes addresses and matching orders to obd 1.   
+4. obd 1, 3 and 4 check price via a oracle. If the price gap is found to exceed the predefined threshold, the transaction is rejected.  
+5. obd 1 Processes atomic swaps to obd 3 and 4.  
+
+## example for matching orders
+
+<p align="center">
+  <img width="768" alt="Global Pool" src="imgs/Matching-Orders.png">
+</p>
+
+
+Match engine picks a ratio between 60000:1 to 60500:1, for example 60200:  
+
+1. Alice sell 1 BTC for 60000 USDT, then the result is more than expected.  
+2. Bob will sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
+3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
 ## token trades
 
@@ -150,6 +231,16 @@ There is no protocol fee taken during closing a channel. Only gas fee in BTC occ
 
 ## oracle
 To feed the real time external price for trading. To be done.  
+
+## Differences from onchain AMM Swaps
+
+1. Price is from trackers who maintains statistics of global liquidity, but to avoid price manipulation, obd node should verify price from external oracles.   
+
+
+2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any swap. Lightning network has not global contract that executes transactions. Every obd node should check the incoming order to avoid price manipulation. Obd don’t have to trust any tracker.  
+
+3. AMM swap on lightning network is in fact a mix of order book swap and amm swap.  
+
 
 
 ## reference
