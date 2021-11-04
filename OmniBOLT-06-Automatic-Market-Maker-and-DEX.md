@@ -1,13 +1,31 @@
 # OmniBOLT #6: Automatic Market Maker model, Liquidity Pool and DEX on Lightning Network 
 
-* This work is in progress. 
+* This work is in progress(Oct 04.2021). 
+
+# Table of Contents
+ * [introduction](#introduction)
+ * [liquidity pool](#liquidity pool)
+ * [limit order](#limit order) 
+ * [signing an order](#signing an order)
+ * [channel state transition](#channel state transition)
+ * [trackers running a matching engine](#trackers running a matching engine)
+ * [example for matching orders](#example for matching orders)
+ * [token trading](#token trading)
+ * [fee structure](#fee structure)
+ * [adding liquidity](#adding liquidity)
+ * [removing  liquidity](#removing  liquidity)
+ * [oracle](#oracle)
+ * [differences from onchain AMM Swaps](#differences from onchain AMM Swaps)
+ * [reference list](#reference list) 
+
+
 
 ## introduction
 
 Automatic market maker (AMM for short) model on lightning network holds significant advantages comparing to onchain AMM[1,6] exchanges:  
 
-1. There is no gas fee for each swap because of the off-chain nature.  
-2. Token swap is quick.  
+1. There is no gas fee for each swap.  
+2. Token swap is quick, so that high frequency trading is feasible.   
 3. Liquidity is for both payment and trading.  
 
 Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model, where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
@@ -138,7 +156,7 @@ Match engine picks a ratio between 60000:1 to 60500:1, for example 60200:
 2. Bob will sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
 3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
-## token trades
+## token trading
 
 Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
 
@@ -245,7 +263,7 @@ To feed the real time external price for trading. Although trackers give a price
 
 
 
-## reference
+## reference list
 
 1. Vitalik Buterin.The x*y=k market maker model. https://ethresear.ch/t/improving-front-running-resistance-of-x-y-k-market-makers.  
 2. Uniswap. https://uniswap.org/
