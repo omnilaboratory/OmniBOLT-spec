@@ -62,7 +62,7 @@ orderMessage
 **ratio**: The price   
 
 
-## sign an order
+## signing an order
 
 <p align="center">
   <img width="768" alt="Global Pool" src="imgs/Sign-Order.png">
@@ -113,6 +113,7 @@ When an OmniBOLT node is online, it has to announce itself to the network via a 
 
 If you run your own tracker, it needs time to collect all the nodes information among the network, communicate with them to build the graph. The longer the tracker is online, the more complete the graph topology information is.  
 
+Please go to the document of [Tracker network](https://omnilaboratory.github.io/obd/#/Architecture?id=tracker-network) to understand how it works.  
 
 <p align="center">
   <img width="768" alt="Global Pool" src="imgs/Matching-Engine.png">
@@ -230,11 +231,12 @@ There is no protocol fee taken during closing a channel. Only gas fee in BTC occ
 
 
 ## oracle
-To feed the real time external price for trading. To be done.  
+To feed the real time external price for trading. Although trackers give a price for a swap, obd should validate it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the swap. 
 
-## Differences from onchain AMM Swaps
+## differences from onchain AMM Swaps
 
-1. Price is from trackers who maintains statistics of global liquidity, but to avoid price manipulation, obd node should verify price from external oracles.   
+1. Price is from trackers who maintains statistics of global liquidity, but to avoid price manipulation, obd node should verify price from external oracles when trading tokens.   
+
 
 
 2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any swap. Lightning network has not global contract that executes transactions. Every obd node should check the incoming order to avoid price manipulation. Obd don’t have to trust any tracker.  
