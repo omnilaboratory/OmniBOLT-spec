@@ -32,19 +32,19 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. **It is in fact a mixed model of order book and AMM**: signing a limit order equals to commiting to the global liquidity pool. Limit orders act similar to small ranges which is defined in Uniswap V3[8].
+AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. **It is in fact a mixed model of order book and AMM**: signing a limit order equals to commiting to the global liquidity pool. Limit Orders act similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
 
-This paper outlines the core mechanics of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
+This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
 ## liquidity pool
 
-LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
+LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have a direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
 
 In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get  commission fee according to the proportion of his contribution in the token pool.  
  
 <p align="center">
-  <img width="768" alt="Global Pool" src="imgs/Global-Pool.png">
+  <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
 </p>
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited into one address.  
@@ -83,16 +83,18 @@ orderMessage
 ## signing an order
 
 <p align="center">
-  <img width="768" alt="Global Pool" src="imgs/Sign-Order.png">
+  <img width="512" alt="Signing Order" src="imgs/Sign-Order.png">
 </p>
 
+1. Alice gets the ratio(price) from a tracker or an oracle, sign the order.  
+2. Alice post this order to a tracker.  
 
 ## channel state transition 
 
-We use **AMM balance** and **payment balance** to distinguish the two attributes of channel funds.  
+We use **AMM balance** and **payment balance** to distinguish the two states of channel funds.  
 
 <p align="center">
-  <img width="768" alt="Global Pool" src="imgs/Channel-States-new.png">
+  <img width="512" alt="Channel States" src="imgs/Channel-States-new.png">
 </p>
 
 ```
@@ -103,7 +105,7 @@ for a 75 USDT channel: [Alice, 75 USDT, Bob]
 
  
 
-**Step 1**: After signing an order for selling out 20 USDT, the channel state is like: 
+**Step 1**: After signing an order to sell out 20 USDT for BTCs, the channel state changes to: 
 ```
 Alice's local balance: 20 USDT as AMM balance, and 30 USDT as payment balance.  
 Bob's local balance: 25 USDT as payment balance.  
@@ -115,7 +117,8 @@ Alice's local balance: 30 USDT as payment balance.
 Bob's local balance: 20 USDT as AMM balance, 25 USDT as payment balance.  
 ```
 
-OR  
+**OR**  
+
 **Step 2**: Alice withdraws the order, then the channel state changes back to the origin.  
  
 
@@ -125,44 +128,46 @@ The global AMM liquidity will not change, if Bob don't manually mark the 20 USDT
 
 ## trackers running a matching engine 
 
-Trackers, in the design of OmniBOLT network, play an important role in maitaining the global constant product model.  
+Trackers, in the design of OmniBOLT network, not only maitain graph topology, but also maitain the global constant product model.  
 
 When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notifying its neighbors to updates its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
-
-If you run your own tracker, it needs time to collect all the nodes information among the network, communicate with them to build the graph. The longer the tracker is online, the more complete the graph topology information is.  
-
+ 
 Please go to the document of [Tracker network](https://omnilaboratory.github.io/obd/#/Architecture?id=tracker-network) to understand how it works.  
 
+After a node sign and submit an order to a tracker, the tracker takes 6 steps to process the order:  
+ 
+
 <p align="center">
-  <img width="768" alt="Global Pool" src="imgs/Matching-Engine.png">
+  <img width="512" alt="Matching Engine" src="imgs/Matching-Engine.png">
 </p>
 
-1. When recieves an order A from obd 1, tracker searches its local database for matching.  
+1. When recieves an order A from obd 1, tracker searches its local orderbook database for matching.  
 2. If can not find matching orders, it seeks its neightbors in DHT network for order A.  
 3. If the tracker collects matching orders that can (partially) fill the order A, it pushes the nodes addresses and matching orders to obd 1.   
-4. obd 1, 3 and 4 check price via a oracle. If the price gap is found to exceed the predefined threshold, the transaction is rejected.  
+4. obd 1, 3 and 4 check price via an oracle. If the price gap is found to exceed the predefined threshold, the transaction is rejected.  
 5. obd 1 Processes atomic swaps to obd 3 and 4.  
+6. The remaining of the order will be saved in the tracker's local orderbook database, waiting for further deals. 
 
 ## example for matching orders
 
 <p align="center">
-  <img width="768" alt="Global Pool" src="imgs/Matching-Orders.png">
+  <img width="512" alt="Matching Orders" src="imgs/Matching-Orders.png">
 </p>
 
 
-Match engine picks a ratio between 60000:1 to 60500:1, for example 60200:  
+Matching engine picks a ratio between 60000:1 to 60500:1, for example 60200:  
 
-1. Alice sell 1 BTC for 60000 USDT, then the result is more than expected.  
-2. Bob will sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
+1. Alice sells 1 BTC for 60000 USDT, then the result is more than expected.  
+2. Bob plans to sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
 3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
 ## token trading
 
-Then a tracker maintains all nodes' balances and hence it is able to calculate the token price for a trade:  
+Then a tracker maintains "almost" all nodes' balances and hence it is able to calculate the token price for a trade:  
 
 Alice plans to sell out `x'` token A for certain number of token B at fee rate `0.3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
 
-**Step 1**. Alice queries a tracker for the liquidity of both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
+**Step 1**. Alice queries a tracker for the liquidity(all available orders) for both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
 
 ```
 fee = x * 0.3%  
@@ -171,15 +176,15 @@ B pool = x*y/(A pool)
 
 y' = y - B pool  
 
-exchange_rate = x'/y'  
+ratio = x'/y'  
 ``` 
 
 
 **Step 2**: The tracker seeks multiple nodes, which together can provide `y'` token B, returns Alice the payment paths.  
 
-**Step 3**. Alice create atomic [swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and send them to these nodes repectively, where `exchange_rate` is the price of token B at the moment of trade. 
+**Step 3**. Alice creates [atomic swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and sends them to these nodes repectively, where `ratio` is the price of token B at the moment of trade. 
 
-**Step 4**. Finish the atomic swaps with all these nodes, get `y'` tokens in **payment balance**.  
+**Step 4**. Alice and all her counterparties finish the atomic swaps with all these nodes, get `y'` tokens in local **AMM balance**.  
 
 ```
 Suppose x'/y' = 2, Alice sells out 10 A:  
@@ -210,9 +215,9 @@ The invariant increases after every trade.
 
 ## fee structure
 
-Token A to token B trads: 0.3% fee paid in A. This fee will be apportioned among the nodes in [atomic swap payment path](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md)[7], which means although the pool has many many liquidity providers, for each transaction, not all the providers will get paid.  
+Token A to token B trads: 0.3% fee paid in A. This fee will be apportioned among the nodes in [atomic swap payment path](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md)[7], which means although the pool has many many liquidity providers, for each transaction, not all the providers gets paid.  
 
-Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop and earns the swap fee. 
+Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop and earns the swap fee.  
 
 If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
 
@@ -221,7 +226,7 @@ If a liquidity provider think the tracker he connects is not fair enough, he may
 
 Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. One way to commit fund to liquidity pool is to sign a limit order, and post it to a tracker. Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
 
 **Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
 
@@ -229,8 +234,7 @@ But adding liquidity to AMM pool is different. Not all the tokens funded in chan
 
 **Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
 
-The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from oracle.  
-
+The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle.  
 
 
 Adding liquidity costs BTC gas fee.  
@@ -238,8 +242,8 @@ Adding liquidity costs BTC gas fee.
 ## removing liquidity
 
 There are two ways to remove liquidity:  
-1. close channel and withdraw tokens to the mainchain.  
-2. pay tokens to someone else: the token paid will be in another investor's balance. But if the investor chooses to keep these token in pool, the global liquidity will not change.
+1. withdraw signed and submitted orders.  
+2. close channel and withdraw tokens to the mainchain.   
 
 Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
 
@@ -249,7 +253,7 @@ There is no protocol fee taken during closing a channel. Only gas fee in BTC occ
 
 
 ## oracle
-To feed the real time external price for trading. Although trackers give a price for a swap, obd should validate it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the swap. 
+Oracle is involved to feed the real time external price for trading. Although trackers give prices at any moment a trade occurs, obd should verify it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the trade. 
 
 ## differences from onchain AMM Swaps
 
@@ -257,9 +261,9 @@ To feed the real time external price for trading. Although trackers give a price
 
 
 
-2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any swap. Lightning network has not global contract that executes transactions. Every obd node should check the incoming order to avoid price manipulation. Obd don’t have to trust any tracker.  
+2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any trade. Lightning network has not global contract that executes transactions. Every obd node should check the incoming order to avoid price manipulation. Obd don’t have to trust any tracker.  
 
-3. AMM swap on lightning network is in fact a mix of order book swap and amm swap.  
+3. AMM on lightning network is in fact a mix model of order book and AMM.  
 
 
 
