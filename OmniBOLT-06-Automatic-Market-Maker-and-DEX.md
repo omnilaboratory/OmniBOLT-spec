@@ -4,19 +4,19 @@
 
 # Table of Contents
  * [introduction](#introduction)
- * [liquidity pool](#liquidity pool)
- * [limit order](#limit order) 
- * [signing an order](#signing an order)
- * [channel state transition](#channel state transition)
- * [trackers running a matching engine](#trackers running a matching engine)
- * [example for matching orders](#example for matching orders)
- * [token trading](#token trading)
- * [fee structure](#fee structure)
- * [adding liquidity](#adding liquidity)
- * [removing  liquidity](#removing  liquidity)
+ * [liquidity pool](#liquidity-pool)
+ * [limit order](#limit-order) 
+ * [signing an order](#signing-an-order)
+ * [channel state transition](#channel-state-transition)
+ * [trackers running a matching engine](#trackers-running-a-matching-engine)
+ * [example for matching orders](#example-for-matching-orders)
+ * [token trading](#token-trading)
+ * [fee structure](#fee-structure)
+ * [adding liquidity](#adding-liquidity)
+ * [removing liquidity](#removing-liquidity)
  * [oracle](#oracle)
- * [differences from onchain AMM Swaps](#differences from onchain AMM Swaps)
- * [reference list](#reference list) 
+ * [differences from onchain AMM Swaps](#differences-from-onchain-AMM-Swaps)
+ * [reference list](#reference-list) 
 
 
 
