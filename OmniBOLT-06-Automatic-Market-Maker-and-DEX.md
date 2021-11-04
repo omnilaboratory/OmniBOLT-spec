@@ -32,7 +32,7 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. It is in fact a mixed model of order book and AMM: signing a limit order equals to commiting to the global pool. Limit orders act similar to small ranges which is defined in Uniswap V3[8]
+AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. **It is in fact a mixed model of order book and AMM**: signing a limit order equals to commiting to the global liquidity pool. Limit orders act similar to small ranges which is defined in Uniswap V3[8].
 
 This paper outlines the core mechanics of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit basic concepts introductions. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
