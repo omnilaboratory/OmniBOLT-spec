@@ -20,21 +20,21 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
 
 
 ```
-    +-------+                                  +-------+
-    |       |---(1)----  open_channel    ----->|       |
-    |       |<--(2)---  accept_channel   ------|       |
-    |       |                                  |       |
-    |   A   |---(3)-- btc_funding_created ---->|   B   |
-    |       |<--(4)--  btc_funding_signed  ----|       |
-    |       |                                  |       |
-    |       |---(5)-- asset_funding_created -->|       |
-    |       |<--(6)--  asset_funding_signed ---|       |
-    |       |                                  |       |
-    |       |---(7)----  funding_locked  ----->|       |
-    |       |<--(8)----  funding_locked  ------|       |
-    |       |                                  |       |
-    |       |<-------   wait for close   ----->|       |
-    +-------+                                  +-------+
+    +-------+                                                  +-------+
+    |       |---(1)-------------   open_channel     ---------->|       |
+    |       |<--(2)------------  accept_channel    ------------|       |
+    |       |                                                  |       |
+    |   A   |---(3)------- btc_funding_created(3400 ) -------->|   B   |
+    |       |<--(4)-------  btc_funding_signed(3500)  ---------|       |
+    |       |                                                  |       |
+    |       |---(5)-------- asset_funding_created(34) -------->|       |
+    |       |<--(6)--------  asset_funding_signed(35) ---------|       |
+    |       |                                                  |       |
+    |       |---(7)------------  funding_locked  ------------->|       |
+    |       |<--(8)------------  funding_locked  --------------|       |
+    |       |                                                  |       |
+    |       |<----------------   wait for close  ------------->|       |
+    +-------+                                                  +-------+
 
     - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee is not allowed to fund the channel. 
     This is because the limitation of current BTC implementation. 
@@ -118,16 +118,17 @@ The two messages describe a payment inside one channel created by Alice and Bob,
 
 ### diagram and messages
 ```
-    +-------+                                 +-------+
-    |       |--(1)---- commitment_tx  ------->|       |
-    |       |<-(2)-- commitment_tx_signed ----|       |
-    |   A   |          channel_A_B            |   B   | 
-    |       |   construct BR1a, C2a and RD2a  |       | 
-    |       |    and the mirror transactions  |       |
-    |       |          on Bob's OBD           |       | 
-    |       |                                 |       |  
-    |       |--(3)-- Alice2's private key --->|       |
-    +-------+                                 +-------+
+    +-------+                                             +-------+
+    |       |--(1)-------  commitment_tx(351)  ---------->|       |  
+    |       |<-(2)----- commitment_tx_signed (352) -------|       |
+    |   A   |                                             |   B   | 
+    |       |           construct BR1a, C2a and RD2a      |       | 
+    |       |            and the mirror transactions      |       |
+    |       |                  on Bob's OBD               |       | 
+    |       |                                             |       |  
+    |       |--(3)-------------- (353) ------------------>|       |
+    |       |      send back signed transactions in C2B   |       |
+    +-------+                                             +-------+
    
 ```
      
@@ -168,6 +169,10 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
     * [`32*byte`:`payer_rd_hex`]: payee signs based on `signed_rsmc_hex`, and send it back to payer to construct the RD transaction.
  
 
+1. type: -353 (send back signed transactions in C2B)  
+2. data: to be added  
+	
+
 ## Cheat and Punishment
 
 In the above diagram, the payer Alice's OBD constructs C2a. Simultaneously, Alice sends her temporary private key of Alice2 to Bob. After Bob sends back the signed messsage, she is able to construct RD2a. If she cheats by broadcasting C1a, where she has more money in her balance, Bob will immedialtly get 60 USDT from address `Alice2 & Bob`. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will be success in cheating, and get the 60 USDT.
@@ -185,7 +190,7 @@ This message indicates how to withdraw money from a channel, by broadcasting a `
 2.2 if they are wrong/incorrect, OBD rejects the request and notify Bob.  
 
 
-Before closing a channel, all HTLCs pending in this channel shall be removed, after which close_channel can be successfully executed.
+Before closing a channel, all HTLCs pending in this channel shall be removed, after which `close_channel` can be successfully executed.
 
 1. type: -38 (close_channel)  
 2. data:

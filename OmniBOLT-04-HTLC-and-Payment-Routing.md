@@ -50,7 +50,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 -->
 
 <p align="center">
-  <img width="1024" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
+  <img width="750" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
 **HED1a**: HTLC Execution Delivery  
@@ -59,22 +59,105 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 **HTRD1a**: HTLC Timeout Revocable Delivery  
 **HTBR1a**: HTLC Timeout Breach Remedy  
 
-## `update_add_HTLC`
+## messages
 
-`update_add_htlc` forwards an HTLC to one peer. Comparing to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`, this message specifies the asset that one peer needs to transfer.
+```
+    +-------+                                                             +-------+
+    |       |--(1)-------------  update_add_htlc_1 (40)  ---------------->|       |  
+    |       |         partially signed toB, toRSMC, toHTLC in C(3)a       |       |  
+    |       |                                                             |       |
+    |       |<-(2)-------------  update_add_htlc_2 (41)  -----------------|       |
+    |   A   |           signed toB, toRSMC, toHTLC in C(3)a               |   B   | 
+    |       |	              partially signed RD, HTLa, HLock            |       |
+    |       |        partially signed toB, toRSMC, toHTLC in C(3)b        |       |
+    |       |                                                             |       |
+    |       |                                                             |       |
+    |       |--(3)-------------  update_add_htlc_3 (42)   --------------->|       |  
+    |       |              signed toB, toRSMC, toHTLC in C(3)b            |       |
+    |       |   partially signed (RD in toRSMC, HTD1b in toHTLC, HLock)   |       |
+    |       |   partially signed HTRD1a, HTBR1a, HED1a in HT1a in C(3)a   |       |
+    |       |                                                             |       |
+    |       |                                                             |       |
+    |       |<-(4)-------------- update_add_htlc_4 (43)   ----------------|       |
+    |       |          send back the completely signed HT1a in C(3)a      |       |
+    |       |                                                             |       |  
+    |       |                                                             |       |  
+    |       |                                                             |       |  
+    +-------+                                                             +-------+
+   
+```
 
-1. type: -128 (update_add_htlc)
-2. data:
+## update_add_htlc 
+
+`update_add_htlc` consists of two rounds of signing sub-transactions to forward an HTLC to the remote peer. Users should compare it to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`.  
+
+Please be noticed that the payment infomation are all encoded in transaction hex.
+
+
+1. type: -40 (AddHTLC)
+2. data: 
   * [`channel_id`:`channel_id`]
   * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
-  * [`u64`:`property_id`]: the Omni asset id. 
-  * [`u64`:`amount`]: ammout of the asset.
-  * [`sha256`:`payment_hash`]: 
-  * [`u32`:`cltv_expiry`]: 
-  * [`1366*byte`:`onion_routing_packet`]: the same to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc), which indicates where the payment is destined.
+  * [`u64`:`PropertyId`]:  
+  * [`u64`:`IsPayInvoice`]:  
+  * [`u64`:`PayerCommitmentTxHash`]:  payer's commitment transaction hash.  
+  * [`u64`:`PayerPeerId`]:  
+  * [`u64`:`PayerNodeAddress`]:  
+  * [`u64`:`C3aRsmcPartialSignedData`]:  
+  * [`u64`:`C3aCounterpartyPartialSignedData`]:  
+  * [`u64`:`C3aHtlcPartialSignedData`]:  
+  	 
+ 
+1. type: -41 (HTLCSigned)
+2. data: 
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`u64`:`PropertyId`]:  
+  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`u64`:`RSMCTempAddressPubKey`]:   payer's temp address pubkey.  
+  * [`u64`:`RSMCMultiAddress`]: Multi-sig address for RSMC.  
+  * [`u64`:`RSMCRedeemScript`]:  Redeem script for RSMC.  
+  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for RSMC.  
+  * [`u64`:`RSMCTxHex`]:  Transaction hex for RSMC.  
+  * [`u64`:`RSMCTxid`]:  Transaction ID.  
+  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+
+ 
+  
+1. type: -42 (PayeeCreateHTRD1a)
+2. data: 
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`u64`:`PropertyId`]:  
+  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`u64`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
+  * [`u64`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
+  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
+  * [`u64`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
+  * [`u64`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
+  * [`u64`:`RSMCTxid`]:  Transaction ID.  
+  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+ 
+1. type: -43 (PayerSignHTRD1a) send back the completely signed HT1a in C(3)a
+2. data: 
+  * [`channel_id`:`channel_id`]
+  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`u64`:`PropertyId`]:  
+  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`u64`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
+  * [`u64`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
+  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
+  * [`u64`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
+  * [`u64`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
+  * [`u64`:`RSMCTxid`]:  Transaction ID.  
+  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.   
+		 
+		 
 
 ### Requirements
-the same to [requirement of update_add_htlc](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-9).
+
+to be added. 
+
 
 
 ## Terminate HTLC off-chain
