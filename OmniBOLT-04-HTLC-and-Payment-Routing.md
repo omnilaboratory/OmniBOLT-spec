@@ -91,7 +91,7 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 `update_add_htlc` consists of two rounds of signing sub-transactions to forward an HTLC to the remote peer. Users should compare it to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`.  
 
-Please be noticed that the payment infomation are all encoded in transaction hex.
+Please note that the payment infomation are all encoded in transaction hex.
 
 
 1. type: -40 (AddHTLC)
