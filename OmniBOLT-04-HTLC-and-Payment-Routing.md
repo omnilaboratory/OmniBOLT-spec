@@ -91,66 +91,68 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 `update_add_htlc` consists of two rounds of signing sub-transactions to forward an HTLC to the remote peer. Users should compare it to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`.  
 
-Please note that the payment infomation are all encoded in transaction hex.
+Please note that the payment infomation are all encoded in transaction hex.  
 
+`byte_array`: an array of bytes, the first 4 bytes indicate the length of the array.   
+`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 4 bytes is 32.   
 
 1. type: -40 (AddHTLC)
 2. data: 
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC.
-  * [`u64`:`PropertyId`]:  
-  * [`u64`:`IsPayInvoice`]:  
-  * [`u64`:`PayerCommitmentTxHash`]:  payer's commitment transaction hash.  
-  * [`u64`:`PayerPeerId`]:  
-  * [`u64`:`PayerNodeAddress`]:  
-  * [`u64`:`C3aRsmcPartialSignedData`]:  
-  * [`u64`:`C3aCounterpartyPartialSignedData`]:  
-  * [`u64`:`C3aHtlcPartialSignedData`]:  
+  * [`channel_id`:`channel_id`]:  
+  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC.
+  * [`int32`:`PropertyId`]:  
+  * [`byte`:`IsPayInvoice`]:  
+  * [`32*byte`:`PayerCommitmentTxHash`]:  payer's commitment transaction hash.  
+  * [`32*byte`:`PayerPeerId`]:  
+  * [`32*byte`:`PayerNodeAddress`]:  
+  * [`byte_array`:`C3aRsmcPartialSignedData`]:  
+  * [`byte_array`:`C3aCounterpartyPartialSignedData`]:  
+  * [`64*byte`:`C3aHtlcPartialSignedData`]:  
   	 
  
 1. type: -41 (HTLCSigned)
 2. data: 
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`u64`:`PropertyId`]:  
-  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`u64`:`RSMCTempAddressPubKey`]:   payer's temp address pubkey.  
-  * [`u64`:`RSMCMultiAddress`]: Multi-sig address for RSMC.  
-  * [`u64`:`RSMCRedeemScript`]:  Redeem script for RSMC.  
-  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for RSMC.  
-  * [`u64`:`RSMCTxHex`]:  Transaction hex for RSMC.  
-  * [`u64`:`RSMCTxid`]:  Transaction ID.  
-  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+  * [`channel_id`:`channel_id`]:
+  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`int32`:`PropertyId`]:  
+  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`66*byte`:`RSMCTempAddressPubKey`]:   payer's temp address pubkey.  
+  * [`32*byte`:`RSMCMultiAddress`]: Multi-sig address for RSMC.  
+  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for RSMC.  
+  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for RSMC.  
+  * [`byte_array`:`RSMCTxHex`]:  Transaction hex for RSMC.  
+  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
+  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.  
 
  
   
 1. type: -42 (PayeeCreateHTRD1a)
 2. data: 
-  * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`u64`:`PropertyId`]:  
-  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`u64`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
-  * [`u64`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
-  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
-  * [`u64`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
-  * [`u64`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
-  * [`u64`:`RSMCTxid`]:  Transaction ID.  
-  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+  * [`channel_id`:`channel_id`]:  
+  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`int32`:`PropertyId`]:  
+  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`32*byte`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
+  * [`32*byte`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
+  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
+  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
+  * [`byte_array`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.  
+  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
+  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.  
  
 1. type: -43 (PayerSignHTRD1a) send back the completely signed HT1a in C(3)a
 2. data: 
   * [`channel_id`:`channel_id`]
-  * [`u64`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`u64`:`PropertyId`]:  
-  * [`u64`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`u64`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
-  * [`u64`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
-  * [`u64`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
-  * [`u64`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
-  * [`u64`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
-  * [`u64`:`RSMCTxid`]:  Transaction ID.  
-  * [`u64`:`AmountToRSMC`]:  Amount of property to RSMC address.   
+  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
+  * [`int32`:`PropertyId`]:  
+  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
+  * [`32*byte`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
+  * [`32*byte`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
+  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
+  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
+  * [`byte_array`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
+  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
+  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.   
 		 
 		 
 
