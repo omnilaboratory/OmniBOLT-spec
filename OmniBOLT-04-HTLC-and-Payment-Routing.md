@@ -93,22 +93,33 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 Please note that the payment infomation are all encoded in transaction hex.  
 
-`byte_array`: an array of bytes, the first 4 bytes indicate the length of the array.   
-`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 4 bytes is 32.   
+`byte_array`: an array of bytes, the first 2 bytes indicate the length of the array. the maximum length is 65535  
+`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 32.   
+`64*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 64.   
+`float64`: 8 bytes represent a float.  
 
 1. type: -40 (AddHTLC)
 2. data: 
   * [`channel_id`:`channel_id`]:  
-  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC.
-  * [`int32`:`PropertyId`]:  
-  * [`byte`:`IsPayInvoice`]:  
-  * [`32*byte`:`PayerCommitmentTxHash`]:  payer's commitment transaction hash.  
-  * [`32*byte`:`PayerPeerId`]:  
-  * [`32*byte`:`PayerNodeAddress`]:  
-  * [`byte_array`:`C3aRsmcPartialSignedData`]:  
-  * [`byte_array`:`C3aCounterpartyPartialSignedData`]:  
-  * [`64*byte`:`C3aHtlcPartialSignedData`]:  
-  	 
+  * [`byte`:`IsPayInvoice`]: bool
+  * [`float64`:`amount`]:   
+  * [`float64`:`amount_to_payee`]: amount to payee.   
+  * [`byte_array`:`memo`]: memo to the payee.   
+  * [`64*byte`:`h`]: Hash(R) used to lock the payment.    
+  * [`int32`:`cltv_expiry`]: expiry blocks.  
+  * [`byte_array`:`routing_packet`]:   
+  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC.  
+  * [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
+  * [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
+  * [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
+  * [`byte_array`:`c3a_counterparty_partial_signed_data`]:   partially signed data from payer in C3a.  
+  * [`byte_array`:`c3a_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C3a.  
+  * [`byte_array`:`c3a_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C3a.  
+  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
+	 
+	 
  
 1. type: -41 (HTLCSigned)
 2. data: 
