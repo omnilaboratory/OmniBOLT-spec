@@ -3,7 +3,7 @@
 ## Terminology
 
 * `OBD`: OmniBOLT Daemon.
-* `channel`: A channel refers to Poon-Dryja channel in ligtning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
+* `channel`: A channel refers to Poon-Dryja channel in lightning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
 * `HTLC`: Hashed Time-Lock Contract chains multiple channels for transferring tokens from one peer to another, betweem whom there is no direct channel established.
