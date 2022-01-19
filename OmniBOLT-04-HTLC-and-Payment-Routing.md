@@ -101,7 +101,7 @@ Please note that the payment infomation are all encoded in transaction hex.
 1. type: -40 (AddHTLC)
 2. data: 
   * [`channel_id`:`channel_id`]:  
-  * [`byte`:`IsPayInvoice`]: bool
+  * [`byte`:`IsPayInvoice`]: bool  
   * [`float64`:`amount`]:   
   * [`float64`:`amount_to_payee`]: amount to payee.   
   * [`byte_array`:`memo`]: memo to the payee.   
@@ -112,9 +112,9 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
   * [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
   * [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
-  * [`byte_array`:`c3a_counterparty_partial_signed_data`]:   partially signed data from payer in C3a.  
-  * [`byte_array`:`c3a_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C3a.  
-  * [`byte_array`:`c3a_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C3a.  
+  * [`byte_array`:`cna_counterparty_partial_signed_data`]:   partially signed data from payer in C(n)x, e.g. C(3)a.  
+  * [`byte_array`:`cna_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C(n)x, e.g. C(3)a. 
+  * [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.
   * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
   * [`byte_array`:`PayerNodeAddress`]: 
   * [`byte_array`:`PayerPeerId`]:   
@@ -124,18 +124,27 @@ Please note that the payment infomation are all encoded in transaction hex.
 1. type: -41 (HTLCSigned)
 2. data: 
   * [`channel_id`:`channel_id`]:
-  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`int32`:`PropertyId`]:  
-  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`66*byte`:`RSMCTempAddressPubKey`]:   payer's temp address pubkey.  
-  * [`32*byte`:`RSMCMultiAddress`]: Multi-sig address for RSMC.  
-  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for RSMC.  
-  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for RSMC.  
-  * [`byte_array`:`RSMCTxHex`]:  Transaction hex for RSMC.  
-  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
-  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
+  * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
+  * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
+  * [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
+  * [`byte_array`:`payee_curr_htlc_temp_address_pub_key`]:  payee's current HTLC temp address pub_key.   
+  * [`byte_array`:`payee_curr_htlc_temp_address_for_he_pub_key`]:  payee's current pub_key of HTLC temp address for HE.  
+  * [`byte_array`:`payee_last_temp_address_private_key`]:  payee's private_key of the last temp address.  
+  * [`byte_array`:`cna_complete_signed_rsmc_hex`]:    
+  * [`byte_array`:`cna_complete_signed_counterparty_hex`]:  
+  * [`byte_array`:`cna_complete_signed_htlc_hex`]:  
+  * [`byte_array`:`cna_rsmc_rd_partial_signed_data`]:  
+  * [`byte_array`:`cna_htlc_ht_partial_signed_data`]:  
+  * [`byte_array`:`cna_htlc_hlock_partial_signed_data`]:  
+  * [`byte_array`:`cnb_rsmc_partial_signed_data`]:  
+  * [`byte_array`:`cnb_counterparty_partial_signed_data`]:  
+  * [`byte_array`:`cnb_htlc_partial_signed_data`]:  
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
 
- 
+
+
   
 1. type: -42 (PayeeCreateHTRD1a)
 2. data: 
