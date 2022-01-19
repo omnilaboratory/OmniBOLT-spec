@@ -121,7 +121,7 @@ Please note that the payment infomation are all encoded in transaction hex.
 	 
 	 
  
-1. type: -41 (HTLCSigned)
+1. type: -41 (HTLCPartiallySigned)
 2. data: 
   * [`channel_id`:`channel_id`]:
   * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
@@ -146,33 +146,32 @@ Please note that the payment infomation are all encoded in transaction hex.
 
 
   
-1. type: -42 (PayeeCreateHTRD1a)
+1. type: -42 (PayerCompletlySigned)
 2. data: 
   * [`channel_id`:`channel_id`]:  
-  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`int32`:`PropertyId`]:  
-  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`32*byte`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
-  * [`32*byte`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
-  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
-  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
-  * [`byte_array`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.  
-  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
-  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.  
+  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.   
+  * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
+  * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
+  * [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
+  * [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
+  * [`byte_array`:`cnb_complete_signed_htlc_hex`]: completly signed HTLC hex in cnb, e.g. C(3)b.   
+  * [`byte_array`:`cnb_rsmc_rd_partial_data`]: partially signed RD in RSMC in cnb, e.g. C(3)b.   
+  * [`byte_array`:`cnb_htlc_htd_partial_data`]: partially signed HTD in HTLC in cnb, e.g. C(3)b.   
+  * [`byte_array`:`cnb_htlc_hlock_partial_data`]:  
+  * [`byte_array`:`cna_htlc_ht_hex`]: hex of HT in HTLC of C(n)a.   
+  * [`byte_array`:`cna_htlc_htrd_partial_data`]:  HTRD data of C(n)a. 
+  * [`byte_array`:`cna_htlc_htbr_partial_data`]:  HTBR data of C(n)a. 
+  * [`byte_array`:`cna_htlc_hed_raw_data`]:  HED data of C(n)a.  
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
+
  
-1. type: -43 (PayerSignHTRD1a) send back the completely signed HT1a in C(3)a
+ 
+1. type: -43 (Completly signed HTLC) send back the completely signed HT1a in C(n)a
 2. data: 
-  * [`channel_id`:`channel_id`]
-  * [`int32`:`hop_id`]: auto increase by 1 when forwards an HTLC. 
-  * [`int32`:`PropertyId`]:  
-  * [`32*byte`:`latestCommitmentTxID`]:  Commitment Tx ID.  
-  * [`32*byte`:`RSMCTempAddressPubKey`]:  Payee's current  Htlc temp address pubKey .  
-  * [`32*byte`:`RSMCMultiAddress`]: Payee's multi-sig address for RSMC.  
-  * [`byte_array`:`RSMCMultiAddressScriptPubKey`]:  ScriptPubKey for Payee's RSMC.  
-  * [`byte_array`:`RSMCRedeemScript`]:  Redeem script for Payee's RSMC.  
-  * [`byte_array`:`RSMCTxHex`]:  data from message 41 RSMCTxHex.Hex.  
-  * [`32*byte`:`RSMCTxid`]:  Transaction ID.  
-  * [`int32`:`AmountToRSMC`]:  Amount of property to RSMC address.   
+  * [`channel_id`:`channel_id`]:  
+  * [`byte_array`:`cna_htlc_htrd_complete_signed_hex`]:  
+  * [`byte_array`:`cna_htlc_hed_partial_data`]:   
 		 
 		 
 
