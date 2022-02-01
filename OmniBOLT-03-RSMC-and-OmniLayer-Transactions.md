@@ -4,6 +4,14 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
+# Table of Contents
+ * [ `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed`](#The-`btc_funding_created`,-`btc_funding_signed`,-`asset_funding_created` and-`asset_funding_signed`-Messages)
+ * [`commitment_tx` and `revoke and acknowledge commitment transaction` Message](#The-`commitment_tx`-and-`revoke-and-acknowledge-commitment-transaction`-Message)
+ * [diagram and messages](#diagram-and-messages) 
+ * [Cheat and Punishment](#Cheat-and-Punishment)
+ * [`close_channel`](#The-`close_channel`-Message )  
+  
+
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
 
 The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
