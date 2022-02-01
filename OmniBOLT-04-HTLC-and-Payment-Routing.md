@@ -5,7 +5,7 @@
 > -- Poon & Dryja, The Bitcoin Lightning Network: Scalable Off-chain Instant Payments
   
 
-A big and common misleading explanation in chaining the channels using HTLC is that if Alice wants to pay 10 USDT to David, she can use 2 hops to reach David:
+A common misleading explanation in chaining the channels using HTLC is that if Alice wants to pay 10 USDT to David, she can use 2 hops to reach David:
 
 ```
 Alice ---(10 USDT)---> Bob ---(10 USDT)---> Carol ---(10 USDT)---> David
