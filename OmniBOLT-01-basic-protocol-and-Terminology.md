@@ -18,3 +18,9 @@
 * `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
 * `HTLSC`: Hashed TimeLock Swap Contract, which consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.
 
+## Data types
+
+`byte_array`: an array of bytes, the first 2 bytes indicate the length of the array. the maximum length is 65535  
+`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 32.   
+`64*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 64.   
+`float64`: 8 bytes represent a float.  
