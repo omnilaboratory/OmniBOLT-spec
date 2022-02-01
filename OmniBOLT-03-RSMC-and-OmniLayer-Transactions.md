@@ -6,10 +6,10 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 # Table of Contents
  * [ `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed`](#The-`btc_funding_created`,-`btc_funding_signed`,-`asset_funding_created` and-`asset_funding_signed`-Messages)
- * [`commitment_tx` and `revoke and acknowledge commitment transaction` Message](#The-`commitment_tx`-and-`revoke-and-acknowledge-commitment-transaction`-Message)
+ * [commitment_tx, revoke and acknowledge commitment transaction](#The-`commitment_tx`-and-`revoke-and-acknowledge-commitment-transaction`-Message)
  * [diagram and messages](#diagram-and-messages) 
  * [Cheat and Punishment](#Cheat-and-Punishment)
- * [`close_channel`](#The-`close_channel`-Message )  
+ * [close_channel](#The-`close_channel`-Message )  
   
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
