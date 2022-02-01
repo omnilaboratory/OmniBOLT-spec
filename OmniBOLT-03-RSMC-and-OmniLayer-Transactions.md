@@ -134,7 +134,11 @@ The two messages describe a payment inside one channel created by Alice and Bob,
    
 ```
      
-![RSMC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC")
+<!-- ![RSMC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC") -->
+
+<p align="center">
+  <img width="750" alt="RSMC-diagram" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png">
+</p>
 
 There are two outputs of a commitment transaction:  
 [to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output): 0. Alice2 & Bob 60,  
