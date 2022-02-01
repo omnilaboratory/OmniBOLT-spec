@@ -62,10 +62,7 @@ step 5: Alice signs C1b/RD1b and send back to bob.
 Both sides verifies the signed the transactions, if all correct, Alice and Bob update their local database. Alice broadcast the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
 
 Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/C1b, but has to wait for a seq=1000 to get his fund. If this broadcast is a cheat, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
- 
-`byte_array`: an array of bytes, the first 4 byte indicate the length of the array.   
-`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 4 bytes is 32.   
-
+  
 
 1. type: -3400 (btc_funding_created)
 2. data:
