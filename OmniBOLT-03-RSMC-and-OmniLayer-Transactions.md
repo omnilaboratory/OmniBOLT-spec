@@ -8,16 +8,8 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
 
-We focus on omni assets in founding creation. Here are two proposals:
-
-**Prop 1**. Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.
-
-`Deprecated`
-**Prop 2**. Alice, Bob and Satoshi create a 2-3 P2SH payment to `scriptPubKey`, where Satoshi takes the responsibility to check/verify all the transactions within the channel. The advantage of this proposal is that when Alice wants to withdraw money from the channel, she does not need the signature from Bob, the only thing she has to do is provide her signature and notify Satoshi to check the channel ledger, and if the money belongs to Alice, Satoshi will provide his signature so that Alice get her money on Omnilayer network.
-
-Proposal 2 has possible vulnerability under the **conspiracy attack**. We will address this issue in the following chapters.
-
-
+We focus on omni assets in founding creation: Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.
+ 
 
 ```
     +-------+                                                  +-------+
@@ -42,9 +34,9 @@ Proposal 2 has possible vulnerability under the **conspiracy attack**. We will a
 
 ```
 
-**Proposal 1: 2-2 P2SH**:
+**2-2 P2SH**:
  
-In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, we construct a Commitment Transaction where one is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
+In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, funder must construct a Commitment Transaction by which he is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
 So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, construct funding transaction but unbroadcasted and construct a RSMC. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
 
@@ -79,7 +71,7 @@ step 5: Alice's OBD constructs refund transaction: C1b/RD1b.
     * [`sha256`:`funding_txid`]: funding transaction id.
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
  
-Alice's OBD notify Bob's OBD that she created the BTC funding transaction by payloads packed in this message -3400. 
+Alice notifies Bob that she created the BTC funding transaction by payloads packed in this message -3400. 
 
 
 1. type: -3500 (btc_funding_signed)
