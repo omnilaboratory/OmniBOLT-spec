@@ -93,10 +93,6 @@ Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)-->
 
 Please note that the payment infomation are all encoded in transaction hex.  
 
-`byte_array`: an array of bytes, the first 2 bytes indicate the length of the array. the maximum length is 65535  
-`32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 32.   
-`64*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 64.   
-`float64`: 8 bytes represent a float.  
 
 1. type: -40 (AddHTLC)
 2. data: 
