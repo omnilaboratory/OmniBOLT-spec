@@ -1,4 +1,7 @@
-# OmniBOLT #6: DEX, Collateral Lending Contract, online store and more Applications
+# OmniBOLT #6: Collateral Lending Contract, online store and more Applications
+
+**The content of this section will be moved to the community discussion forum and will no longer be part of the specification until proven feasible**
+
 
 Following examples use multi-stage atomic swaps for specific scenarios. Each procedure shall be implemented as a piece of program written in a turing complete language, like Javascript or Solidity, calling obd API to execute the foundamental tasks. All participants shall run the program to check if all the transactions are valid and if the counterparties are honest.  
 
