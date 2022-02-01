@@ -47,17 +47,21 @@ The following diagram shows the steps we MUST do before any participants broadca
   <img width="500" alt="RSMC-C1a-RD1a" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-C1a-RD1a.png">
 </p>
 
-Alice's OBD constructs refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
+Alice's OBD constructs a promised transaction and a refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
 
 step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and waiting Bob's signature: Alice2 & Bob.
 
 step 2: Alice constructs a promise payment C1a out of Alice & Bob, one output is 60 USDT to `Alice2 & Bob`, and the other output is 40 USDT to Bob.
 
-step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a sequence number preventing immediate payment if Alice cheat.
+step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a sequence number preventing immediate payment if Alice cheats.
 
-step 4: Bob signs C1a and RD1a, sends back to Alice.
+step 4: Bob signs C1a and RD1a, constructs the symmetric C1b/RD1b, hands to Alice for signature.
 
-step 5: Alice's OBD constructs refund transaction: C1b/RD1b.
+step 5: Alice signs C1b/RD1b and send back to bob. 
+
+Both sides verifies the signed the transactions, if all correct, Alice and Bob update their local database. Alice broadcast the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
+
+Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/C1b, but has to wait for a seq=1000 to get his fund. If this broadcast is a cheat, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
  
 `byte_array`: an array of bytes, the first 4 byte indicate the length of the array.   
 `32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 4 bytes is 32.   
@@ -115,7 +119,7 @@ The two messages describe a payment inside one channel created by Alice and Bob,
     +-------+                                             +-------+
     |       |--(1)-------  commitment_tx(351)  ---------->|       |  
     |       |<-(2)----- commitment_tx_signed (352) -------|       |
-    |   A   |                                             |   B   | 
+    |   A   |             Revoke and Acknowledge,         |   B   | 
     |       |           construct BR1a, C2a and RD2a      |       | 
     |       |            and the mirror transactions      |       |
     |       |                  on Bob's OBD               |       | 
@@ -136,9 +140,11 @@ There are two outputs of a commitment transaction:
 [to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output): 0. Alice2 & Bob 60,  
 [to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
 
-`to local output` sends funds back to the owner of this commitment transaction and thus must be timelocked using for example sequence number =1000. By breach remedy transaction, this money will be sent to the counterparty(Bob) immediatly(without delay), if Alice tries to broadcast C1a to claim more money after she pays by C2a.  
+`to local output` sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000.  
 
-Alice must send the hex `rsmc_hex` of the transaction based on `to local output` to Bob to verify and sign. The transaction based on `to remote output` is named `counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
+Alice must send the hex `rsmc_hex` of the transaction based on `to local output` to Bob to verify and sign. The transaction based on `to remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
+
+Bob constructs the symmetric transaction C2b and hands it back to Alice for signing. 
 
 1. type: -351 (commitment_tx)
 2. data:
@@ -169,11 +175,16 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 
 1. type: -353 (send back signed transactions in C2B)  
 2. data: to be added  
-	
+
+Alice can only update the local state database after receiving all the signatures of C(n)a from Bob. Otherwise, if any message in the process is interrupted, Alice must cancel the established transaction and return to the state of the previous commitment tx. On Bob's side, the same logic is applied, the local state database is updated only after all Alice's signatures are received. 
 
 ## Cheat and Punishment
 
-In the above diagram, the payer Alice's OBD constructs C2a. Simultaneously, Alice sends her temporary private key of Alice2 to Bob. After Bob sends back the signed messsage, she is able to construct RD2a. If she cheats by broadcasting C1a, where she has more money in her balance, Bob will immedialtly get 60 USDT from address `Alice2 & Bob`. There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will be success in cheating, and get the 60 USDT.
+All penalties are implemented through breach remedy transactions and Seq timelocks. If Alice tries to broadcast C1a(the older transaction) to claim more money after she pays by C2a，then by broadcasting breach remedy transaction, this money will be sent to the Bob without delay.    
+
+In the above diagram, the payer Alice's OBD constructs C2a and simultaneously, Alice gives up the ownership of C1a by sending her temporary private key of Alice2 to Bob. This is a critical step for Bob to be able to punish fraudulent behavior. 
+
+There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will be success in cheating, and get the 60 USDT.
  
  
 ## The `close_channel` Message 
