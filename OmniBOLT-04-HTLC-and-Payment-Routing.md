@@ -129,6 +129,7 @@ Data format of `htlc_sender_signed`:
   * [`byte_array`:`PayerPeerId`]:   
 
 Data format of `htlc_reciever_signed`:  
+
   	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
   	* [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
  	* [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
@@ -158,6 +159,7 @@ Data format of `htlc_reciever_signed`:
   * [`byte_array`:`PayerPeerId`]:   
 
 Data format of `payer_completely_signed`:  
+
   	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
   	* [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
   	* [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
