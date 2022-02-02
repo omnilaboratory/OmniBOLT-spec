@@ -103,7 +103,7 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`byte_array`:`memo`]: memo to the payee.   
   * [`64*byte`:`h`]: Hash(R) used to lock the payment.    
   * [`int32`:`cltv_expiry`]: expiry blocks.  
-  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC: give up the provious commitment tx.  
+  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC: give up the previous commitment tx.  
   * [`byte_array`:`htlc_sender_signed`]: HTLC sub contracts and partially signed by the sender.    
   * [`byte_array`:`routing_packet`]:   
   * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
@@ -112,12 +112,12 @@ Please note that the payment infomation are all encoded in transaction hex.
 	 
 Data format of `htlc_sender_signed`:  
   
-  * [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
-  * [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
-  * [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
-  * [`byte_array`:`cna_counterparty_partial_signed_data`]:   partially signed data from payer in C(n)x, e.g. C(3)a.  
-  * [`byte_array`:`cna_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C(n)x, e.g. C(3)a. 
-  * [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.  
+  	* [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
+  	* [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
+  	* [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
+  	* [`byte_array`:`cna_counterparty_partial_signed_data`]:   partially signed data from payer in C(n)x, e.g. C(3)a.  
+  	* [`byte_array`:`cna_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C(n)x, e.g. C(3)a. 
+  	* [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.  
 
  
 1. type: -41 (HTLCReceiverSigned)
