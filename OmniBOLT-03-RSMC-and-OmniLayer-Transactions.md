@@ -11,6 +11,11 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [close_channel](#The-close_channel-Message )  
   
+## Omnilayer Transactions
+
+Most omni transactions are created according to the specification. In order to improve efficiency, the transactions here are created offline, without omnicore full node, and the format and steps of the transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the `omnicore` directory of the obd project.
+
+Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
 
