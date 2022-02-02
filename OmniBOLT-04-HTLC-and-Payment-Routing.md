@@ -97,7 +97,7 @@ Please note that the payment infomation are all encoded in transaction hex.
 1. type: -40 (AddHTLC)
 2. data: 
   * [`channel_id`:`channel_id`]:  
-  * [`byte`:`IsPayInvoice`]: bool  
+  * [`byte`:`IsPayInvoice`]: bool type  
   * [`float64`:`amount`]:   
   * [`float64`:`amount_to_payee`]: amount to payee.   
   * [`byte_array`:`memo`]: memo to the payee.   
