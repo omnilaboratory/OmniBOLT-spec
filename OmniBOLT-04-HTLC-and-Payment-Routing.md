@@ -129,21 +129,21 @@ Data format of `htlc_sender_signed`:
   * [`byte_array`:`PayerPeerId`]:   
 
 Data format of `htlc_reciever_signed`:  
-  * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
-  * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
-  * [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
-  * [`byte_array`:`payee_curr_htlc_temp_address_pub_key`]:  payee's current HTLC temp address pub_key.   
-  * [`byte_array`:`payee_curr_htlc_temp_address_for_he_pub_key`]:  payee's current pub_key of HTLC temp address for HE.  
-  * [`byte_array`:`payee_last_temp_address_private_key`]:  payee's private_key of the last temp address.  
-  * [`byte_array`:`cna_complete_signed_rsmc_hex`]:    
-  * [`byte_array`:`cna_complete_signed_counterparty_hex`]:  
-  * [`byte_array`:`cna_complete_signed_htlc_hex`]:  
-  * [`byte_array`:`cna_rsmc_rd_partial_signed_data`]:  
-  * [`byte_array`:`cna_htlc_ht_partial_signed_data`]:  
-  * [`byte_array`:`cna_htlc_hlock_partial_signed_data`]:  
-  * [`byte_array`:`cnb_rsmc_partial_signed_data`]:  
-  * [`byte_array`:`cnb_counterparty_partial_signed_data`]:  
-  * [`byte_array`:`cnb_htlc_partial_signed_data`]:   
+  	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
+  	* [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
+ 	* [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
+  	* [`byte_array`:`payee_curr_htlc_temp_address_pub_key`]:  payee's current HTLC temp address pub_key.   
+  	* [`byte_array`:`payee_curr_htlc_temp_address_for_he_pub_key`]:  payee's current pub_key of HTLC temp address for HE.  
+  	* [`byte_array`:`payee_last_temp_address_private_key`]:  payee's private_key of the last temp address.  
+  	* [`byte_array`:`cna_complete_signed_rsmc_hex`]:    
+  	* [`byte_array`:`cna_complete_signed_counterparty_hex`]:  
+  	* [`byte_array`:`cna_complete_signed_htlc_hex`]:  
+  	* [`byte_array`:`cna_rsmc_rd_partial_signed_data`]:  
+  	* [`byte_array`:`cna_htlc_ht_partial_signed_data`]:  
+  	* [`byte_array`:`cna_htlc_hlock_partial_signed_data`]:  
+  	* [`byte_array`:`cnb_rsmc_partial_signed_data`]:  
+  	* [`byte_array`:`cnb_counterparty_partial_signed_data`]:  
+  	* [`byte_array`:`cnb_htlc_partial_signed_data`]:   
 
 
 
@@ -158,17 +158,17 @@ Data format of `htlc_reciever_signed`:
   * [`byte_array`:`PayerPeerId`]:   
 
 Data format of `payer_completely_signed`:  
-  * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
-  * [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
-  * [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
-  * [`byte_array`:`cnb_complete_signed_htlc_hex`]: completly signed HTLC hex in cnb, e.g. C(3)b.   
-  * [`byte_array`:`cnb_rsmc_rd_partial_data`]: partially signed RD in RSMC in cnb, e.g. C(3)b.   
-  * [`byte_array`:`cnb_htlc_htd_partial_data`]: partially signed HTD in HTLC in cnb, e.g. C(3)b.   
-  * [`byte_array`:`cnb_htlc_hlock_partial_data`]:  
-  * [`byte_array`:`cna_htlc_ht_hex`]: hex of HT in HTLC of C(n)a.   
-  * [`byte_array`:`cna_htlc_htrd_partial_data`]:  HTRD data of C(n)a. 
-  * [`byte_array`:`cna_htlc_htbr_partial_data`]:  HTBR data of C(n)a. 
-  * [`byte_array`:`cna_htlc_hed_raw_data`]:  HED data of C(n)a.  
+  	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
+  	* [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
+  	* [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
+  	* [`byte_array`:`cnb_complete_signed_htlc_hex`]: completly signed HTLC hex in cnb, e.g. C(3)b.   
+  	* [`byte_array`:`cnb_rsmc_rd_partial_data`]: partially signed RD in RSMC in cnb, e.g. C(3)b.   
+  	* [`byte_array`:`cnb_htlc_htd_partial_data`]: partially signed HTD in HTLC in cnb, e.g. C(3)b.   
+  	* [`byte_array`:`cnb_htlc_hlock_partial_data`]:  
+  	* [`byte_array`:`cna_htlc_ht_hex`]: hex of HT in HTLC of C(n)a.   
+  	* [`byte_array`:`cna_htlc_htrd_partial_data`]:  HTRD data of C(n)a. 
+  	* [`byte_array`:`cna_htlc_htbr_partial_data`]:  HTBR data of C(n)a. 
+  	* [`byte_array`:`cna_htlc_hed_raw_data`]:  HED data of C(n)a.  
  
  
 1. type: -43 (Completly signed HTLC) send back the completely signed HT1a in C(n)a
