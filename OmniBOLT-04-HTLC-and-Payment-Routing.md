@@ -103,24 +103,32 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`byte_array`:`memo`]: memo to the payee.   
   * [`64*byte`:`h`]: Hash(R) used to lock the payment.    
   * [`int32`:`cltv_expiry`]: expiry blocks.  
+  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC: give up the provious commitment tx.  
+  * [`byte_array`:`htlc_sender_signed`]: HTLC sub contracts and partially signed by the sender.    
   * [`byte_array`:`routing_packet`]:   
-  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC.  
+  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
+	 
+Data format of `htlc_sender_signed`:  
+  
   * [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
   * [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
   * [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
   * [`byte_array`:`cna_counterparty_partial_signed_data`]:   partially signed data from payer in C(n)x, e.g. C(3)a.  
   * [`byte_array`:`cna_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C(n)x, e.g. C(3)a. 
-  * [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.
-  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
-	 
-	 
+  * [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.  
+
  
-1. type: -41 (HTLCPartiallySigned)
+1. type: -41 (HTLCReceiverSigned)
 2. data: 
   * [`channel_id`:`channel_id`]:
   * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
+  * [`byte_array`:`htlc_reciever_signed`]: HTLC sub contracts signed by the reciever, the symmetric transactions created on the reciever side and signed. 
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
+
+Data format of `htlc_reciever_signed`:  
   * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
   * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
   * [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
@@ -135,9 +143,7 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`byte_array`:`cna_htlc_hlock_partial_signed_data`]:  
   * [`byte_array`:`cnb_rsmc_partial_signed_data`]:  
   * [`byte_array`:`cnb_counterparty_partial_signed_data`]:  
-  * [`byte_array`:`cnb_htlc_partial_signed_data`]:  
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
+  * [`byte_array`:`cnb_htlc_partial_signed_data`]:   
 
 
 
@@ -147,6 +153,11 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`channel_id`:`channel_id`]:  
   * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.   
   * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
+  * [`byte_array`:`payer_completely_signed`]: payer completely signed HTLC sub contracts.  
+  * [`byte_array`:`PayerNodeAddress`]: 
+  * [`byte_array`:`PayerPeerId`]:   
+
+Data format of `payer_completely_signed`:  
   * [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
   * [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
   * [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
@@ -158,9 +169,6 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`byte_array`:`cna_htlc_htrd_partial_data`]:  HTRD data of C(n)a. 
   * [`byte_array`:`cna_htlc_htbr_partial_data`]:  HTBR data of C(n)a. 
   * [`byte_array`:`cna_htlc_hed_raw_data`]:  HED data of C(n)a.  
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
-
  
  
 1. type: -43 (Completly signed HTLC) send back the completely signed HT1a in C(n)a
