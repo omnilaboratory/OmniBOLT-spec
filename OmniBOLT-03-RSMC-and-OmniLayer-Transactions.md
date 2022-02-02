@@ -5,13 +5,14 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 # Table of Contents
+ * [Omnilayer Raw Transactions](#Omnilayer-Raw-Transactions)
  * [btc_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
  * [commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-commitment-transaction-Message)
  * [diagram and messages](#diagram-and-messages) 
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [close_channel](#The-close_channel-Message )  
   
-## Omnilayer Transactions
+## Omnilayer Raw Transactions
 
 Most omni transactions are created according to the specification. In order to improve efficiency, the transactions here are created offline, without omnicore full node, and the format and steps of the transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the `omnicore` directory of the obd project.
 
