@@ -140,5 +140,5 @@ amount: optional, number in that currency, followed by an optional multiplier le
 * [slip-0173: registered-human-readable-parts](https://github.com/satoshilabs/slips/blob/master/slip-0173.md#registered-human-readable-parts)
 * [OLE-300: human-readable-part](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#human-readable-part)
 * [BOLT-11: payment encoding](https://github.com/lightningnetwork/lightning-rfc/blob/master/11-payment-encoding.md#bolt-11-invoice-protocol-for-lightning-payments)
-* [BIP-0032]((https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#security))
+* [BIP-0032: security](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#security)
  
