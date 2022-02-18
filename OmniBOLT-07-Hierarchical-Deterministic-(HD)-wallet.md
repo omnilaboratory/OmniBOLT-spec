@@ -1,6 +1,6 @@
 # OmniBOLT #7: Hierarchical Deterministic(HD) wallet, Non Custodial Daemon, Invoice Encoding.
 
-* `correct me`: neocarmack@omnilab.online 
+* `correct me`: neocarmack@omnilab.online  or join our slack channel to discuss:  https://omnibolt.slack.com/archives/CNJ0PMUMV
 
 # Table of Contents
  * [Hierarchical Deterministic(HD) wallet](#hierarchical-deterministichd-wallet)
@@ -108,43 +108,10 @@ OBD(OmniBOLT daemon) runs in non-custodial mode, which means clients' seeds and 
 
 Users don't need to trust any obd node, even those nodes they deploy by themselves.
 
-OBD is designed for both liquidity providers and individual users: 
 
 
-**liquidity provider**  
-
-The business model for a liquidity providers is straight forword. They connect to as many clients as possible, and earn channel fees by providing funded channels as relays of payments. Liquidity providers shall make sure the service quality of their nodes, especially the quality of being constantly online in order to earn more money during their service. With this motivation, we can expect that these liquidity providers bring sufficient funded channels hence better connectivity to the network. 
-
-More importantly, when you(the wallet client) go offline, these kind of nodes keep monitoring you counterparties activities, and  punishing cheating activities if there are any, which are basic functions of a lignting node.  
-
-We recommend users to connect to liquidity providers' nodes and regularly backup channel data to local device.
-
-
-**individual user**  
-
-If you have complete knowledge of how block chain and lightning network works, you will try to run your own full obd node. Which means you shall install omnicore/btccore, syc chain data, manage the network security and availability. 
-
-
-### **remark**
-
-(07.09.2020)  
-
-Currently being released obd does not specify a role of third party watch tower, because the business model for independent watch tower is not quite clear yet. Running a full node of obd and keep it secure, being constantly online and serving tons of anonimours outsourcing need professional skills and will be costly. If a watch tower maintainer can not make enough money to cover his operational cost, he will not be motivated. 
-
-**Option 1:** 
-
-Users can simply connect to liquidity providers' nodes, who serve as relays of payments, construct payment paths for individual clients, and earn channel fee. This part of channel fee will be significantly huge than merely monitoring cheating activities. Liquidity providers are already motivated to offer high quality node services, including protecting clients from cheating activities, so that they can make more money during their serivce life cycle.  
-
-For this reason, we consider watch tower a value added service of liquidity provider, which can be almost free, comparing to huge amount of channel fee that they are able to earn. 
-
-**Option 2:** 
-
-Another option is that any small community can crowd fund a cloud server to run a full obd node. Your community will be charged fee by the cloud computing company. And it is the only fee the community shall pay, which is cheap and transparent. The obd node will also handle all your daily transactions. Because of the limited number person in your community, there won't be huge amount of transactions to be managed, and less cheating will be punished, maintaining a node for your small group will not suppose to be challenging.
- 
-
-If you have better suggestions or other convincing points, please join our slack channel to discuss:  
-https://omnibolt.slack.com/archives/CNJ0PMUMV
-
+## Exclusive mode
+Exclusive mode works in the same way as lnd. Every user MUST run his own obd node, which manages and stores all his keys. For application integrators, obd exposes GRPC API to interact with and the tech stack is similar to lnd.   
 
 
 ## Invoice encoding
