@@ -261,7 +261,7 @@ Oracle is involved to feed the real time external price for trading. Although tr
 
 
 
-2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any trade. Lightning network has not global contract that executes transactions. Every obd node should check the incoming order to avoid price manipulation. Obd don’t have to trust any tracker.  
+2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any trade. Lightning network has no global contract that executes transactions. Every obd node should verify the incoming order to avoid price manipulation. Obd does not have to trust any tracker.  
 
 3. AMM on lightning network is in fact a mix model of order book and AMM.  
 
