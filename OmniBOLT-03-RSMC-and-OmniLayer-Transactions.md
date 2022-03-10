@@ -14,7 +14,7 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
   
 ## Omnilayer Raw Transactions
 
-Most omnibolt raw transactions are created according to the omnilayer specification. In order to improve efficiency, the transactions here are created offline, without omnicore full node, and the format and steps of the transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory of the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
+All omnibolt raw transactions are created according to the omnilayer specification. In order to improve efficiency, transactions are created off-chain, without involving full node. The format and steps of the transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory of the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
 
 Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
