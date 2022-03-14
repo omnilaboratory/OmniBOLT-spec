@@ -53,7 +53,7 @@ Omnilayer embeds a payload in an OP_RETURN output, prefixed with a transaction m
 
 ```
 
-A [byte array omni_payload](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
+A [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
 
 ```go
 
