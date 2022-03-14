@@ -53,13 +53,36 @@ Omnilayer embeds a payload in an OP_RETURN output, prefixed with a transaction m
 
 ```
 
-A byte array payload defines the property ID and the amount to be paid:   
+A [byte array omni_payload](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
+
+```go
+
+func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
+
+	var messageType uint16 = 0
+	var messageVer uint16 = 0
+	messageType = SwapByteOrder16(messageType)
+	messageVer = SwapByteOrder16(messageVer)
+	property_id = SwapByteOrder32(property_id)
+	amount = SwapByteOrder64(amount)
+
+	len := 4
+	s := make([][]byte, len)
+
+	s[0] = Uint16ToBytes(messageType)
+	s[1] = Uint16ToBytes(messageVer)
+	s[2] = Uint32ToBytes(property_id)
+	s[3] = Uint64ToBytes(amount)
+
+	sep := []byte("")
+	return bytes.Join(s, sep)
+
+}
+
+```
 
 
-https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114  
-
-https://github.com/omnilaboratory/obd/blob/58293151d0122daf331a518cea5105bd2e619374/tracker/service/htlc_service.go#L40-L83  
-
+ 
 
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
