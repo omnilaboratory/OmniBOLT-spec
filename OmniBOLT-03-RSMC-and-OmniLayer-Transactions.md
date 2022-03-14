@@ -18,6 +18,44 @@ All omnibolt raw transactions are created according to the omnilayer specificati
 
 Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
+```go
+  //Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
+  //
+  //The request is rejected, if the size of the payload with marker is larger than
+  //the allowed data carrier size ("-datacarriersize=n").
+  
+  
+  //"omni"
+  vchOmBytes := []byte{0x6f, 0x6d, 0x6e, 0x69}
+  
+	s := make([][]byte, 2)
+
+	s[0] = vchOmBytes
+	s[1] = payload_bytes
+
+	sep := []byte("")
+	omni_payload := bytes.Join(s, sep)
+
+	if (uint(len(omni_payload))) > nMaxDatacarrierBytes {
+		fmt.Println("omni_payload is too long, only 83 bytes are allowed")
+		return nil
+	}
+	//add op code data
+
+	//CScript script;
+	//script << OP_RETURN << vchData;
+
+	//add op code, which is OP_RETURN in this case, and data .
+	op_return_data := make([][]byte, 2)
+	op_return_data[0] = []byte{OP_RETURN}
+	op_return_data[1] = addOpCodeData(omni_payload)
+	op_return := bytes.Join(op_return_data, sep)
+
+	return op_return
+
+```
+
+
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
 
 The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
