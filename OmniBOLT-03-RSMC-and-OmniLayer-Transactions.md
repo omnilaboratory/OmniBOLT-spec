@@ -14,11 +14,11 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
   
 ## Omnilayer Raw Transaction 
 
-All omnibolt raw transactions are created according to the omnilayer specification. In order to improve efficiency, transactions are created off-chain, without involving full node. The format and steps for creating an simple transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory in the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
+Omnibolt defines and transfers tokens according to the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory in the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
 
-Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
+Validators (e.g the counterparty) must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
-Omnilayer [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
+By definition, Omnilayer [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
 ```go
   	/* 
 	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
