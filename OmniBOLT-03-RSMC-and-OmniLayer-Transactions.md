@@ -18,7 +18,7 @@ All omnibolt raw transactions are created according to the omnilayer specificati
 
 Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
-Omnilayer embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
+Omnilayer [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
 ```go
   	/* 
 	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
