@@ -58,6 +58,8 @@ A byte array payload defines the property ID and the amount to be paid:
 
 https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114  
 
+https://github.com/omnilaboratory/obd/blob/58293151d0122daf331a518cea5105bd2e619374/tracker/service/htlc_service.go#L40-L83  
+
 
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
