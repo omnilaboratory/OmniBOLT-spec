@@ -14,10 +14,11 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
   
 ## Omnilayer Raw Transactions
 
-All omnibolt raw transactions are created according to the omnilayer specification. In order to improve efficiency, transactions are created off-chain, without involving full node. The format and steps of the transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory of the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
+All omnibolt raw transactions are created according to the omnilayer specification. In order to improve efficiency, transactions are created off-chain, without involving full node. The format and steps for creating an simple transactions are in accordance with the [omni raw transaction specification](https://github.com/OmniLayer/omnicore/wiki/Use-the-raw-transaction-API-to-create-a-Simple-Send-transaction). The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory of the obd project. An example of constructing simple send raw transaction offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
 
 Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
+Omnilayer embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
 ```go
   	/* 
 	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
@@ -51,6 +52,32 @@ Validators (e.g the counterparty) of transactions must use omnicore(integrated b
 	return op_return
 
 ```
+
+A byte array payload defines the property ID and the amount to be paid:  
+
+```go
+
+func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
+	var messageType uint16 = 0
+	var messageVer uint16 = 0
+	messageType = SwapByteOrder16(messageType)
+	messageVer = SwapByteOrder16(messageVer)
+	property_id = SwapByteOrder32(property_id)
+	amount = SwapByteOrder64(amount)
+
+	len := 4
+	s := make([][]byte, len)
+
+	s[0] = Uint16ToBytes(messageType)
+	s[1] = Uint16ToBytes(messageVer)
+	s[2] = Uint32ToBytes(property_id)
+	s[3] = Uint64ToBytes(amount)
+
+	sep := []byte("")
+	return bytes.Join(s, sep)
+
+}
+``` 
 
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
