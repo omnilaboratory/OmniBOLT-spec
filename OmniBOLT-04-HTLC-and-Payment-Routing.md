@@ -27,12 +27,7 @@ An HTLC implements this procedure:
 
 If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 10 USDT back. 
 
-Simply put: 
-
-```
-in a particular channel, the one who wants the money, tells the counterparty the `R`. 
-```
-So the script is simple:
+The redeem script is:
 
 ```
 OP_IF
