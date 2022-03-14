@@ -1,4 +1,4 @@
-# OmniBOLT #3: RSMC and OmniLayer Transactions
+# OmniBOLT #3: RSMC and OmniLayer Transaction  
 
 Sometimes we use "money" instead of Omni assets for illustration purpose. Readers just image that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
