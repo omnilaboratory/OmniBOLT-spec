@@ -19,14 +19,15 @@ All omnibolt raw transactions are created according to the omnilayer specificati
 Validators (e.g the counterparty) of transactions must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
 ```go
-  //Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
-  //
-  //The request is rejected, if the size of the payload with marker is larger than
-  //the allowed data carrier size ("-datacarriersize=n").
+  	/* 
+	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
+  	 *
+  	 * The request is rejected, if the size of the payload with marker is larger than
+   	 * the allowed data carrier size ("-datacarriersize=n").
+   	 */
   
-  
-  //"omni"
-  vchOmBytes := []byte{0x6f, 0x6d, 0x6e, 0x69}
+  	//"omni"
+  	vchOmBytes := []byte{0x6f, 0x6d, 0x6e, 0x69}
   
 	s := make([][]byte, 2)
 
@@ -40,11 +41,7 @@ Validators (e.g the counterparty) of transactions must use omnicore(integrated b
 		fmt.Println("omni_payload is too long, only 83 bytes are allowed")
 		return nil
 	}
-	//add op code data
-
-	//CScript script;
-	//script << OP_RETURN << vchData;
-
+	 
 	//add op code, which is OP_RETURN in this case, and data .
 	op_return_data := make([][]byte, 2)
 	op_return_data[0] = []byte{OP_RETURN}
