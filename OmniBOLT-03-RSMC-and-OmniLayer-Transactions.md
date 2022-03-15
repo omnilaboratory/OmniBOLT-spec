@@ -215,12 +215,25 @@ The two messages describe a payment inside one channel created by Alice and Bob,
 </p>
 
 There are two outputs of a commitment transaction:  
-[to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output): 0. Alice2 & Bob 60,  
+to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output)): 0. Alice2 & Bob 60,  
 [to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
 
-`to local output` sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000.  
+`to_rsmc output` sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy transaction for Bob in the case that Alice broadcasts a revocked commitment transaction:   
 
-Alice must send the hex `rsmc_hex` of the transaction based on `to local output` to Bob to verify and sign. The transaction based on `to remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
+```
+OP_IF
+    # Penalty transaction
+    <revocationpubkey>
+OP_ELSE
+    `to_self_delay`
+    OP_CHECKSEQUENCEVERIFY
+    OP_DROP
+    <local_delayedpubkey>
+OP_ENDIF
+OP_CHECKSIG
+```  
+
+Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` to Bob to verify and sign. The transaction based on `to_remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
 Bob constructs the symmetric transaction C2b and hands it back to Alice for signing. 
 
