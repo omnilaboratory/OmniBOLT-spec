@@ -265,7 +265,7 @@ to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master
 
 ```
 OP_IF
-    # Penalty transaction
+    # Breach Remedy branch, execute the penalty transaction
     <revocationpubkey>
 OP_ELSE
     `to_self_delay`
