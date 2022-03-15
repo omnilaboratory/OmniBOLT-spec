@@ -81,8 +81,51 @@ func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
 
 ```
 
+The token amount in floating number is represented in a string, which has to be [converted to a usable int64](https://github.com/omnilaboratory/obd/blob/master/omnicore/ParseString.go#L21-L95). 8 decimal is allowed and can be recognized. If the decimal is less than 8, pad zeros on right. If there are too many decimals, truncate after 8:   
 
- 
+
+```go
+	pos := strings.Index(strAmount, ".")
+	if pos == -1 {
+		// no decimal point but divisible so pad 8 zeros on right
+		//strAmount += "00000000";
+		pad_eight_zero := "00000000"
+		strAmount = strings.Join([]string{strAmount, pad_eight_zero}, "")
+
+	} else {
+		// check for existence of second decimal point, if so invalidate amount
+			 
+		posSecond := strings.LastIndex(strAmount, ".")
+		if posSecond != pos {
+			return 0
+		}
+
+		if (len(strAmount) - pos) < 9 {
+			// there are decimals either exact or not enough, pad as needed
+
+			strRightOfDecimal := strAmount[pos+1 : len(strAmount)]
+			zerosToPad := 8 - len(strRightOfDecimal)
+			//fmt.Println(strRightOfDecimal)
+
+			// do we need to pad?
+			if zerosToPad > 0 {
+				for it := 0; it != zerosToPad; it++ {
+					strAmount += "0"
+				}
+			}
+		} else {
+			// there are too many decimals, truncate after 8
+			// strAmount = strAmount.substr(0, pos + 9);
+			strAmount = strAmount[0 : pos+9]
+		}
+		str1 := strAmount[0:pos]
+		str2 := strAmount[pos+1 : len(strAmount)]
+		strAmount = strings.Join([]string{str1, str2}, "")
+	}
+		 
+
+	nAmount, _ = strconv.ParseInt(strAmount, 10, 64)
+ ```
 
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
