@@ -64,6 +64,16 @@ Where `op_return_out` is encoded as:
 
 The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
 
+
+
+|   Field               |      type          |  Example           |   
+|-----------------------|  ----------------  |  ----------------  |   
+|  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) 	|   0   |    
+|  Transaction type     |  [Transaction type](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-type) 	        |   0   |    
+|  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) 	| 1(omni) |    
+|  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	                |   100 |    
+ 
+
 ```go
 
 func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
