@@ -95,8 +95,7 @@ The token amount in floating number is represented in a string, which has to be 
 ```go
 	pos := strings.Index(strAmount, ".")
 	if pos == -1 {
-		// no decimal point but divisible so pad 8 zeros on right
-		//strAmount += "00000000";
+		// no decimal point but divisible so pad 8 zeros on right 
 		pad_eight_zero := "00000000"
 		strAmount = strings.Join([]string{strAmount, pad_eight_zero}, "")
 
