@@ -5,7 +5,7 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 # Table of Contents
- * [Omnilayer Raw Transaction](#Omnilayer-Raw-Transaction)
+ * [Omnilayer Class C Transaction](#Omnilayer-Class-C-Transaction)
  * [btc_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
  * [commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-commitment-transaction-Message)
  * [diagram and messages](#diagram-and-messages) 
@@ -13,7 +13,7 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
  * [close_channel](#The-close_channel-Message )  
  * [references](#references)
   
-## Omnilayer Raw Transaction 
+## Omnilayer Class C Transaction 
 
 Omnibolt defines and transfers tokens according to the [omni protocol specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc). Specifically, [the class C transaction](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method) is mainly used in the omnibolt. The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory in the obd project. An example of constructing simple send raw transaction([the class c tx in omni protocol](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method)) offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
 
