@@ -19,6 +19,14 @@ Omnibolt defines and transfers tokens according to the [omni raw transaction spe
 Validators (e.g the counterparty) must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
 
 By definition, Omnilayer [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
+```
+vin: [...]  
+out: [
+    {op_return_out:{value:0, pkScript:opReturn_encode}},
+    {normal_out:{value:546, pkScript: pkHash}}
+]
+```
+Where `op_return_out` is encoded as: 
 ```go
   	/* 
 	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
@@ -53,7 +61,7 @@ By definition, Omnilayer [embeds a payload in an OP_RETURN output](https://githu
 
 ```
 
-A [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
+The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
 
 ```go
 
