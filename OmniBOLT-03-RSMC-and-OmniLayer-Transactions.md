@@ -191,9 +191,9 @@ step 4: Bob signs C1a and RD1a, constructs the symmetric C1b/RD1b, hands to Alic
 
 step 5: Alice signs C1b/RD1b and send back to bob. 
 
-Both sides verifies the signed the transactions, if all correct, Alice and Bob update their local database. Alice broadcast the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
+Both sides verifies the signed the transactions, if all are correct, Alice and Bob update their local database. Alice broadcasts the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
 
-Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/C1b, but has to wait for a seq=1000 to get his fund. If this broadcast is a cheat, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
+Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/C1b, but has to wait for a seq=1000 to get his fund. If C1a/C1b are revocked but broadcasted, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
   
 
 1. type: -3400 (btc_funding_created)
@@ -241,7 +241,7 @@ Bob signs, and send `asset_funding_signed` message back to Alice, hence Alice kn
    
 ## The `commitment_tx` and `revoke and acknowledge commitment transaction` Message
 
-The two messages describe a payment inside one channel created by Alice and Bob, upon which HTLC makes it possible for quick payment between any two peers, who do not has a direct channel yet. We introduce HTLC and corresponding messages in the next chapter.  
+The two messages describe a RSMC payment inside one channel created by Alice and Bob. We introduce HTLC and corresponding messages in the next chapter.  
 
 ### diagram and messages
 ```
@@ -325,7 +325,7 @@ Alice can only update the local state database after receiving all the signature
 
 All penalties are implemented through breach remedy transactions and Seq timelocks. If Alice tries to broadcast C1a(the older transaction) to claim more money after she pays by C2a，then by broadcasting breach remedy transaction, this money will be sent to the Bob without delay.    
 
-In the above diagram, the payer Alice's OBD constructs C2a and simultaneously, Alice gives up the ownership of C1a by sending her temporary private key of Alice2 to Bob. This is a critical step for Bob to be able to punish fraudulent behavior. 
+In the above [diagram](#diagram-and-messages), the payer Alice's OBD constructs C2a and simultaneously, Alice gives up the ownership of C1a by sending her temporary private key of Alice2 to Bob. This is a critical step for Bob to be able to punish fraudulent behavior. 
 
 There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will be success in cheating, and get the 60 USDT.
  
