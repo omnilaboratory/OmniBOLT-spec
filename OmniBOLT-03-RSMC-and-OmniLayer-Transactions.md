@@ -269,13 +269,14 @@ There are two outputs of a commitment transaction:
 to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output)): 0. Alice2 & Bob 60,  
 [to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
 
-`to_rsmc output` sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy transaction for Bob in the case that Alice broadcasts a revocked commitment transaction:   
+In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction:   
 
 ```
 OP_IF
-    # Breach Remedy branch, execute the penalty transaction
+    # Breach Remedy(BR) branch, execute the penalty transaction
     <revocationpubkey>
 OP_ELSE
+    # Revockable Delivery(RD) branch
     `to_self_delay`
     OP_CHECKSEQUENCEVERIFY
     OP_DROP
