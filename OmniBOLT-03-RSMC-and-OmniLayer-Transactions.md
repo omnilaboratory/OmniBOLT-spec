@@ -17,7 +17,7 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 Omnibolt defines and transfers tokens in lightning network according to the [omni protocol specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc). Specifically, [the class C transaction](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method) is mainly used in the omnibolt. The golang implementation is under the [`omnicore`](https://github.com/omnilaboratory/obd/tree/master/omnicore) directory in the obd project. An example of constructing simple send raw transaction([the class c tx in omni protocol](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method)) offline is [here](https://github.com/omnilaboratory/obd/tree/master/omnicore#construct-simple-send-transaction).  
 
-Validators (e.g the counterparty) must use omnicore(integrated by tracker) full nodes to check the correctness of received transactions.  
+Validators (e.g the counterparty) must use omnicore(integrated by tracker) full nodes to verify the correctness of received transactions.  
 
 By definition, [the class C transaction](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method) [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
 ```
