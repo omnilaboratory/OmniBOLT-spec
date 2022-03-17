@@ -320,13 +320,16 @@ Where:
 `redeem script`: is the [above script](#redeem-script).  
 `change`: change = satoshi in channel - dust - miner fee.    
 
-The outputs are sorted into the order by omnicore spec.  
+The outputs are sorted into the order by omnicore spec.   
+
+
+### message data
 
 Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` to Bob to verify and sign. The transaction based on `to_remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
 Bob constructs the symmetric transaction C2b and hands it back to Alice for signing. 
 
-### message data
+
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
