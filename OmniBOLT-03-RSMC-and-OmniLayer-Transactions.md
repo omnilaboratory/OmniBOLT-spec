@@ -6,12 +6,15 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
 # Table of Contents
  * [Omnilayer Class C Transaction](#Omnilayer-Class-C-Transaction)
- * [btc_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
- * [commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-commitment-transaction-Message)
- * [diagram and messages](#diagram-and-messages) 
+ * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
+ * [Commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-Message)
+ * [Diagram and messages](#diagram-and-messages) 
+ * [Redeemp script](#redeemp-script) 
+ * [Omni RSMC transaction construction](#omni-RSMC-transaction-construction)
+ * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
- * [close_channel](#The-close_channel-Message )  
- * [references](#references)
+ * [Close_channel](#The-close_channel-Message )  
+ * [References](#references)
   
 ## Omnilayer Class C Transaction 
 
@@ -249,7 +252,7 @@ Alice creats the asset funding transaction and asks Bob to verify and sign this 
 Bob signs, and send `asset_funding_signed` message back to Alice, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. 
    
    
-## The `commitment_tx` and `revoke and acknowledge commitment transaction` Message
+## The `commitment_tx` and `revoke and acknowledge` Message
 
 The two messages describe a RSMC payment inside one channel created by Alice and Bob. We introduce HTLC and corresponding messages in the next chapter.  
 
@@ -297,6 +300,7 @@ OP_ENDIF
 OP_CHECKSIG
 ```  
 
+### omni RSMC transaction construction  
 Put the redeem script and the omni class C transaction together:  
 ```
 version: 1  
@@ -320,6 +324,7 @@ Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` 
 
 Bob constructs the symmetric transaction C2b and hands it back to Alice for signing. 
 
+### message data
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
