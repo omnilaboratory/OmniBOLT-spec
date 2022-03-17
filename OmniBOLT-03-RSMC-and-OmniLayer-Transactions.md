@@ -307,7 +307,7 @@ version: 1
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
-	* <remotehtlcsig> <localhtlcsig>: to spend the funding transaction.  
+	* <payee's signature> <payer's signature>: to spend the funding transaction.  
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
@@ -319,6 +319,8 @@ Where:
 `opReturn_encode`: the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
 `redeem script`: is the [above script](#redeem-script).  
 `change`: change = satoshi in channel - dust - miner fee.    
+
+The outputs are sorted into the order by omnicore spec.  
 
 Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` to Bob to verify and sign. The transaction based on `to_remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
