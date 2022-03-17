@@ -306,11 +306,14 @@ tx input:
 	* <remotehtlcsig> <localhtlcsig>: to spend the funding transaction.  
 
 tx output:
-	* op_return:{value:0, pkScript:opReturn_encode}}, # the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
-    	* receiver/reference:{value:dust, pkScript: [redeem script](#redeem-script)} # dust by default is 546 satoshi, could set a bigger number.  
-	* change:{value:change, pkScript: the channel pubkey script } # change = sotoshi in channel - dust - miner fee.    
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* receiver/reference:{value:dust, pkScript: redeem script},    
+	* change:{value:change, pkScript: the channel pubkey script }    
 ```
-
+Where:  
+`opReturn_encode`: the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
+`redeem script`: is the above script(#redeem-script).  
+`change`: change = satoshi in channel - dust - miner fee.    
 
 Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` to Bob to verify and sign. The transaction based on `to_remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
