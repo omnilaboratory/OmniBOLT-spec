@@ -9,8 +9,8 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
  * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
  * [Commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-Message)
  * [Diagram and messages](#diagram-and-messages) 
- * [Redeemp script](#redeemp-script) 
- * [Omni RSMC transaction construction](#omni-RSMC-transaction-construction)
+ * [Redeemp script](#redeem-script) 
+ * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
  * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [Close_channel](#The-close_channel-Message )  
@@ -300,7 +300,7 @@ OP_ENDIF
 OP_CHECKSIG
 ```  
 
-### omni RSMC transaction construction  
+### OMNI RSMC transaction construction  
 Put the redeem script and the omni class C transaction together:  
 ```
 version: 1  
