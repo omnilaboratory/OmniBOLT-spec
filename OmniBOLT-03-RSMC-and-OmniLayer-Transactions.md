@@ -64,7 +64,7 @@ Where `op_return_out` is encoded as:
 
 The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master/omnicore/rpcpayload.go#L94-L114) defines the property ID and the amount to be paid:   
 
-
+### payload
 
 |   Field               |      type          |  Example           |   
 |-----------------------|  ----------------  |  ----------------  |   
@@ -281,7 +281,9 @@ to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master
 
 In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction:   
 
+### redeem script
 ```
+# redeem script
 OP_IF
     # Breach Remedy(BR) branch, execute the penalty transaction
     <revocationpubkey>
@@ -294,6 +296,21 @@ OP_ELSE
 OP_ENDIF
 OP_CHECKSIG
 ```  
+
+Put the redeem script and the omni class C transaction together:  
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout of funding transaction.  
+	* <remotehtlcsig> <localhtlcsig>: to spend the funding transaction.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode}}, # the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
+    	* receiver/reference:{value:dust, pkScript: [redeem script](#redeem-script)} # dust by default is 546 satoshi, could set a bigger number.  
+	* change:{value:change, pkScript: the channel pubkey script } # change = sotoshi in channel - dust - miner fee.    
+```
+
 
 Alice must send the hex `rsmc_hex` of the transaction based on `to_rsmc output` to Bob to verify and sign. The transaction based on `to_remote output` is named `to_counterparty_tx`, and Alice must send the hex `to_counterparty_tx_hex` to Bob to sign as well. In message `-352`, the signed arguments are `signed_to_counterparty_tx_hex` and `signed_rsmc_hex` respectively.  
 
