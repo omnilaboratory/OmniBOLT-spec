@@ -8,8 +8,7 @@ From this chapter on, our context is Omnilayer, not only bitcoin any more.
  * [Omnilayer Class C Transaction](#Omnilayer-Class-C-Transaction)
  * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
  * [Commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-Message)
- * [Diagram and messages](#diagram-and-messages) 
- * [Redeemp script](#redeem-script) 
+ * [Diagram and messages](#diagram-and-messages)  
  * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
  * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
@@ -282,26 +281,13 @@ There are two outputs of a commitment transaction:
 to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output)): 0. Alice2 & Bob 60,  
 [to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
 
-In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction:   
+In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction.  
 
-### redeem script
-```
-# redeem script
-OP_IF
-    # Breach Remedy(BR) branch, execute the penalty transaction
-    <revocationpubkey>
-OP_ELSE
-    # Revockable Delivery(RD) branch
-    `to_self_delay`
-    OP_CHECKSEQUENCEVERIFY
-    OP_DROP
-    <local_delayedpubkey>
-OP_ENDIF
-OP_CHECKSIG
-```  
+The RD and BR are written in a redeem script, which locks the local output. Put the redeem script and the omni class C transaction together to constructe the commitment transaction:   
+
 
 ### OMNI RSMC transaction construction  
-Put the redeem script and the omni class C transaction together:  
+ 
 ```
 version: 1  
 locktime: 0 
@@ -317,7 +303,20 @@ tx output:
   
 Where:  
 `opReturn_encode`: the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
-`redeem script`: is the [above script](#redeem-script).  
+`redeem script`:  
+```
+OP_IF
+    # Breach Remedy(BR) branch, execute the penalty transaction
+    <revocationpubkey>
+OP_ELSE
+    # Revockable Delivery(RD) branch
+    `to_self_delay`
+    OP_CHECKSEQUENCEVERIFY
+    OP_DROP
+    <local_delayedpubkey>
+OP_ENDIF
+OP_CHECKSIG
+```  
 `change`: change = satoshi in channel - dust - miner fee.    
 
 The outputs are sorted into the order by omnicore spec.   
