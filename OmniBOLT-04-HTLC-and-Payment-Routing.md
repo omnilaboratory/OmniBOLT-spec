@@ -25,20 +25,8 @@ Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob
 
 An HTLC implements this procedure:
 
-If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 10 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 10 USDT fund inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 10 USDT back. 
-
-The redeem script is:
-
-```
-OP_IF
-    OP_HASH256 <HASH 256(R)> OP_EQUALVERIFY
-    2 <Alice2> <Bob2> OP_CHECKMULTISIG
-OP_ELSE
-    2 <Alice1> <Bob1> OP_CHECKMULTISIG
-OP_ENDIF
-```
-
-Equipted with HTLC, the internal transfer of fund `[Alice --(10 USDT in HTLC)--> Bob]` is then an extra unbroadcasted output from funding transaction embeded together with [RD1a/BR1a](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#the-commitment_tx-and-commitment_tx_signed-message).
+If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 15 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 15 USDT fund inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 15 USDT back. 
+ 
 
 <!-- 
 ![HTLC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png "HTLC")
