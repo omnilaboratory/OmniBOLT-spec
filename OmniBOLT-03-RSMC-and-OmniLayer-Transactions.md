@@ -4,7 +4,7 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
-RMSC pays tokens to the counterparty directly without any locker. The receiver is only passively receiving, and does not need any unlocking or confirming actions. This protocol can be applied to the following representative scenarios:  
+RMSC pays tokens to the counterparty directly without any locker. The receiver is only passively receiving, and does not need any unlocking or confirming actions. This protocol can be applied to the following classic scenarios:  
 
 1. peer-to-peer communication    
 2. Send red packets in social networks  
@@ -80,7 +80,75 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 |  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
 |  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |    
  
-Use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...)`, `Uint16ToBytes(...)`, `Uint32ToBytes(...)`, `Uint64ToBytes(...)` to transform into byte array to be embeded.  
+If on little endian systems, use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...) to swap the bit order: 
+```go
+func SwapByteOrder16(us uint16) uint16 {
+	if IsLittleEndian() {
+		us = (us >> 8) |
+			(us << 8)
+	}
+	return us
+}
+
+func SwapByteOrder32(ui uint32) uint32 {
+	if IsLittleEndian() {
+		ui = (ui >> 24) |
+			((ui << 8) & 0x00FF0000) |
+			((ui >> 8) & 0x0000FF00) |
+			(ui << 24)
+	}
+	return ui
+}
+
+func SwapByteOrder64(ull uint64) uint64 {
+	if IsLittleEndian() {
+		ull = (ull >> 56) |
+			((ull << 40) & 0x00FF000000000000) |
+			((ull << 24) & 0x0000FF0000000000) |
+			((ull << 8) & 0x000000FF00000000) |
+			((ull >> 8) & 0x00000000FF000000) |
+			((ull >> 24) & 0x0000000000FF0000) |
+			((ull >> 40) & 0x000000000000FF00) |
+			(ull << 56)
+	}
+
+	return ull
+}
+
+```
+
+And usr `Uint16ToBytes(...)`, `Uint32ToBytes(...)`, `Uint64ToBytes(...)` to transform int to byte array to be embeded:  
+```go
+func Uint16ToBytes(n uint16) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+	}
+}
+func Uint32ToBytes(n uint32) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+		byte(n >> 16),
+		byte(n >> 24),
+	}
+}
+func Uint64ToBytes(n uint64) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+		byte(n >> 16),
+		byte(n >> 24),
+		byte(n >> 32),
+		byte(n >> 40),
+		byte(n >> 48),
+		byte(n >> 56),
+	}
+}
+```
+
+
+
 ```go
 
 func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
