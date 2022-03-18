@@ -83,8 +83,10 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 |  16bits  |  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) |   0   |   
 |  16bits  |  Transaction type     |  [Transaction type](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-type) 	    |   0   |   
 |  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
-|  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |    
-The transaction version and type used by OmniBOLT are both 0.  
+|  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |   
+
+ 
+The transaction version and type used by OmniBOLT are both 0. 
 
 If on little endian systems, use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...)` to swap the bit order: 
 ```go
