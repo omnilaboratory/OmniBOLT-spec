@@ -317,7 +317,7 @@ OP_ELSE
 OP_ENDIF
 OP_CHECKSIG
 ```  
-`change`: change = satoshi in channel - dust - miner fee.    
+`change`: change = satoshi in channel - dust - miner fee. By default, we set dust 546 satoshi.   
 
 The outputs are sorted into the order by omnicore spec.   
 
