@@ -302,7 +302,7 @@ tx output:
 ```
   
 Where:  
-`opReturn_encode`: the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](#payload), prefixed by "omni". 
 `redeem script`:  
 ```go
 OP_IF
