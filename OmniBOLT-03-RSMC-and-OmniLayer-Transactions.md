@@ -304,7 +304,7 @@ tx output:
 Where:  
 `opReturn_encode`: the [encoded version, type, token id and amount](#payload), prefixed by "omni".  
 `redeem script`:  
-```
+```go
 OP_IF
     # Breach Remedy(BR) branch, execute the penalty transaction
     <revocationpubkey>
