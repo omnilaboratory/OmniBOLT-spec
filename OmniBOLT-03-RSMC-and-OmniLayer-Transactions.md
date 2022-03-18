@@ -125,7 +125,7 @@ func SwapByteOrder64(ull uint64) uint64 {
 
 ```
 
-And usr `Uint16ToBytes(...)`, `Uint32ToBytes(...)`, `Uint64ToBytes(...)` to transform int to byte array to be embeded:  
+And use `Uint16ToBytes(...)`, `Uint32ToBytes(...)`, `Uint64ToBytes(...)` to transform int to byte array to be embeded:  
 ```go
 func Uint16ToBytes(n uint16) []byte {
 	return []byte{
