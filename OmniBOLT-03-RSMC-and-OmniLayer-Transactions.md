@@ -80,7 +80,7 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 |  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
 |  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |    
  
-If on little endian systems, use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...) to swap the bit order: 
+If on little endian systems, use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...)` to swap the bit order: 
 ```go
 func SwapByteOrder16(us uint16) uint16 {
 	if IsLittleEndian() {
@@ -147,7 +147,7 @@ func Uint64ToBytes(n uint64) []byte {
 }
 ```
 
-
+Ties together to create a payload:  
 
 ```go
 
@@ -175,6 +175,7 @@ func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
 
 ```
 
+### string to int64
 The token amount in floating number is represented in a string, which has to be [converted to a usable int64](https://github.com/omnilaboratory/obd/blob/master/omnicore/ParseString.go#L21-L95). 8 decimal is allowed and can be recognized. If the decimal is less than 8, pad zeros on right. If there are too many decimals, truncate after 8:   
 
 
