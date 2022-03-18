@@ -11,6 +11,9 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
 
 # Table of Contents
  * [Omnilayer Class C Transaction](#Omnilayer-Class-C-Transaction)
+ * 	[op return](#op_return)
+ * 	[payload](#payload)  
+ * 	[string to int64](#string-to-int64)
  * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
  * [Commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-Message)
  * [Diagram and messages](#diagram-and-messages)  
@@ -26,6 +29,7 @@ Omnibolt defines and transfers tokens in lightning network according to the [omn
 
 Validators (e.g the counterparty) must use omnicore(integrated by tracker) full nodes to verify the correctness of received transactions.  
 
+### op_return 
 By definition, [the class C transaction](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#65-class-c-transactions-op_return-method) [embeds a payload in an OP_RETURN output](https://github.com/omnilaboratory/obd/blob/master/omnicore/CreateRawOmniTransactionOpreturn.go#L170-L208), prefixed with a transaction marker "omni", to a raw bitcoin transaction: 
 ```
 vin: [...]  
