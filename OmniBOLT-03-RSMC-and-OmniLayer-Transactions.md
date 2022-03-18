@@ -4,6 +4,11 @@ Sometimes we use "money" instead of Omni assets for illustration purpose. Reader
 
 From this chapter on, our context is Omnilayer, not only bitcoin any more.
 
+RMSC pays tokens to the counterparty directly without any locker. The receiver is only passively receiving, and does not need any unlocking or confirming actions. This protocol can be applied to the following representative scenarios:  
+
+1. peer-to-peer communication    
+2. Send red packets in social networks  
+
 # Table of Contents
  * [Omnilayer Class C Transaction](#Omnilayer-Class-C-Transaction)
  * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
