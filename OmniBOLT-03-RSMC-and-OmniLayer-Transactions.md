@@ -15,7 +15,7 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
  	* [payload](#payload)  
  	* [string to int64](#string-to-int64)
  * [BTC_funding and asset_funding](#The-btc_funding_created-btc_funding_signed-asset_funding_created-and-asset_funding_signed-Messages)
- * [Commitment_tx, revoke and acknowledge commitment transaction](#The-commitment_tx-and-revoke-and-acknowledge-Message)
+ * [Commitment_tx, revoke and acknowledge](#The-commitment_tx-and-revoke-and-acknowledge-Message)
  * [Diagram and messages](#diagram-and-messages)  
  * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
  * [Message data](#message-data)
