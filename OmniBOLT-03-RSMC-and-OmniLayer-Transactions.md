@@ -30,7 +30,7 @@ out: [
     {normal_out:{value:546, pkScript: pkHash}}
 ]
 ```
-Where `op_return_out` is encoded as: 
+Where `op_return_out` has to be less than 83 bytes and is encoded as: 
 ```go
   	/* 
 	 * Embeds a payload in an OP_RETURN output, prefixed with a transaction marker "omni".
@@ -74,7 +74,7 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 |  16bits  |  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) |   0   |   
 |  16bits  |  Transaction type     |  [Transaction type](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-type) 	    |   0   |   
 |  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
-|  32bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |    
+|  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |    
  
 Use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...)`, `Uint16ToBytes(...)`, `Uint32ToBytes(...)`, `Uint64ToBytes(...)` to transform into byte array to be embeded.  
 ```go
