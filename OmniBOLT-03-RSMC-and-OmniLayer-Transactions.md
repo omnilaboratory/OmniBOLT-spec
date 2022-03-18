@@ -298,7 +298,7 @@ tx input:
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
     	* receiver/reference:{value:dust, pkScript: redeem script},    
-	* change:{value:change, pkScript: the channel pubkey script }    
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
   
 Where:  
@@ -317,7 +317,9 @@ OP_ELSE
 OP_ENDIF
 OP_CHECKSIG
 ```  
-`change`: change = satoshi in channel - dust - miner fee. By default, we set dust 546 satoshi.   
+`change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
+
+Fees are calculated according to [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the op_return byte numbers.  
 
 The outputs are sorted into the order by omnicore spec.   
 
