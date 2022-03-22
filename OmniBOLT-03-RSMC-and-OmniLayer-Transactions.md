@@ -235,7 +235,9 @@ The token amount in floating number is represented in a string, which has to be 
 
 The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
 
-We focus on omni assets in founding creation: Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.
+We focus on omni assets in founding creation: Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.  
+
+All transactions, besides the btc funding transaction, are omni class C transaction.  
  
 
 ```
@@ -263,9 +265,9 @@ We focus on omni assets in founding creation: Alice and Bob create a 2-2 P2SH pa
 
 **2-2 P2SH**:
  
-In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, funder must construct a Commitment Transaction by which he is able to revoke a transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
+In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, funder must construct a Commitment Transaction by which he is able to revoke his funding transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
-So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simpley setup a P2SH address, construct funding transaction but unbroadcasted and construct a RSMC. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
+So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simply setup a P2SH address, construct an unbroadcast funding transaction, construct a RSMC and exchange signatures. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
 
 The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions. BR1a (Breach Remedy) can be created later before the next commitment transaction is contructed.
 
