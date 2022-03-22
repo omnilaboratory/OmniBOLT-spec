@@ -22,6 +22,7 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
  * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [Close_channel](#The-close_channel-Message )  
+ * [Unit test vectors](#unit-tests)
  * [References](#references)
   
 ## Omnilayer Class C Transaction 
@@ -361,11 +362,11 @@ The two messages describe a RSMC payment inside one channel created by Alice and
 
 There are two outputs of a commitment transaction:  
 to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output)): 0. Alice2 & Bob 60,  
-[to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 60.  
+[to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 40.  
 
 In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction.  
 
-The RD and BR are written in a redeem script, which locks the local output. Put the redeem script and the omni class C transaction together to constructe the commitment transaction:   
+The RD and BR are written in a redeem script, which locks the to_local output. Put the redeem script and the omni class C transaction together to constructe the commitment transaction:   
 
 
 ### OMNI RSMC transaction construction  
@@ -475,8 +476,59 @@ Before closing a channel, all HTLCs pending in this channel shall be removed, af
     * [`len`*`byte:scriptpubkey`]
     * [`signature`:`signature`]: the signature of Alice or Bob.
 
- ## references
+## unit tests
+
+### Class C transaction test vectors 
+```
+unspent outputs for sender "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc":
+[
+    ...,
+    {
+        "txid" : "c23495f6e7ba24705d43583edd69ff25a354c18e69fd8514c07ec6f47cb995de",
+        "vout" : 0,
+        "address" : "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc",
+        "account" : "",
+        "scriptPubKey" : "76a914c6734676a08e3c6438bd95fa62c57939c988a17b88ac",
+        "amount" : 0.00100000,
+        "confirmations" : 0,
+        "spendable" : true
+    },
+    {
+        "txid" : "ee1673b09b0edaf7aaf8eb0bfd53a5a2757eb3e342e731bfc960b869aa0ab6b3",
+        "vout" : 2,
+        "address" : "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc",
+        "account" : "",
+        "scriptPubKey" : "76a914c6734676a08e3c6438bd95fa62c57939c988a17b88ac",
+        "amount" : 0.00835660,
+        "confirmations" : 1416,
+        "spendable" : true
+    }
+]
+
+Sender pays 0.1 token(2) to the receiver: "1Njbpr7EkLA1R8ag8bjRN7oks7nv5wUn3o", miner fee: 0.0006, changes return to the sender:
+
+payload:
+
+|   size   |   Field               |   value   |    
+| -------- |-----------------------|  -------  | 
+|  16bits  |  Transaction version  |     0     |  
+|  16bits  |  Transaction type     |     0     |  
+|  32bits  |  Currency identifier  |     2     | 
+|  64bits  |  Amount to transfer   |    0.1    |   
+
+
+expected encoded payload: 00000000000000020000000000989680   
+
+expected transaction hex: 0100000002de95b97cf4c67ec01485fd698ec154a325ff69dd3e58435d7024bae7f69534c20000000000ffffffffb3b60aaa69b860c9bf31e742e3b37e75a2a553fd0bebf8aaf7da0e9bb07316ee0200000000ffffffff036a5a0d00000000001976a914c6734676a08e3c6438bd95fa62c57939c988a17b88ac0000000000000000166a146f6d6e690000000000000002000000000098968022020000000000001976a914ee692ea81da1b12d3dd8f53fd504865c9d843f5288ac00000000
+
+```
+
+### RSMC test vectors
+
+to be added.  
+
+## references
  
- 1. Omni protocol specification, [https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification)
+ 1. Omni specification version 0.7, [https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification)
  
  
