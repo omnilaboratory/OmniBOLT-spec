@@ -481,8 +481,12 @@ Before closing a channel, all HTLCs pending in this channel shall be removed, af
 ## unit tests
 
 ### Class C transaction test vectors 
+Sender: "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc"  
+Receiver: "1Njbpr7EkLA1R8ag8bjRN7oks7nv5wUn3o"  
+Sender pays 0.1 token(2) to the receiver, where miner fee is 0.0006, and changes return to the sender.  
+
 ```
-unspent outputs for sender "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc":
+unspent outputs for sender:
 [
     ...,
     {
@@ -507,7 +511,7 @@ unspent outputs for sender "1K6JtSvrHtyFmxdtGZyZEF7ydytTGqasNc":
     }
 ]
 
-Sender pays 0.1 token(2) to the receiver: "1Njbpr7EkLA1R8ag8bjRN7oks7nv5wUn3o", miner fee: 0.0006, changes return to the sender:
+
 
 payload:
 
