@@ -88,10 +88,10 @@ Transaction type 0 is used in:
 
 |   size   |   Field               |      type          |  Example           |   
 | -------- |-----------------------|  ----------------  |  ----------------  |   
-|  16bits  |  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) |   0   |   
-|  16bits  |  Transaction type     |  [Transaction type](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-type) 	    |   0   |   
-|  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
-|  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |   
+|  2 bytes |  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) |   0   |   
+|  2 bytes |  Transaction type     |  [Transaction type](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-type) 	    |   0   |   
+|  4 bytes |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
+|  8 bytes |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |   
 
 
 And the [transaction type 7](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef) is used in commitment trsactions that constructs 2 or 3 outputs in RSMC and HTLC respectively:  
