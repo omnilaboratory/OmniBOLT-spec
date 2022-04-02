@@ -447,7 +447,7 @@ The RD and BR are written in a redeem script, which locks the to_local output. P
 
 ### OMNI RSMC transaction construction  
 
-Funding, to remote transactions:  
+Funding and `to remote` transactions:  
 
 ```
 version: 1  
@@ -458,26 +458,13 @@ tx input:
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
-    	* receiver/reference:{value:dust, pkScript: redeem script},    
-	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+    	* receiver/reference:{value:dust, pkScript: pubkey script},    
+	* change:{value:change in satoshis, pkScript: the channel pubkey script }    
 ```
   
 Where:  
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](#payload), prefixed by "omni".  
-`redeem script`:  
-```bat
-OP_IF
-    # Breach Remedy(BR) branch, execute the penalty transaction
-    <revocationpubkey>
-OP_ELSE
-    # Revockable Delivery(RD) branch
-    `to_self_delay`
-    OP_CHECKSEQUENCEVERIFY
-    OP_DROP
-    <local_delayedpubkey>
-OP_ENDIF
-OP_CHECKSIG
-```  
+
 `change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
 Fees are calculated according to [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the op_return byte numbers.  
@@ -495,10 +482,36 @@ tx input:
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
     	* to_local/reference1:{value:dust, pkScript: redeem script},  
-	* to_remote/reference2:{value:dust, pkScript: redeem script},  
+	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
+Where:  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](#payload), prefixed by "omni".  
 
+`to_local` and `to_remote` are two outputs that allocates the balance of the channel. `to_remote` is locked by the pubkey script and `to_local` is locked by the following `redeem script`:  
+
+```bat
+OP_IF
+    # Breach Remedy(BR) branch, execute the penalty transaction
+    <revocationpubkey>
+OP_ELSE
+    # Revockable Delivery(RD) branch
+    `to_self_delay`
+    OP_CHECKSEQUENCEVERIFY
+    OP_DROP
+    <local_delayedpubkey>
+OP_ENDIF
+OP_CHECKSIG
+```  
+
+`change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
+
+In the script, readers should notice that the 2-of-2 multisig as the revocation mechanism was replaced with the elliptic curve point multiplication technique. The updated version is of the form:
+```
+<revocationpubkey> OP_CHECKSIG
+```
+
+The outputs are sorted into the order by omnicore spec.   
 
 ### message data
 
