@@ -96,7 +96,7 @@ Transaction type 0 is used in:
 
 And the [transaction type 7](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef) is used in commitment trsactions that constructs 2 or 3 outputs in RSMC and HTLC respectively:  
  
-| size		|	Field				|		Type		|	Value		 	|  
+| size		|	Field				|		Type		|	Example		 	|  
 | -------- 	|	-----------------------		|  	-------------------	|  -------------------	 	|   
 | 2 bytes	|	Transaction version		|	Transaction version	|	0			|
 | 2 bytes	|	Transaction type		|	Transaction type	|	7 (= Send-to-Many)	|
