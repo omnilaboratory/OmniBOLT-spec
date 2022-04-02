@@ -19,6 +19,8 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
  * [Commitment_tx, revoke and acknowledge](#The-commitment_tx-and-revoke-and-acknowledge-Message)
 	 * [Diagram and messages](#diagram-and-messages)  
 	 * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
+	 * [Funding and to_remote transaction](#Funding-and-to-remote-transactions)
+	 * [Commitment transaction](#Commitment Transaction)
 	 * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [Close_channel](#The-close_channel-Message )  
@@ -447,7 +449,7 @@ The RD and BR are written in a redeem script, which locks the to_local output. P
 
 ### OMNI RSMC transaction construction  
 
-Funding and `to remote` transactions:  
+#### Funding and `to remote` transactions   
 
 ```
 version: 1  
@@ -471,7 +473,7 @@ Fees are calculated according to [fee calculation](https://github.com/lightning/
 
 The outputs are sorted into the order by omnicore spec.   
 
-RSMC:  
+#### Commitment Transaction  
 ```
 version: 1  
 locktime: 0 
@@ -481,7 +483,7 @@ tx input:
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
-    	* to_local/reference1:{value:dust, pkScript: redeem script},  
+    	* to_local/reference1:{value:dust, pkScript: RSMC redeem script},  
 	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
