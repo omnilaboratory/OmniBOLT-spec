@@ -79,6 +79,13 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 
 ### payload
 
+Transaction type 0 is used in:  
+* funding asset to a channel, 
+* pay the `to_remote` output and in RSMC and HTLC,  
+* construct breach remedy transactions,  
+
+ 
+
 |   size   |   Field               |      type          |  Example           |   
 | -------- |-----------------------|  ----------------  |  ----------------  |   
 |  16bits  |  Transaction version  |  [Transaction version](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-transaction-version) |   0   |   
@@ -86,8 +93,26 @@ The [byte array payload_bytes](https://github.com/omnilaboratory/obd/blob/master
 |  32bits  |  Currency identifier  |  [Currency identifier](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-currency-identifier) | 1(omni) | 
 |  64bits  |  Amount to transfer   |  [Amount](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-number-of-coins) 	            |   100 |   
 
+
+And the [transaction type 7](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef) is used in commitment trsactions that constructs 2 or 3 outputs in RSMC and HTLC respectively:  
  
-The transaction version and type used by OmniBOLT are both 0. 
+| size		|	Field				|		Type		|	Value		 	|  
+| -------- 	|	-----------------------		|  	-------------------	|  -------------------	 	|   
+| 2 bytes	|	Transaction version		|	Transaction version	|	0			|
+| 2 bytes	|	Transaction type		|	Transaction type	|	7 (= Send-to-Many)	|
+| 4 bytes	|	Token identifier to send	|	Token identifier	|	31 (= USDT )	 	|
+| 1 byte 	|	Number of outputs		|	Integer-one byte	|	3		 	|
+| 1 byte 	|	Receiver output #		|	Integer-one byte	|	1 (= vout 1)		|
+| 8 bytes	|	Amount to send			|	Number of tokens	|	20 0000 0000 (= 20.0)	|
+| 1 byte 	|	Receiver output #		|	Integer-one byte	|	2 (= vout 2)	 	|
+| 8 bytes	|	Amount to send			|	Number of tokens	|	15 0000 0000 (= 15.0)	|
+| 1 byte 	|	Receiver output #		|	Integer-one byte	|	4 (= vout 4)	 	|
+| 8 bytes	|	Amount to send			|	Number of tokens	|	30 0000 0000 (= 30.0)	|
+ 
+The above may changes according to the update of omnicore.
+
+
+The transaction version used by OmniBOLT are both 0. 
 
 If on little endian systems, use `SwapByteOrder16(...)`, `SwapByteOrder32(...)`, `SwapByteOrder64(...)` to swap the bit order: 
 ```go
@@ -156,7 +181,7 @@ func Uint64ToBytes(n uint64) []byte {
 }
 ```
 
-Ties together to create a payload:  
+Ties together to create a payload. For type 0:  
 
 ```go
 
@@ -182,6 +207,55 @@ func OmniCreatePayloadSimpleSend(property_id uint32, amount uint64) []byte {
 
 }
 
+```
+
+And for [type 7](https://github.com/omnilaboratory/obd/blob/lnd/omnicore/rpcpayloadSendToMany.go#L50):  
+
+```
+	var messageType uint16 = 7
+	var messageVer uint16 = 0
+	messageType = SwapByteOrder16(messageType)
+	messageVer = SwapByteOrder16(messageVer)
+	property_id = SwapByteOrder32(property_id)
+
+	var outputs_count byte = 0
+	var total_value_out int64 = 0 
+	
+	receivers := make([][]byte, 0)
+
+	for j := 0; j < len(receivers_array); j++ {
+		outputs_count += 1
+		amount := StrToInt64(receivers_array[j].Amount, divisible)
+		amount_uint64 := uint64(amount)
+		size := 2
+		one_receiver := make([][]byte, size)
+		one_receiver[0] = OneByte(receivers_array[j].Output)
+		one_receiver[1] = Uint64ToBytes(SwapByteOrder64(amount_uint64))
+
+		seperator := []byte("")
+		one_receiver_in_byts := bytes.Join(one_receiver, seperator)
+
+		receivers = append(receivers, one_receiver_in_byts)
+		total_value_out = total_value_out + AmountFromValue(receivers_array[j].Amount)
+	}
+
+	len := 4 + outputs_count
+	s := make([][]byte, len)
+
+	s[0] = Uint16ToBytes(messageVer)
+	s[1] = Uint16ToBytes(messageType)
+	s[2] = Uint32ToBytes(property_id)
+	s[3] = OneByte(outputs_count)
+
+	for i := byte(4); i < len; i++ {
+		s[i] = receivers[i-4]
+	}
+
+	sep := []byte("")
+
+	payload := bytes.Join(s, sep)
+	return payload, HexStr(payload)
+	
 ```
 
 ### string to int64
@@ -372,7 +446,9 @@ The RD and BR are written in a redeem script, which locks the to_local output. P
 
 
 ### OMNI RSMC transaction construction  
- 
+
+Funding, to remote transactions:  
+
 ```
 version: 1  
 locktime: 0 
@@ -407,6 +483,21 @@ OP_CHECKSIG
 Fees are calculated according to [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the op_return byte numbers.  
 
 The outputs are sorted into the order by omnicore spec.   
+
+RSMC:  
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout of funding transaction.  
+	* <payee's signature> <payer's signature>: to spend the funding transaction.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* to_local/reference1:{value:dust, pkScript: redeem script},  
+	* to_remote/reference2:{value:dust, pkScript: redeem script},  
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+```
 
 
 ### message data
@@ -536,5 +627,6 @@ to be added.
 ## references
  
  1. Omni specification version 0.7, [https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification)
+ 2. Omni specification for sendtomany, [https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef)
  
  
