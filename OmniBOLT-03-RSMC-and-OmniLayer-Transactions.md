@@ -20,7 +20,7 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
 	 * [Diagram and messages](#diagram-and-messages)  
 	 * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
 	 * [Funding and to_remote transaction](#Funding-and-to-remote-transactions)
-	 * [Commitment transaction](#Commitment Transaction)
+	 * [Commitment transaction](#Commitment-Transaction)
 	 * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [Close_channel](#The-close_channel-Message )  
