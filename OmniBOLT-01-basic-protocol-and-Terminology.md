@@ -14,7 +14,7 @@
 * `HT`: HTLC Timeout
 * `HBR`: HTLC Breach Remedy, the breach remedy transaction in HTLC
 * `HTRD`: HTLC Timeout Revocable Delivery, the revocable delievery transaction in HTLC
-* `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period. 
+* `HTBR`: HTLC Timeout Breach Remedy, punishes Alice who broadcasts the elder hash time-locked transaction during the time lock period.  
 * `Atomic Swap`: Atomic swap technology enables the exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges. 
 * `HTLSC`: Hashed TimeLock Swap Contract, which consists of two seperate HTLCs with extra specified exchange rate of tokens and time lockers.
 
