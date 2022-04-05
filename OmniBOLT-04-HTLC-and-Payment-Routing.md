@@ -270,7 +270,7 @@ For a timed out or route-failed HTLC:
 ### Requirements
 the same to [requirement of Removing an HTLC](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-10). 
 
-## Unit-tests
+## Unit tests
 Omni HTLC transaction testing vectors will be added soon.  
 
 ## Reference
