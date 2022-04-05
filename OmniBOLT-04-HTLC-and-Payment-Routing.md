@@ -11,15 +11,17 @@ A common misleading explanation in chaining the channels using HTLC is that if A
 Alice ---(10 USDT)---> Bob ---(10 USDT)---> Carol ---(10 USDT)---> David
 ```
 
-It is confusing, because there is no concept of personal account in lightning. The only building block lightning uses is channel. So the correct hops are:
+There is no concept of personal account in lightning. The only building block lightning uses is channel. So the correct hops are:
 
 ```
-[Alice --(10 USDT)--> Bob] ==(Bob has two channels)== [Bob --(10 USDT)--> Carol] ==(Carol has two channels)== [Carol --(10 USDT)--> David]
+[Alice --(10 USDT)--> Bob] ==(Bob has two channels)== [Bob --(10 USDT)--> Carol] ==(Carol has two channels)== [Carol --(10 USDT)--> David]. 
+
+where: 
 
 [A, USDT, B] stands for the channel built by A and B, funded by USDT.
 ```
 
-Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Carol, USDT, David]`.
+Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Carol, USDT, David]`.  
 
 # Table of Contents
  * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
