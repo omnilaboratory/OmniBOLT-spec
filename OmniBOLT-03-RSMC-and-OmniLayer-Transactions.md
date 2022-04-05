@@ -466,7 +466,7 @@ tx output:
   
 Where:  
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](#payload), prefixed by "omni".  
-
+ 
 `change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
 Fees are calculated as in [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the `op_return` byte numbers.  
@@ -483,14 +483,41 @@ tx input:
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
-    	* to_local/reference1:{value:dust, pkScript: RSMC redeem script},  
+    	* to_rsmc/reference1:{value:dust, pkScript: RSMC redeem script},  
 	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
 Where:  
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](#payload), prefixed by "omni".  
 
-`to_local` and `to_remote` are two outputs that allocates the balance of the channel. `to_remote` is locked by the pubkey script and `to_local` is locked by the following `redeem script`:  
+The payload on sender side is:
+
+| size		|	Field				|	Example		 	|  
+| -------- 	|	-----------------------		|    -------------------	|   
+| 2 bytes	|	Transaction version		|	0			|
+| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
+| 4 bytes	|	Token identifier to send	|	31 (= USDT )	 	|
+| 1 byte 	|	Number of receivers		|	2		 	|
+| 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
+| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 45)	|
+| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
+| 8 bytes	|	Amount to send			|	to_remote (= 55)	| 
+ 
+The payload on receiver side is:  
+
+| size		|	Field				|	Example		 	|  
+| -------- 	|	-----------------------		|    -------------------	|   
+| 2 bytes	|	Transaction version		|	0			|
+| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
+| 4 bytes	|	Token identifier to send	|	31 (= USDT )	 	|
+| 1 byte 	|	Number of receivers		|	2		 	|
+| 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
+| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 55)	|
+| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
+| 8 bytes	|	Amount to send			|	to_remote (= 45)	| 
+ 
+
+`to_rsmc` and `to_remote` are two outputs that allocates the balance of the channel. `to_remote` is locked by the pubkey script and `to_rsmc` is locked by the following `redeem script`:  
 
 ```bat
 OP_IF
