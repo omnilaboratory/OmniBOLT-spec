@@ -21,6 +21,17 @@ It is confusing, because there is no concept of personal account in lightning. T
 
 Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Carol, USDT, David]`.
 
+# Table of Contents
+ * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
+ * [OMNI HTLC transaction construction](#OMNI-HTLC-transaction-construction) 
+ * [Messages](#messages)
+ * [Update_add_htlc](#update_add_htlc)  
+ * [Terminate HTLC off-chain](#Terminate-HTLC-off-chain)
+ * [Unit test vectors](#unit-tests)
+ * [References](#references)
+  
+
+
 ## Hashed TimeLock Contract
 
 An HTLC implements this procedure:
@@ -36,13 +47,68 @@ If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one els
   <img width="750" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
-**HED1a**: HTLC Execution Delivery  
-**HT1a**: HTLC Timeout  
-**HBR1a**: HTLC Breach Remedy  
-**HTRD1a**: HTLC Timeout Revocable Delivery  
-**HTBR1a**: HTLC Timeout Breach Remedy  
+Internal transactions in the above diagram are explained in [chapter 1](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-01-basic-protocol-and-Terminology.md#terminology).  
 
-## messages
+There are three outputs of a commitment transaction:
+`to_rsmc(to local)`: 0. Alice3 & Bob 45,
+`to remote`: 1. Bob 40, 
+`to_htlc`: 2. Alice4 & Bob 15 
+
+`to_htlc` has three branches to handle the situations of time eout, breach remedy, htlc success. 
+
+## OMNI HTLC transaction construction
+
+### Commitment Transaction
+
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout of funding transaction.  
+	* <payee's signature> <payer's signature>: to spend the funding transaction.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* to_local/reference1:{value:dust, pkScript: RSMC redeem script},  
+	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
+	* to_htlc/reference3:{value:dust, pkScript: offered htlc script}, 
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+```
+Where:  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".  
+
+`to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` is as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
+
+```bat
+# To remote node with revocation key
+OP_DUP OP_HASH160 <RIPEMD160(SHA256(revocationpubkey))> OP_EQUAL
+OP_IF
+    OP_CHECKSIG
+OP_ELSE
+    <remote_htlcpubkey> OP_SWAP OP_SIZE 32 OP_EQUAL
+    OP_NOTIF
+        # To local node via HTLC-timeout transaction (timelocked).
+        OP_DROP 2 OP_SWAP <local_htlcpubkey> 2 OP_CHECKMULTISIG
+    OP_ELSE
+        # To remote node with preimage.
+        OP_HASH160 <RIPEMD160(payment_hash)> OP_EQUALVERIFY
+        OP_CHECKSIG
+    OP_ENDIF
+OP_ENDIF
+```  
+
+`change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
+
+The remote node can redeem the HTLC with the witness:
+```
+<remotehtlcsig> <preimage R>
+```
+
+The outputs are sorted into the order by omnicore spec.   
+
+
+
+## Messages
 
 ```
     +-------+                                                             +-------+
@@ -204,5 +270,10 @@ For a timed out or route-failed HTLC:
 ### Requirements
 the same to [requirement of Removing an HTLC](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#requirements-10). 
 
+## Unit-tests
+Omni HTLC transaction testing vectors will be added soon.  
 
-
+## Reference
+1. BOLT 3 transactions, [https://github.com/lightning/bolts/blob/master/03-transactions.md](https://github.com/lightning/bolts/blob/master/03-transactions.md)
+2. BOLT 2 peer protocol, [https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md)
+3. Omni specification for sendtomany, [https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef)
