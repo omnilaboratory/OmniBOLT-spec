@@ -19,7 +19,7 @@ It is confusing, because there is no concept of personal account in lightning. T
 [A, USDT, B] stands for the channel built by A and B, funded by USDT.
 ```
 
-Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Bob, USDT, Carol]`.
+Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Carol, USDT, David]`.
 
 ## Hashed TimeLock Contract
 
