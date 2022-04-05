@@ -56,7 +56,7 @@ There are three outputs of a commitment transaction:
 `to remote`: 1. Bob 40, 
 `to_htlc`: 2. Alice4 & Bob 15 
 
-`to_htlc` has three branches to handle the situations of time eout, breach remedy, htlc success. 
+`to_htlc` has three branches to handle the situations of time eout, breach remedy, htlc success. We put the payload and outputs together to construct the HTLC transaction: 
 
 ## OMNI HTLC transaction construction
 
@@ -79,7 +79,7 @@ tx output:
 Where:  
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".  
 
-`to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` is as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
+`to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` is locked by the `offered HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
 
 ```bat
 # To remote node with revocation key
@@ -107,6 +107,26 @@ The remote node can redeem the HTLC with the witness:
 ```
 
 The outputs are sorted into the order by omnicore spec.   
+
+On receiver side, the received HTLC is the same to `received HTLC` in BOLT 3:  
+```
+# To remote node with revocation key
+OP_DUP OP_HASH160 <RIPEMD160(SHA256(revocationpubkey))> OP_EQUAL
+OP_IF
+    OP_CHECKSIG
+OP_ELSE
+    <remote_htlcpubkey> OP_SWAP OP_SIZE 32 OP_EQUAL
+    OP_IF
+        # To local node via HTLC-success transaction.
+        OP_HASH160 <RIPEMD160(payment_hash)> OP_EQUALVERIFY
+        2 OP_SWAP <local_htlcpubkey> 2 OP_CHECKMULTISIG
+    OP_ELSE
+        # To remote node after timeout.
+        OP_DROP <cltv_expiry> OP_CHECKLOCKTIMEVERIFY OP_DROP
+        OP_CHECKSIG
+    OP_ENDIF
+OP_ENDIF
+```
 
 
 
