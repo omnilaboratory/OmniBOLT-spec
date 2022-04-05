@@ -469,7 +469,7 @@ Where:
 
 `change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
-Fees are calculated according to [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the op_return byte numbers.  
+Fees are calculated as in [fee calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation), and must add the `op_return` byte numbers.  
 
 The outputs are sorted into the order by omnicore spec.   
 
@@ -643,5 +643,6 @@ to be added.
  
  1. Omni specification version 0.7, [https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#omni-protocol-specification)
  2. Omni specification for sendtomany, [https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef)
+ 3. Fee calculation, [https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation](https://github.com/lightning/bolts/blob/master/03-transactions.md#fee-calculation)
  
  
