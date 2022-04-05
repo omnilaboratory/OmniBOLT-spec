@@ -23,4 +23,5 @@
 `byte_array`: an array of bytes, the first 2 bytes indicate the length of the array. the maximum length is 65535  
 `32*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 32.   
 `64*byte`: a fixed length version of `byte_array`, where the decimal value of the first 2 bytes is 64.   
-`float64`: 8 bytes represent a float.  
+`float64`: 8 bytes represent a float, [8 decimal is allowed and can be recognized](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#string-to-int64)
+ 
