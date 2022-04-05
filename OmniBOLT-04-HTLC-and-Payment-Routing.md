@@ -11,7 +11,7 @@ A common misleading explanation in chaining the channels using HTLC is that if A
 Alice ---(10 USDT)---> Bob ---(10 USDT)---> Carol ---(10 USDT)---> David
 ```
 
-There is no concept of personal account in lightning. The only building block lightning uses is channel. So the correct hops are:
+There is no concept of personal account in lightning. The only building block lightning defines is channel. So the correct hops are:
 
 ```
 [Alice --(10 USDT)--> Bob] ==(Bob has two channels)== [Bob --(10 USDT)--> Carol] ==(Carol has two channels)== [Carol --(10 USDT)--> David]. 
