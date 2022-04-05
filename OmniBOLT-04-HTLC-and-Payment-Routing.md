@@ -273,7 +273,7 @@ the same to [requirement of Removing an HTLC](https://github.com/lightningnetwor
 ## Unit tests
 Omni HTLC transaction testing vectors will be added soon.  
 
-## Reference
+## References
 1. BOLT 3 transactions, [https://github.com/lightning/bolts/blob/master/03-transactions.md](https://github.com/lightning/bolts/blob/master/03-transactions.md)
 2. BOLT 2 peer protocol, [https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md)
 3. Omni specification for sendtomany, [https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef](https://gist.github.com/dexX7/1138fd1ea084a9db56798e9bce50d0ef)
