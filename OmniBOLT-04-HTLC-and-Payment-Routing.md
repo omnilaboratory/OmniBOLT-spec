@@ -57,6 +57,7 @@ There are three outputs of a commitment transaction:
 
 ### Commitment Transaction
 
+On sender side: 
 ```
 version: 1  
 locktime: 0 
@@ -74,7 +75,57 @@ tx output:
 Where:  
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".  
 
-`to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` is locked by the `offered HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
+payload in output 0:  
+
+| size		|	Field				|	Sender Value	 	|  
+| -------- 	|	-----------------------		|  -------------------	 	|   
+| 2 bytes	|	Transaction version		|	0			|
+| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
+| 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	|
+| 1 byte 	|	Number of outputs		|	3		 	|
+| 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
+| 8 bytes	|	Amount to send			|	to_local (e.g. 45)	|
+| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
+| 8 bytes	|	Amount to send			|	to_remote (e.g. 40)	|
+| 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
+| 8 bytes	|	Amount to send			|	offered_htlc (e.g. 15)	|
+ 
+On receiver side: 
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout of funding transaction.  
+	* <payee's signature> <payer's signature>: to spend the funding transaction.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* to_remote/reference1:{value:dust, pkScript: pubkey script},  
+	* to_local/reference2:{value:dust, pkScript: RSMC redeem script},  
+	* to_htlc/reference3:{value:dust, pkScript: received htlc script}, 
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+```
+
+payload in output 0: 
+
+| size		|	Field				|	Sender Value	 	|  
+| -------- 	|	-----------------------		|  -------------------	 	|   
+| 2 bytes	|	Transaction version		|	0			|
+| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
+| 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	|
+| 1 byte 	|	Number of outputs		|	3		 	|
+| 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
+| 8 bytes	|	Amount to send			|	to_remote (e.g. 45)	|
+| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
+| 8 bytes	|	Amount to send			|	to_local (e.g. 40)	|
+| 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
+| 8 bytes	|	Amount to send			|	received_htlc (e.g. 15)	|
+
+`change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
+
+The outputs are sorted into the order by omnicore spec.   
+
+On both sides, `to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` on sender side is locked by the `offered HTLC` and in receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
 
 ```bat
 # To remote node with revocation key
@@ -94,14 +145,13 @@ OP_ELSE
 OP_ENDIF
 ```  
 
-`change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
 The remote node can redeem the HTLC with the witness:
 ```
 <remotehtlcsig> <preimage R>
 ```
 
-The outputs are sorted into the order by omnicore spec.   
+
 
 On receiver side, the received HTLC is the same to `received HTLC` in BOLT 3:  
 ```
