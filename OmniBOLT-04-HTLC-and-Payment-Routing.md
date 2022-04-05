@@ -67,7 +67,7 @@ tx input:
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
-    	* to_local/reference1:{value:dust, pkScript: RSMC redeem script},  
+    	* to_rsmc/reference1:{value:dust, pkScript: RSMC redeem script},  
 	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
 	* to_htlc/reference3:{value:dust, pkScript: offered htlc script}, 
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
@@ -78,13 +78,13 @@ Where:
 payload in output 0:  
 
 | size		|	Field				|	Sender Value	 	|  
-| -------- 	|	-----------------------		|  -------------------	 	|   
+| -------- 	|	-----------------------		|	-------------------	|   
 | 2 bytes	|	Transaction version		|	0			|
 | 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
 | 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	|
 | 1 byte 	|	Number of outputs		|	3		 	|
 | 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
-| 8 bytes	|	Amount to send			|	to_local (e.g. 45)	|
+| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 45)	|
 | 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
 | 8 bytes	|	Amount to send			|	to_remote (e.g. 40)	|
 | 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
@@ -108,8 +108,8 @@ tx output:
 
 payload in output 0: 
 
-| size		|	Field				|	Sender Value	 	|  
-| -------- 	|	-----------------------		|  -------------------	 	|   
+| size		|	Field				|	Receiver Value	 	|  
+| -------- 	|	-----------------------		|	-------------------	|   
 | 2 bytes	|	Transaction version		|	0			|
 | 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
 | 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	|
@@ -117,7 +117,7 @@ payload in output 0:
 | 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
 | 8 bytes	|	Amount to send			|	to_remote (e.g. 45)	|
 | 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
-| 8 bytes	|	Amount to send			|	to_local (e.g. 40)	|
+| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 40)	|
 | 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
 | 8 bytes	|	Amount to send			|	received_htlc (e.g. 15)	|
 
@@ -125,7 +125,7 @@ payload in output 0:
 
 The outputs are sorted into the order by omnicore spec.   
 
-On both sides, `to_local` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` on sender side is locked by the `offered HTLC` and in receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
+On both sides, `to_rsmc` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` on sender side is locked by the `offered HTLC` and in receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
 
 ```bat
 # To remote node with revocation key
