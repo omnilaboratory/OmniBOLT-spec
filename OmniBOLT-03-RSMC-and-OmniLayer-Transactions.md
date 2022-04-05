@@ -492,7 +492,7 @@ Where:
 
 The payload on sender side is:
 
-| size		|	Field				|	Example		 	|  
+| size		|	Field				|	Sender Value		|  
 | -------- 	|	-----------------------		|    -------------------	|   
 | 2 bytes	|	Transaction version		|	0			|
 | 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
@@ -505,7 +505,7 @@ The payload on sender side is:
  
 The payload on receiver side is:  
 
-| size		|	Field				|	Example		 	|  
+| size		|	Field				|	Receiver Value	 	|  
 | -------- 	|	-----------------------		|    -------------------	|   
 | 2 bytes	|	Transaction version		|	0			|
 | 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
