@@ -87,7 +87,7 @@ We don't specify which asset will be in this channel during creating, so there i
     * [`point`:`funding_pubkey`]: the public key in the two-of-two multisig script of the funding transaction output.  
 
  
-    **basepoint is currently ignored**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. The security mechanism used by Omnibolt is a bit different, and we will improve it based on community proposal. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the current mechanism. 
+    **basepoint is currently ignored in non-custodial mode**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. The security mechanism used by Omnibolt is a bit different, and we will improve it based on community proposal. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the current mechanism. In custodial mode, the following `_basepoints` are the same to BOLT.
  
     * [`point`:`revocation_basepoint`]: not used.
     * [`point`:`payment_basepoint`]:
