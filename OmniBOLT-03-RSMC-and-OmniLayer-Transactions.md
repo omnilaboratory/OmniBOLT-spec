@@ -21,6 +21,7 @@ RMSC pays tokens to the counterparty directly without any locker. The receiver i
 	 * [Omni RSMC transaction construction](#OMNI-RSMC-transaction-construction)
 	 * [Funding and to_remote transaction](#Funding-and-to-remote-transactions)
 	 * [Commitment transaction](#Commitment-Transaction)
+	 * [Breach remedy transaction](#Breach-remedy-transaction)
 	 * [Message data](#message-data)
  * [Cheat and Punishment](#Cheat-and-Punishment)
  * [Close_channel](#The-close_channel-Message )  
@@ -541,6 +542,30 @@ In the script, readers should notice that the 2-of-2 multisig as the revocation 
 ```
 
 The outputs are sorted into the order by omnicore spec.   
+
+#### Breach remedy transaction
+
+The BR transaction can be constructed and broadcast without delay when the counter party broadcasts an revocked commitment.  
+
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout of funding transaction.  
+	* <revockation key>: to spend the funding transaction.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* receiver/reference:{value:dust, pkScript: pubkey script},    
+	* change:{value:change in satoshis, pkScript: the channel pubkey script }    
+```
+  
+Where:  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](#payload), prefixed by "omni".  
+
+The receiver is Bob is Alice cheats.  
+
+The amount is the tokens funded in the channel.  
 
 ### message data
 
