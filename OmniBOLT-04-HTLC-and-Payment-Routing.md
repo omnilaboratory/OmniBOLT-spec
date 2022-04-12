@@ -22,6 +22,9 @@ Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob
  * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
  * [OMNI HTLC transaction construction](#OMNI-HTLC-transaction-construction) 
 	* [Commitment Transaction](#Commitment-Transaction)
+	* [HTLC success HED1a](#HTLC-Success-HED1a )
+	* [HTLC timeout HT1a](#HTLC-Timeout-HT1a)
+	* [HTLC breach remedy](#HTLC-Breach-Remedy)
 	* [Fee rate](#Fee-rate)
  * [Messages](#messages)
  * [Update_add_htlc](#update_add_htlc)  
@@ -75,7 +78,7 @@ tx output:
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
 Where:  
-`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 7 ), token id and array of receivers](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".  
 
 payload in output 0:  
 
@@ -174,6 +177,39 @@ OP_ELSE
     OP_ENDIF
 OP_ENDIF
 ```
+
+### HTLC Success HED1a 
+TODO(Ben Fei, Neo Carmack)
+
+
+### HTLC Timeout HT1a 
+
+TODO(Ben Fei, Neo Carmack)
+
+### HTLC Breach Remedy 
+
+The HTLC BR transaction can be constructed and broadcast without delay when the counter party broadcasts a revocked commitment.  
+
+```
+version: 1  
+locktime: 0 
+tx input:
+	* outpoint: the vout to_htlc.  
+	* <revockation key>: to spend the to_htlc output.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* receiver/reference:{value:dust, pkScript: pubkey script},    
+	* change:{value:change in satoshis, pkScript: the channel pubkey script }    
+```
+  
+Where:  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".   
+
+
+The receiver is Bob is Alice cheats.  
+
+The amount is the tokens in the `to_htlc` output.  
 
 ### Fee rate
 
