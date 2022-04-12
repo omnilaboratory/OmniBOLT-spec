@@ -21,6 +21,8 @@ Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob
 # Table of Contents
  * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
  * [OMNI HTLC transaction construction](#OMNI-HTLC-transaction-construction) 
+	* [Commitment Transaction](#Commitment-Transaction)
+	* [Fee rate](#Fee-rate)
  * [Messages](#messages)
  * [Update_add_htlc](#update_add_htlc)  
  * [Terminate HTLC off-chain](#Terminate-HTLC-off-chain)
@@ -123,7 +125,7 @@ payload in output 0:
 
 `change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
-The outputs are sorted into the order by omnicore spec.   
+The outputs are sorted into the order by omnicore spec:  `op_return` payload is in output 0 and the receivers are ordered as in the payload definition.   
 
 On both sides, `to_rsmc` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` on sender side is locked by the `offered HTLC` and in receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
 
@@ -173,6 +175,11 @@ OP_ELSE
 OP_ENDIF
 ```
 
+### Fee rate
+
+For liquidity providers, when relay a HTLC, a channel fee could be charged in the token(not in satoshis). Generally the fee rate is known to the network when a node annouces itself and lower fee rate will attract more traffic of HTLCs.  
+
+For a fee rate example of 50 basis points, an incoming HTLC is 15 USDT, then the out going HTLC is `15-15*0.5% = 14.925` USDT.  
 
 
 ## Messages
