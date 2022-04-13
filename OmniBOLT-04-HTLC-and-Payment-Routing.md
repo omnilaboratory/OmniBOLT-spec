@@ -207,9 +207,9 @@ Where:
 `opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".   
 
 
-The receiver is Bob is Alice cheats.  
+The receiver is Bob if Alice cheats.  
 
-The amount is the tokens in the `to_htlc` output.  
+The amount is the number in `vout=3`( receiver `to_htlc`) of the commitment transaction payload.  
 
 ### Fee rate
 
