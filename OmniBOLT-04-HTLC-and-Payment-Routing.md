@@ -179,8 +179,7 @@ OP_ENDIF
 ```
 
 ### HTLC Success HED1a 
-TODO(Ben Fei, Neo Carmack)
-
+ 
 HED(n)(a/b) spends the `to_htlc` output by receiver's signature and preimage R:
 
 ```
@@ -229,7 +228,7 @@ RSMC redeem script is the same as in [RSMC commitment transaction](https://githu
 The HTLC BR transaction can be constructed and broadcast without delay when the counter party broadcasts a revocked commitment.  
 
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout to_htlc.  
