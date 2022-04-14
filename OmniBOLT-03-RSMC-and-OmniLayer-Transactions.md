@@ -453,7 +453,7 @@ The RD and BR are written in a redeem script, which locks the to_local output. P
 #### Funding and `to remote` transactions   
 
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
@@ -476,7 +476,7 @@ The outputs are sorted into the order by omnicore spec.
 
 #### Commitment Transaction  
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
@@ -548,7 +548,7 @@ The outputs are sorted into the order by omnicore spec.
 The BR transaction can be constructed and broadcast without delay when the counter party broadcasts an revocked commitment.  
 
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
