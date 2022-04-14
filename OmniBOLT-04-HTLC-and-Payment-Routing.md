@@ -64,7 +64,7 @@ There are three outputs of a commitment transaction:
 
 On sender side: 
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
@@ -97,7 +97,7 @@ payload in output 0:
  
 On receiver side: 
 ```
-version: 1  
+version: 2  
 locktime: 0 
 tx input:
 	* outpoint: the vout of funding transaction.  
@@ -181,10 +181,48 @@ OP_ENDIF
 ### HTLC Success HED1a 
 TODO(Ben Fei, Neo Carmack)
 
+HED(n)(a/b) spends the `to_htlc` output by receiver's signature and preimage R:
+
+```
+version: 2  
+locktime: 0 
+tx input:
+	* outpoint: tx id of parent commitment transaction and the `to_htlc` output is 3.  
+	* witness stack: 0 <remotehtlcsig> <localhtlcsig> <payment_preimage>.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* receiver/reference1:{value:dust, pkScript: receiver's pubkey script},  
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+``` 
 
 ### HTLC Timeout HT1a 
 
-TODO(Ben Fei, Neo Carmack)
+If timed out, payer should construct HT1a to get this HTLC payment back. 
+
+```
+version: 2  
+locktime: 0 
+tx input:
+	* outpoint: tx id of parent commitment transaction and the `to_htlc` output is 3.  
+	* witness stack: 0 <remotehtlcsig> <localhtlcsig>.  
+
+tx output:
+	* op_return:{value:0, pkScript:opReturn_encode},  
+    	* receiver/reference1:{value:dust, pkScript: RSMC redeem script},   
+	* change:{value:change satoshis, pkScript: the channel pubkey script }    
+```
+
+Where in both HTLC success and timeout:  
+`opReturn_encode`: the [encoded tx version( = 0 ), tx type( = 0 ), token id and amount](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#payload), prefixed by "omni".   
+
+The amount is the amount of vout3 in the `op_return` payload of commitment transaction.  
+
+change satoshis = channel satoshis - dust.  
+
+RSMC redeem script is the same as in [RSMC commitment transaction](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md#commitment-transaction)
+
+
 
 ### HTLC Breach Remedy 
 
