@@ -231,8 +231,8 @@ The HTLC BR transaction can be constructed and broadcast without delay when the 
 version: 2  
 locktime: 0 
 tx input:
-	* outpoint: the vout to_htlc.  
-	* <revockation key>: to spend the to_htlc output.  
+	* outpoint: the `to_htlc` output is 3.  
+	*  witness stack: <revockation key> to spend the to_htlc output.  
 
 tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
@@ -246,7 +246,7 @@ Where:
 
 The receiver is Bob if Alice cheats.  
 
-The amount is the number in `vout=3`( receiver `to_htlc`) of the commitment transaction payload.  
+The amount is the number in `vout=3`( receiver `to_htlc`) of the commitment transaction `op_return` payload.  
 
 ### Fee rate
 
