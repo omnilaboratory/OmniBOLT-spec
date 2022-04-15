@@ -259,29 +259,37 @@ For a fee rate example of 50 basis points, an incoming HTLC is 15 USDT, then the
 
 ```
     +-------+                                                             +-------+
-    |       |--(1)-------------  update_add_htlc_1 (40)  ---------------->|       |  
-    |       |         partially signed toB, toRSMC, toHTLC in C(3)a       |       |  
+    |       |--(1)-------------   update_add_htlc  (40)  ---------------->|       |  
+    |       |         		    for asset 1       		  	  |       |  
     |       |                                                             |       |
-    |       |<-(2)-------------  update_add_htlc_2 (41)  -----------------|       |
-    |   A   |           signed toB, toRSMC, toHTLC in C(3)a               |   B   | 
-    |       |	              partially signed RD, HTLa, HLock            |       |
-    |       |        partially signed toB, toRSMC, toHTLC in C(3)b        |       |
-    |       |                                                             |       |
-    |       |                                                             |       |
-    |       |--(3)-------------  update_add_htlc_3 (42)   --------------->|       |  
-    |       |              signed toB, toRSMC, toHTLC in C(3)b            |       |
-    |       |   partially signed (RD in toRSMC, HTD1b in toHTLC, HLock)   |       |
-    |       |   partially signed HTRD1a, HTBR1a, HED1a in HT1a in C(3)a   |       |
-    |       |                                                             |       |
-    |       |                                                             |       |
-    |       |<-(4)-------------- update_add_htlc_4 (43)   ----------------|       |
-    |       |          send back the completely signed HT1a in C(3)a      |       |
+    |       |--(1)-------------   update_add_htlc  (40)  ---------------->|       |  
+    |       |         		    for asset 2       		 	  |       |   
     |       |                                                             |       |  
+    |       |<-(1)-------------   update_add_htlc  (40)  -----------------|       |
+    |   A   |           	    for asset 3              		  |   B   |  
+    |       |                                                             |       |
+    |       |--(2)-------------  commitment signed (41)   --------------->|       |  
+    |       |              	    for asset 1         		  |       |  
+    |       |              	                             		  |       |  
+    |       |<-(3)-----------  revock and acknowledge (42)  --------------|       |
+    |       |              	    for asset 1         		  |       |  
+    |       |                                                             |       |
+    |       |<-(2)-------------- commitment signed (41)   ----------------|       |
+    |       |          		    for asset 3      			  |       |
     |       |                                                             |       |  
+    |       |--(2)-------------  commitment signed (41)   --------------->|       |  
+    |       |              	    for asset 2         		  |       |  
+    |       |                                                             |       | 
+    |       |<-(3)-----------  revock and acknowledge (42)  --------------|       |
+    |       |              	    for asset 2         		  |       |   
     |       |                                                             |       |  
+    |       |--(3)-----------  revock and acknowledge (42)  ------------->|       |
+    |       |              	    for asset 3         		  |       |    
     +-------+                                                             +-------+
    
 ```
+
+ach node has multiple asset channels, it can simultaneously send out transactions，and wait fot the counter party to response.
 
 ## update_add_htlc 
 
@@ -293,93 +301,40 @@ Please note that the payment infomation are all encoded in transaction hex.
 1. type: -40 (AddHTLC)
 2. data: 
   * [`channel_id`:`channel_id`]:  
+  * [`4 bytes`:`asset id`]: 
   * [`byte`:`IsPayInvoice`]: bool type  
-  * [`float64`:`amount`]:   
-  * [`float64`:`amount_to_payee`]: amount to payee.   
+  * [`float64`:`amount`]:    
+  * [`sha256`:`payment_hash`]: the hash(R) used to lock the payment. 
   * [`byte_array`:`memo`]: memo to the payee.   
-  * [`64*byte`:`h`]: Hash(R) used to lock the payment.    
   * [`int32`:`cltv_expiry`]: expiry blocks.  
-  * [`byte_array`:`last_temp_address_private_key`]: private key of temp address generated in last RSMC: give up the previous commitment tx.  
-  * [`byte_array`:`htlc_sender_signed`]: HTLC sub contracts and partially signed by the sender.    
-  * [`byte_array`:`routing_packet`]:   
-  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
+  * [`1366*byte`:onion_routing_packet]
 	 
-Data format of `htlc_sender_signed`:  
-  
-  	* [`byte_array`:`curr_rsmc_temp_address_pub_key`]: pub key of temp address used to accept "pay to RSMC" in current C(n)x.  
-  	* [`byte_array`:`curr_htlc_temp_address_pub_key`]: pub key of temp address used to accept "pay to HTLC" in current C(n)x.  
-  	* [`byte_array`:`curr_htlc_temp_address_for_ht1a_pub_key`]: pub key of temp address used to accept "pay to RSMC" in Ht1a.  
-  	* [`byte_array`:`cna_counterparty_partial_signed_data`]:   partially signed data from payer in C(n)x, e.g. C(3)a.  
-  	* [`byte_array`:`cna_rsmc_partial_signed_data`]:   partially signed RSMC data from payer in C(n)x, e.g. C(3)a. 
-  	* [`byte_array`:`cna_htlc_partial_signed_data`]:   partially signed HTLC data from payer in C(n)x, e.g. C(3)a.  
 
  
-1. type: -41 (HTLCReceiverSigned)
+1. type: -41 (commitment signed)
 2. data: 
   * [`channel_id`:`channel_id`]:
-  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.  
-  * [`byte_array`:`htlc_reciever_signed`]: HTLC sub contracts signed by the reciever, the symmetric transactions created on the reciever side and signed. 
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
+  * [`4 bytes`:`asset id`]: 
+  * [`signature`:`signature`]: sender's signature.  
+  * [`u16`:num_htlcs]: number of HTLCs for this `asset id`.  
+  * [`num_htlcs*signature`:htlc_signature]: htlc signatures. 
 
-Data format of `htlc_reciever_signed`:  
-
-  	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:    
-  	* [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
- 	* [`byte_array`:`payee_curr_rsmc_temp_address_pub_key`]:  payee's current RSMC temp address pub_key.   
-  	* [`byte_array`:`payee_curr_htlc_temp_address_pub_key`]:  payee's current HTLC temp address pub_key.   
-  	* [`byte_array`:`payee_curr_htlc_temp_address_for_he_pub_key`]:  payee's current pub_key of HTLC temp address for HE.  
-  	* [`byte_array`:`payee_last_temp_address_private_key`]:  payee's private_key of the last temp address.  
-  	* [`byte_array`:`cna_complete_signed_rsmc_hex`]:    
-  	* [`byte_array`:`cna_complete_signed_counterparty_hex`]:  
-  	* [`byte_array`:`cna_complete_signed_htlc_hex`]:  
-  	* [`byte_array`:`cna_rsmc_rd_partial_signed_data`]:  
-  	* [`byte_array`:`cna_htlc_ht_partial_signed_data`]:  
-  	* [`byte_array`:`cna_htlc_hlock_partial_signed_data`]:  
-  	* [`byte_array`:`cnb_rsmc_partial_signed_data`]:  
-  	* [`byte_array`:`cnb_counterparty_partial_signed_data`]:  
-  	* [`byte_array`:`cnb_htlc_partial_signed_data`]:   
-
-
+ 
 
   
-1. type: -42 (PayerCompletlySigned)
+1. type: -42 (revock and acknowledge)
 2. data: 
   * [`channel_id`:`channel_id`]:  
-  * [`byte_array`:`payer_commitment_tx_hash`]:  payer's commitment transaction hash.   
-  * [`byte_array`:`payee_commitment_tx_hash`]:  payee's commitment transaction hash.   
-  * [`byte_array`:`payer_completely_signed`]: payer completely signed HTLC sub contracts.  
-  * [`byte_array`:`PayerNodeAddress`]: 
-  * [`byte_array`:`PayerPeerId`]:   
+  * [`4 bytes`:`asset id`]: 
+  * [`32*byte`:per_commitment_secret]
+  * [`point`:next_per_commitment_point]
 
-Data format of `payer_completely_signed`:  
+If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
 
-  	* [`byte_array`:`cna_htlc_temp_address_for_ht_pub_key`]:  pub key of temp address in HT for HTLC of C(n)a, e.g. C(3)a.  
-  	* [`byte_array`:`cnb_complete_signed_rsmc_hex`]: completly signed RSMC hex in cnb, , e.g. C(3)b.  
-  	* [`byte_array`:`cnb_complete_signed_counterparty_hex`]: completly signed counterparty's hex in cnb, , e.g. C(3)b.  
-  	* [`byte_array`:`cnb_complete_signed_htlc_hex`]: completly signed HTLC hex in cnb, e.g. C(3)b.   
-  	* [`byte_array`:`cnb_rsmc_rd_partial_data`]: partially signed RD in RSMC in cnb, e.g. C(3)b.   
-  	* [`byte_array`:`cnb_htlc_htd_partial_data`]: partially signed HTD in HTLC in cnb, e.g. C(3)b.   
-  	* [`byte_array`:`cnb_htlc_hlock_partial_data`]:  
-  	* [`byte_array`:`cna_htlc_ht_hex`]: hex of HT in HTLC of C(n)a.   
-  	* [`byte_array`:`cna_htlc_htrd_partial_data`]:  HTRD data of C(n)a. 
-  	* [`byte_array`:`cna_htlc_htbr_partial_data`]:  HTBR data of C(n)a. 
-  	* [`byte_array`:`cna_htlc_hed_raw_data`]:  HED data of C(n)a.  
- 
- 
-1. type: -43 (Completly signed HTLC) send back the completely signed HT1a in C(n)a
-2. data: 
-  * [`channel_id`:`channel_id`]:  
-  * [`byte_array`:`cna_htlc_htrd_complete_signed_hex`]:  
-  * [`byte_array`:`cna_htlc_hed_partial_data`]:   
-		 
-		 
 
 ### Requirements
 
-to be added. 
+TO DO: Neo Carmack, Ben Fei
 
 
 
