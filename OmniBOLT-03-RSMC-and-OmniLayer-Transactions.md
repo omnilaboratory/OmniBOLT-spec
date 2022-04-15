@@ -625,7 +625,7 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 1. type: -353 (send back signed transactions in C2B)  
 2. data: to be added  
 
-The asset ID has to match the channel ID. If a node receives a commitment transaction of a certain asset that does not match the channel(ID) it built for another asset, the node should close the connect with the remote party. Also a node must check the if the channel id is the same in the transaction signature. If not, the node has to close the connection.  
+If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
 
 Alice can only update the local state database after receiving all the signatures of C(n)a from Bob. Otherwise, if any message in the process is interrupted, Alice must cancel the established transaction and return to the state of the previous commitment tx. On Bob's side, the same logic is applied, the local state database is updated only after all Alice's signatures are received. 
 
