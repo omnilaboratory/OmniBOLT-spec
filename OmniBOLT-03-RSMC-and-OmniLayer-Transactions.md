@@ -421,17 +421,36 @@ The two messages describe a RSMC payment inside one channel created by Alice and
 ```
     +-------+                                             +-------+
     |       |--(1)-------  commitment_tx(351)  ---------->|       |  
+    |       |                for asset 1 		  |       |  
+    |       |--(1)-------  commitment_tx(351)  ---------->|       |  
+    |       |                for asset 2 		  |       |  
+    |       |--(1)-------  commitment_tx(351)  ---------->|       |  
+    |       |                for asset 3 		  |       |   
     |       |<-(2)----- commitment_tx_signed (352) -------|       |
+    |       |                for asset 1 		  |       |  
     |   A   |             Revoke and Acknowledge,         |   B   | 
     |       |           construct BR1a, C2a and RD2a      |       | 
     |       |            and the mirror transactions      |       |
     |       |                  on Bob's OBD               |       | 
+    |       |                                             |       |   
+    |       |<-(2)----- commitment_tx_signed (352) -------|       |
+    |       |                for asset 2 		  |       |  
+    |       |                                             |       |  
+    |       |<-(2)----- commitment_tx_signed (352) -------|       |
+    |       |                for asset 3 		  |       |  
     |       |                                             |       |  
     |       |--(3)-------------- (353) ------------------>|       |
     |       |      send back signed transactions in C2B   |       |
+    |       |                for asset 2 		  |       |  
+    |       |--(3)-------------- (353) ------------------>|       |  
+    |       |                for asset 1 		  |       |  
+    |       |--(3)-------------- (353) ------------------>|       |
+    |       |                for asset 3 		  |       |  
     +-------+                                             +-------+
    
 ```
+
+Each node has multiple asset channels, it can simultaneously send out transactions，and wait fot the counter party to response.  
      
 <!-- ![RSMC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC") -->
 
@@ -577,6 +596,7 @@ Bob constructs the symmetric transaction C2b and hands it back to Alice for sign
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
+    * [`4*byte`:`channel_id`]: asset id.
     * [`32*byte`:`amount`]: amount of the payment.
     * [`byte_array`:`commitment_tx_hash`]: C(n+1)a's commitment transaction hash, if Alice is the payer.
     * [`32*byte`:`last_temp_address_private_key`]: When C(n+1)a created, the payer shall give up the private key of the previous temp multi-sig address in C(n)a. <Alice2, Bob> as an example in the above diagram. 
@@ -589,6 +609,7 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 1. type: -352 (Revoke and Acknowledge Commitment Transaction)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
+    * [`4*byte`:`channel_id`]: asset id.
     * [`byte`:`approval`]: payee accepts or rejects this payment.
     * [`32*byte`:`amount`]: amount of the payment.  
     * [`byte_array`:`commitment_tx_hash`]: Payer's commitement tx hash.  
@@ -603,6 +624,8 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 
 1. type: -353 (send back signed transactions in C2B)  
 2. data: to be added  
+
+The asset ID has to match the channel ID. If a node receives a commitment transaction of a certain asset that does not match the channel(ID) it built for another asset, the node should close the connect with the remote party. Also a node must check the if the channel id is the same in the transaction signature. If not, the node has to close the connection.  
 
 Alice can only update the local state database after receiving all the signatures of C(n)a from Bob. Otherwise, if any message in the process is interrupted, Alice must cancel the established transaction and return to the state of the previous commitment tx. On Bob's side, the same logic is applied, the local state database is updated only after all Alice's signatures are received. 
 
