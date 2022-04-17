@@ -372,7 +372,7 @@ Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/
 
 1. type: -3400 (btc_funding_created)
 2. data:
-    * [`32*byte`:`amount`]: total BTC funded by Alice.  
+    * [`32*byte`:`amount`]: total satoshis funded by Alice. The minimum amount is `7*546`, where `546` is the dust for an output.    
     * [`32*byte`:`funding_btc_hex`]: BTC funding transaction hex, used by Bob to validate the transaction.  
     * [`byte_array`:`funding_redeem_hex`]: funding redeem hex.   
     * [`sha256`:`funding_txid`]: funding transaction id.
