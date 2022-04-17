@@ -28,7 +28,7 @@ Opening a channel seeks remote an OmniBOLT node, to create a channel according t
 The process consists of:
 
 * funding node (funder) sends an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. 
-* The funder creates the funding BTC transaction and get the approval from fundee. 
+* The funder creates the funding satoshis transaction and get the approval from fundee. The satoshis in a channel is only for gas fee when broadcasts, we don't use satoshis as channel fee. As a HTLC transaction includes maximum 7 sub-transactions, each at least has 546 satoshis(dust) in its output, so that the funder has to fund `7*546` satoshis in creating a channel.  
 * The funder creates the funding token transaction and the corresponding commitment transaction, as described in [OmniBOLT #3](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). 
 * The funder then sends the hex of the funding transaction with the `asset_funding_created` message, along with the hex of the first commitment transaction in the channel, to the fundee. 
 * Once the fundee learns the funding transaction have been created, and validate the hex, it's able to generate the signature for the funder's version of the commitment transaction, create his mirror commitment transaction, and send it back using the `asset_funding_signed` message.
