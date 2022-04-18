@@ -331,13 +331,13 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`32*byte`:per_commitment_secret]
   * [`point`:next_per_commitment_point]
 
-If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
 
 
 ### Requirements
 
 TO DO: Neo Carmack, Ben Fei
 
+If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload for every HTLC. If not, the node has to close the connection.  
 
 
 ## Terminate HTLC off-chain
