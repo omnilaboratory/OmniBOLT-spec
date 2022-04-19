@@ -4,7 +4,8 @@
 
 * `OBD`: OmniBOLT Daemon.
 * `channel`: A channel refers to Poon-Dryja channel in lightning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
-* `[A, token symbol, B]`: stands for the channel built by A and B, funded by token `token symbol`, for example `omni`,`usdt`.
+* `asset id`: Each asset has an id that is published by Omnilayer on the mainnet. In most protocol messages, if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is compatible to current bitcoin only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet.  
+* `[A, token symbol, B]`: stands for the channel built by A and B, funded by token `token symbol`, for example `omni`,`usdt`.  
 * `[A --(10 USDT)--> B]`: A pays 10 usdt to B in channel `[A, USDT, B]`.  
 * `property`: refers to tokens issued on Omnilayer, the same to "asset".
 * `RSMC`: Revocable Sequence Maturity Contract is composed to punish malicious peers, who broadcasts elder commitment transactions to get more refund than what's exactly in his balance.
