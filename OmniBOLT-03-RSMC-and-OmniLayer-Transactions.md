@@ -596,7 +596,7 @@ Bob constructs the symmetric transaction C2b and hands it back to Alice for sign
 1. type: -351 (commitment_tx)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
-    * [`4*byte`:`channel_id`]: asset id.
+    * [`4*byte`:`asset_id`]: asset id. 
     * [`32*byte`:`amount`]: amount of the payment.
     * [`byte_array`:`commitment_tx_hash`]: C(n+1)a's commitment transaction hash, if Alice is the payer.
     * [`32*byte`:`last_temp_address_private_key`]: When C(n+1)a created, the payer shall give up the private key of the previous temp multi-sig address in C(n)a. <Alice2, Bob> as an example in the above diagram. 
@@ -609,7 +609,7 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 1. type: -352 (Revoke and Acknowledge Commitment Transaction)
 2. data:
     * [`32*byte`:`channel_id`]: the global channel id.
-    * [`4*byte`:`channel_id`]: asset id.
+    * [`4*byte`:`asset_id`]: asset id.
     * [`byte`:`approval`]: payee accepts or rejects this payment.
     * [`32*byte`:`amount`]: amount of the payment.  
     * [`byte_array`:`commitment_tx_hash`]: Payer's commitement tx hash.  
@@ -624,6 +624,10 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 
 1. type: -353 (send back signed transactions in C2B)  
 2. data: to be added  
+
+
+In all above messages, if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is compatible to current bitcoin only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet. 
+
 
 If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
 
