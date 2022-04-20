@@ -89,6 +89,8 @@ orderMessage
 1. Alice gets the ratio(price) from a tracker or an oracle, sign the order.  
 2. Alice post this order to a tracker.  
 
+The tracker network must verify the signature. If all correct, then sync it to neighbors and push it to connected nodes.  
+
 ## channel state transition 
 
 We use **AMM balance** and **payment balance** to distinguish the two states of channel funds.  
