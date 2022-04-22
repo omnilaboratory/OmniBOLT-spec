@@ -331,7 +331,7 @@ Please note that the payment infomation are all encoded in transaction hex.
   * [`32*byte`:per_commitment_secret]
   * [`point`:next_per_commitment_point]
 
-
+if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is compatible to current bitcoin only lightning network. 
 
 ### Requirements
 
@@ -355,7 +355,7 @@ To supply the preimage:
 2. data:
   * [`channel_id`:`channel_id`]
   * [`u64`:`hop_id`]
-  * [`u64`:`property_id`]: the Omni asset id. 
+  * [`4 bytes`:`asset id`]: 
   * [`u64`:`private_key_Alice_4`]: the private key of Alice 4, encrypted by Bob's public key when sending this message to Bob.
   * [`u64`:`private_key_Alice_5`]: the private key of Alice 5, encrypted by Bob's public key when sending this message to Bob.
   * [`32*byte`:`payment_preimage`]: the R
