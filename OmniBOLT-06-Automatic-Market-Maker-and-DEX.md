@@ -58,7 +58,7 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
 
-After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network have no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading. 
+After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading. 
 
 The following sections explain the mechanism in detail.
 
