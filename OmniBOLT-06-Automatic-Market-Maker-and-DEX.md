@@ -4,7 +4,7 @@
 
 # Table of Contents
  * [introduction](#introduction)
- * [liquidity pool](#liquidity-pool)
+ * [liquidity pool：from sparse to continuous space ](#liquidity-pool-from-sparse-to-continuous-space )
  * [limit order](#limit-order) 
  * [signing an order](#signing-an-order)
  * [channel state transition](#channel-state-transition)
@@ -37,7 +37,7 @@ AMM on lightning network operates on the same constant product model, but the in
 This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
-## liquidity pool
+## liquidity pool：from sparse to continuous space 
 
 LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have a direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
 
@@ -47,7 +47,16 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
   <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
 </p>
 
-Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect tokens: all tokens are deposited into one address.  
+Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquiity: all tokens are deposited into one address.  
+
+Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will take a loss of miner fee. 
+
+To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges. This hedges against the liquidity sparsity of the order book.  
+
+<p align="center">
+  <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM.png">
+</p>
+
 
 ## limit order
 
