@@ -57,6 +57,9 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM.png">
 </p>
 
+After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network have no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading. 
+
+The following sections explain the mechanism in detail.
 
 ## limit order
 
@@ -237,7 +240,9 @@ If a liquidity provider think the tracker he connects is not fair enough, he may
 
 Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be liquidity reserves. One way to commit fund to liquidity pool is to sign a limit order, and post it to a tracker. Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User need to sign a ranged liquidity of pair (x, y), and post it to a tracker. 
+
+Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
 
 **Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
 
