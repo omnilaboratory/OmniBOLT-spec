@@ -1,6 +1,7 @@
 # OmniBOLT #6: Automatic Market Maker model, Liquidity Pool and DEX on Lightning Network 
 
-* This work is in progress(Oct 04.2021). 
+* This work is in progress (Oct 04.2022). 
+* Mechanism supports both discrete and continuous models in section 2 (Apr 27.2022). 
 
 # Table of Contents
  * [introduction](#introduction)
