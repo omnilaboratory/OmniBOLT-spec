@@ -52,7 +52,7 @@ Naturally, funded channels in lightning network form a global liquidity pool, th
 
 Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will take a loss of miner fee. 
 
-To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
+To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
 
 <p align="center">
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
