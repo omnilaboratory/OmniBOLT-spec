@@ -4,7 +4,7 @@
 
 # Table of Contents
  * [introduction](#introduction)
- * [liquidity pool：from sparse to continuous space ](#liquidity-pool-from-sparse-to-continuous-space )
+ * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
  * [limit order](#limit-order) 
  * [signing an order](#signing-an-order)
  * [channel state transition](#channel-state-transition)
@@ -37,7 +37,7 @@ AMM on lightning network operates on the same constant product model, but the in
 This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
-## liquidity pool: from sparse to continuous space 
+## liquidity pool: from discrete to continuous space 
 
 LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have a direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
 
