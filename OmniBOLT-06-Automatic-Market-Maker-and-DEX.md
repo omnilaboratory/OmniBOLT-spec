@@ -47,7 +47,7 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
   <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
 </p>
 
-Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquiity: all tokens are deposited into one address.  
+Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
 Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will take a loss of miner fee. 
 
