@@ -63,6 +63,8 @@ The following sections explain the mechanism in detail.
 
 ## limit order
 
+A limit order is an extreme case of a liquidity range.  
+
 ```
 orderMessage  
 {  
