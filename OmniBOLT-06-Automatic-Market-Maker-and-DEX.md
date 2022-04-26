@@ -54,7 +54,7 @@ Conceptually, an order book is a discrete space consisting of a series of orders
 To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges. This hedges against the liquidity sparsity of the order book.  
 
 <p align="center">
-  <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM.png">
+  <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network have no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading. 
