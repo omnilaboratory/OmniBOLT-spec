@@ -50,7 +50,7 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
-Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will take a loss of miner fee. 
+Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will oftenly take loss of miner fee. 
 
 To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
 
@@ -288,14 +288,14 @@ Oracle is involved to feed the real time external price for trading. Although tr
 
 ## reference list
 
-1. Vitalik Buterin.The x*y=k market maker model. https://ethresear.ch/t/improving-front-running-resistance-of-x-y-k-market-makers.  
+1. Vitalik Buterin. The x*y=k market maker model. https://ethresear.ch/t/improving-front-running-resistance-of-x-y-k-market-makers.  
 2. Uniswap. https://uniswap.org/
-3. Curve. https://www.curve.fi/
-4. Balancer. https://balancer.finance/
+3. Michael Egorov. Curve. Automatic market-making with dynamic peg. https://www.curve.fi/
+4. Fernando Martinelli, Nikolai Mushegian. A non-custodial portfolio manager, liquidity provider, and price sensor. https://balancer.finance/
 5. [Connect to a tracker](https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker): https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker  
 6. Uniswap whitepaper. https://uniswap.org/whitepaper.pdf
 7. Atomic swap. https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap
-8. Uniswap V3 white paper. https://uniswap.org/whitepaper-v3.pdf
+8. Hayden Adams, Noah Zinsmeister, et. Uniswap V3 white paper. https://uniswap.org/whitepaper-v3.pdf
  
 
  
