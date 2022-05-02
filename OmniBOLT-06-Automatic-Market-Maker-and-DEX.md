@@ -8,13 +8,14 @@
  * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
  * [limit order](#limit-order) 
  * [signing an order](#signing-an-order)
+ * [adding liquidity](#adding-liquidity)
+ * [removing liquidity](#removing-liquidity)
  * [channel state transition](#channel-state-transition)
  * [trackers running a matching engine](#trackers-running-a-matching-engine)
  * [example for matching orders](#example-for-matching-orders)
- * [token trading](#token-trading)
+ * [token trading against liquidity pool](#token-trading-against-liquidity-pool)
  * [fee structure](#fee-structure)
- * [adding liquidity](#adding-liquidity)
- * [removing liquidity](#removing-liquidity)
+ * [impermanent loss](#impermanent-loss)
  * [oracle](#oracle)
  * [differences from onchain AMM Swaps](#differences-from-onchain-AMM-Swaps)
  * [reference list](#reference-list) 
@@ -106,6 +107,40 @@ orderMessage
 
 The tracker network must verify the signature. If all correct, then sync it to neighbors and push it to connected nodes.  
 
+
+## adding liquidity
+
+Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
+
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User need to sign a ranged liquidity of pair (x, y), and post it to a tracker. 
+
+Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
+
+**Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
+
+**Step 2**: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+
+**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+
+The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle.  
+
+
+Adding liquidity costs BTC gas fee.  
+
+## removing liquidity
+
+There are two ways to remove liquidity:  
+1. withdraw signed and submitted orders.  
+2. close channel and withdraw tokens to the mainchain.   
+
+Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
+
+Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund, `y'` to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged, where `y' = y - y(x-x')/x`.  
+
+There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
+
+
+
 ## channel state transition 
 
 We use **AMM balance** and **payment balance** to distinguish the two states of channel funds.  
@@ -178,7 +213,7 @@ Matching engine picks a ratio between 60000:1 to 60500:1, for example 60200:
 2. Bob plans to sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
 3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
-## token trading
+## token trading against liquidity pool
 
 Then a tracker maintains "almost" all nodes' balances and hence it is able to calculate the token price for a trade:  
 
@@ -238,37 +273,12 @@ Trackers balance the workload of the whole network: If one node is busy handling
 
 If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
 
+## impermanent loss
+It is LP's decision to offer a wider liquidity range to earn more potential transaction fee, or a narrow liquidity range to avoid impermanent losses.  
 
-## adding liquidity
+If the price fluctuates in a narrow space for a long time, then the liquidity provider can not only earn a lot of fees, but also avoid impermanent losses. 
 
-Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
-
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User need to sign a ranged liquidity of pair (x, y), and post it to a tracker. 
-
-Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
-
-**Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
-
-**Step 2**: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
-
-**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
-
-The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle.  
-
-
-Adding liquidity costs BTC gas fee.  
-
-## removing liquidity
-
-There are two ways to remove liquidity:  
-1. withdraw signed and submitted orders.  
-2. close channel and withdraw tokens to the mainchain.   
-
-Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
-
-Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund, `y'` to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged, where `y' = y - y(x-x')/x`.  
-
-There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
+If the stock price rises or falls unilaterally, the impermanent loss will be relatively large, and the fee will not be earned much. It all depends on the liquidity provider's prediction to the future market trend. 
 
 
 ## oracle
@@ -296,7 +306,7 @@ Oracle is involved to feed the real time external price for trading. Although tr
 6. Uniswap whitepaper. https://uniswap.org/whitepaper.pdf
 7. Atomic swap. https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap
 8. Hayden Adams, Noah Zinsmeister, et. Uniswap V3 white paper. https://uniswap.org/whitepaper-v3.pdf
- 
+9. Impermanent Loss Explained. https://academy.binance.com/en/articles/impermanent-loss-explained
 
  
 
