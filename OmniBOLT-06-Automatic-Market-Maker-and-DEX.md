@@ -274,15 +274,29 @@ Trackers balance the workload of the whole network: If one node is busy handling
 If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
 
 ## impermanent loss
-It is LP's decision to offer a wider liquidity range to earn more potential transaction fee, or a narrow liquidity range to be less exposed to impermanent losses.  
 
-If the price fluctuates in a narrow space for a long time, then the impermanent losses are negligible compared to the profitble trading fees. 
+Payment liquidity providers will never expose to any loss. Potential losses are only possible for AMM LPs who wish to use liquidity to earn trading fees.
 
-If stock price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
+It is AMM LP's decision to offer a wider liquidity range to earn more trading fee, or a narrow liquidity range to be less exposed to potential impermanent losses.  
+
+If the price fluctuates in a narrow space for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If stock price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
 
 LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend. 
 
-Expamples showing how impermanent loss happens and how much a loss could be can be found in [9,10]
+Expamples showing how impermanent loss happens and how much a loss could be can be found in [9,10]. The follwoing graph and summary of losses compared to holding are from [10]:
+
+<p align="center">
+  <img width="512" alt="Impermanent Loss" src="imgs/impermanentLoss.png">
+</p>
+
+a 1.25x price change results in a 0.6% loss relative to HODL
+a 1.50x price change results in a 2.0% loss relative to HODL
+a 1.75x price change results in a 3.8% loss relative to HODL
+a 2x price change results in a 5.7% loss relative to HODL
+a 3x price change results in a 13.4% loss relative to HODL
+a 4x price change results in a 20.0% loss relative to HODL
+a 5x price change results in a 25.5% loss relative to HODL
+
 
 ## oracle
 Oracle is involved to feed the real time external price for trading. Although trackers give prices at any moment a trade occurs, obd should verify it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the trade. 
