@@ -12,8 +12,8 @@
  * [removing liquidity](#removing-liquidity)
  * [channel state transition](#channel-state-transition)
  * [trackers running a matching engine](#trackers-running-a-matching-engine)
- * [example for matching orders](#example-for-matching-orders)
- * [token trading against liquidity pool](#token-trading-against-liquidity-pool)
+ 	* [example for matching orders](#example-for-matching-orders)
+ 	* [token trading against liquidity pool](#token-trading-against-liquidity-pool)
  * [fee structure](#fee-structure)
  * [impermanent loss](#impermanent-loss)
  * [oracle](#oracle)
@@ -112,9 +112,9 @@ The tracker network must verify the signature. If all correct, then sync it to n
 
 Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User need to sign a ranged liquidity of pair (x, y), and post it to a tracker. 
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User needs to sign a ranged liquidity of pair (x, y), and post it to a tracker. At least two channels have to be opened and funded. 
 
-Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by the tracker:  
+Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by trackers:  
 
 **Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
 
@@ -125,7 +125,8 @@ Adding liquidity must use the current exchange rate at the moment of deposit[6].
 The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle.  
 
 
-Adding liquidity costs BTC gas fee.  
+Funding a channel costs BTC gas fee. But adding(removing) liquidity has no cost. 
+
 
 ## removing liquidity
 
@@ -139,7 +140,9 @@ Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have 
 
 There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
 
+## O(1) complexity of add and remove
 
+TO DO(Ben, Neo): apply binary tree to store ranged liquidity and limit orders, which has `O(1)` time complexity in adding and removing.  
 
 ## channel state transition 
 
@@ -200,7 +203,7 @@ After a node sign and submit an order to a tracker, the tracker takes 6 steps to
 5. obd 1 Processes atomic swaps to obd 3 and 4.  
 6. The remaining of the order will be saved in the tracker's local orderbook database, waiting for further deals. 
 
-## example for matching orders
+### example for matching orders
 
 <p align="center">
   <img width="512" alt="Matching Orders" src="imgs/Matching-Orders.png">
@@ -213,7 +216,7 @@ Matching engine picks a ratio between 60000:1 to 60500:1, for example 60200:
 2. Bob plans to sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
 3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
-## token trading against liquidity pool
+### token trading against liquidity pool
 
 Then a tracker maintains "almost" all nodes' balances and hence it is able to calculate the token price for a trade:  
 
