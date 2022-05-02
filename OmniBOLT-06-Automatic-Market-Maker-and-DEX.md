@@ -10,6 +10,7 @@
  * [signing an order](#signing-an-order)
  * [adding liquidity](#adding-liquidity)
  * [removing liquidity](#removing-liquidity)
+ * [O(1) complexity of add and remove operations](#O1-complexity-of-add-and-remove-operations)
  * [channel state transition](#channel-state-transition)
  * [trackers running a matching engine](#trackers-running-a-matching-engine)
  	* [example for matching orders](#example-for-matching-orders)
@@ -140,7 +141,7 @@ Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have 
 
 There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
 
-## O(1) complexity of add and remove
+## O(1) complexity of add and remove operations
 
 TO DO(Ben, Neo): apply binary tree to store ranged liquidity and limit orders, which has `O(1)` time complexity in adding and removing.  
 
