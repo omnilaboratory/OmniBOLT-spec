@@ -274,12 +274,15 @@ Trackers balance the workload of the whole network: If one node is busy handling
 If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
 
 ## impermanent loss
-It is LP's decision to offer a wider liquidity range to earn more potential transaction fee, or a narrow liquidity range to avoid impermanent losses.  
+It is LP's decision to offer a wider liquidity range to earn more potential transaction fee, or a narrow liquidity range to be less exposed to impermanent losses.  
 
-If the price fluctuates in a narrow space for a long time, then the liquidity provider can not only earn a lot of fees, but also avoid impermanent losses. 
+If the price fluctuates in a narrow space for a long time, then the impermanent losses are negligible compared to the profitble trading fees. 
 
-If the stock price rises or falls unilaterally, the impermanent loss will be relatively large, and the fee will not be earned much. It all depends on the liquidity provider's prediction to the future market trend. 
+If stock price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
 
+LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend. 
+
+Expamples showing how impermanent loss happens and how much a loss could be can be found in [9,10]
 
 ## oracle
 Oracle is involved to feed the real time external price for trading. Although trackers give prices at any moment a trade occurs, obd should verify it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the trade. 
@@ -307,6 +310,7 @@ Oracle is involved to feed the real time external price for trading. Although tr
 7. Atomic swap. https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap
 8. Hayden Adams, Noah Zinsmeister, et. Uniswap V3 white paper. https://uniswap.org/whitepaper-v3.pdf
 9. Impermanent Loss Explained. https://academy.binance.com/en/articles/impermanent-loss-explained
+10. Pintail. Uniswap: A Good Deal for Liquidity Providers?. https://pintail.medium.com/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2
 
  
 
