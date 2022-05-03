@@ -281,11 +281,7 @@ If a liquidity provider think the tracker he connects is not fair enough, he may
 
 Payment liquidity providers will never expose to any loss. Potential losses are only possible for AMM LPs who wish to use liquidity to earn trading fees.
 
-It is AMM LP's decision to offer a wider liquidity range to earn more trading fee, or a narrow liquidity range to be less exposed to potential impermanent losses.  
-
-If the price fluctuates in a narrow space for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If stock price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
-
-LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend. 
+It is AMM LP's decision to offer a wider liquidity range to earn more trading fee, or a narrow liquidity range to be less exposed to potential impermanent losses.   
 
 Expamples showing how impermanent loss happens and how much a loss could be can be found in [9,10]. The follwoing graph and summary of losses compared to holding are from [10]:
 
@@ -300,6 +296,14 @@ a 2x price change results in a 5.7% loss relative to HODL
 a 3x price change results in a 13.4% loss relative to HODL  
 a 4x price change results in a 20.0% loss relative to HODL  
 a 5x price change results in a 25.5% loss relative to HODL  
+
+
+We use 1.50x price change as an example, given trading fee 0.3%. If the price is in  1.5x change for a month, suppose the transaction volumn during this period is 100 times of the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
+
+If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
+
+
+LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend.  
 
 
 ## oracle
