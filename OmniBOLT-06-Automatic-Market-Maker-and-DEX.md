@@ -121,21 +121,24 @@ Adding liquidity must use the current exchange rate at the moment of deposit[6].
 
 **Step 2**: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
 
-**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's balance of BTC and USDT.  
+**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's AMM liquidity of BTC and USDT.  
 
-The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle.  
-
+The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle. 
 
 Funding a channel costs BTC gas fee. But adding(removing) liquidity has no cost. 
+
+
+In section [impermanent loss](#impermanent-loss), there is a data simulation to help liquidity providers set appropriate ranges, minimize impermanent losses, and earn reliable trading fees. 
+
 
 
 ## removing liquidity
 
 There are two ways to remove liquidity:  
-1. withdraw signed and submitted orders.  
+1. withdraw signed and submitted orders and ranged liquidity.  
 2. close channel and withdraw tokens to the mainchain.   
 
-Trackers calculate the remaining tokens in the liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
+Trackers calculate the remaining tokens in the global liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
 
 Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund, `y'` to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged, where `y' = y - y(x-x')/x`.  
 
