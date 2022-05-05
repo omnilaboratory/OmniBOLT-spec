@@ -301,7 +301,7 @@ a 4x price change results in a 20.0% loss relative to HODL
 a 5x price change results in a 25.5% loss relative to HODL  
 
 
-We use 1.50x price change as an example, given trading fee 0.3%. If the price is in  1.5x change for a month, suppose the transaction volumn during this period is 100 times of the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
+We use 1.50x price change as an example, given trading fee 0.3%. If the price stays within the 1.0X to 1.5x range for a month, suppose the transaction volumn during this period is 100 times of the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
 
 If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If price rises or falls quickly out of the range, the impermanent loss will be relatively large, and no trading fee will be earned. 
 
