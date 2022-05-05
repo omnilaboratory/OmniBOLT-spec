@@ -96,6 +96,13 @@ orderMessage
 
 **ratio**: The price   
 
+If one token is denominated in the other token, then the price `P` is the ratio of the two tokens. A buyer's order is a left-closed and right-open interval `[P, $\infty$)`. The union of all buyers' intervals covers the space of Bitcoin buyer's liquidity, if tokenSell is USDT, and tokenBuy is Bitcoin:  
+```
+$[P1, $\infty$) \cup [P2, $\infty$) \cup ... \cup [Pn, $\infty$) = [P1, $\infty$)$
+```
+
+The token amount at an buyers' interval `$[P1, $\infty$) \cap [P2, $\infty$)` is consumed by sellers' orders, the price moves up to the next limit.  
+
 
 ## signing an order
 
