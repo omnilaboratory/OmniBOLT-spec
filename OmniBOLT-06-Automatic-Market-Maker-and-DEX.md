@@ -102,8 +102,9 @@ If one token is denominated in the other token, then the price `P` is the ratio 
   <img width="256" alt="intervals union" src="imgs/intervalsUnion.png">
 </p>
 
-The token amount at an buyers' interval `$[P1, $\infty$) \cap [P2, $\infty$)` is consumed by sellers' orders, the price moves up to the next limit.  
+The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
+When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0.
 
 ## signing an order
 
