@@ -100,7 +100,7 @@ If one token is denominated in the other token, then the price `P` is the ratio 
 
 
 
-![1](https://latex.codecogs.com/svg.image?[p1,\infty)\cup&space;[p2,\infty)&space;\cup&space;...&space;\cup&space;[pn,\infty)&space;=&space;[p1,\infty))
+![](https://latex.codecogs.com/svg.image?\\[p1,\infty)\cup&space;[p2,\infty)&space;\cup&space;...&space;\cup&space;[pn,\infty)&space;=&space;[p1,\infty))
 
 The token amount at an buyers' interval `$[P1, $\infty$) \cap [P2, $\infty$)` is consumed by sellers' orders, the price moves up to the next limit.  
 
