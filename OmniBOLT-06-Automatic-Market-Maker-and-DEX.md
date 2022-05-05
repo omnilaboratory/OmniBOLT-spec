@@ -303,7 +303,7 @@ a 5x price change results in a 25.5% loss relative to HODL
 
 We use 1.50x price change as an example, given trading fee 0.3%. If the price stays within the 1.0X to 1.5x range for a month, suppose the transaction volumn during this period is 100 times of the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
 
-If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If price rises or falls quickly out of the range, the impermanent loss will be well controlled within the range as in the example of 1.5x price change, but no trading fee will be earned anymore. 
+If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If price rises or falls quickly out of the range, the impermanent loss will be well controlled under a maximum value as in the example of 1.5x price change, but no trading fee will be earned anymore. 
 
 
 LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend.  
