@@ -112,7 +112,7 @@ The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$`
 
 ### invariant definition
 
-When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0. 
+When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
 Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable around a local point `(x0, y0)` on a continious space. We build local chart around `(x0, y0)`, and It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
 
