@@ -31,11 +31,15 @@ Automatic market maker (AMM for short) model on lightning network holds signific
 2. Token swap is quick, so that high frequency trading is feasible.   
 3. Liquidity is for both payment and trading.  
 
-Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
+Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, by defining a global constant invariant, proof an efficient way that a dex can be. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network operates on the same constant product model, but the infrastructure is completely different than the onchain AMM. **It is in fact a mixed model of order book and AMM**: signing a limit order equals to commiting to the global liquidity pool. Limit Orders act similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
+AMM on lightning network is a more general model than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle,  not predefined, but calculated during the system working.  
+
+Constant product or constrant sum, which are locally homeomorphic to a open unit circle, are special cases of 2-manifold.  
+
+signing a limit order equals to commiting to the global liquidity pool. Limit Orders act similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
 
 This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
@@ -62,8 +66,12 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
-The following sections explain the mechanism in detail.
+Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable around a local point `(x0, y0)` on a continious space. It has a power series based on a function's derivatives:
 
+<p align="center">
+  <img width="512" alt="local expansion" src="imgs/localExpansion.png">
+</p>
+ 
 ## limit order
 
 A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound:   
@@ -104,7 +112,9 @@ If one token is denominated in the other token, then the price `P` is the ratio 
 
 The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
-When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0.
+When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0. 
+
+
 
 ## signing an order
 
