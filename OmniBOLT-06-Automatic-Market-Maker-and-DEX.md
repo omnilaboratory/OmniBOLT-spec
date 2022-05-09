@@ -9,6 +9,7 @@
  	* [local coordinate](#local-coordinate)
 	* [limit order](#limit-order) 
  	* [invariant definition](#invariant-definition)
+ 	* [properties of local invariant mode](#properties-of-local-invariant-model)
  * [signing an order](#signing-an-order)
  * [adding liquidity](#adding-liquidity)
  * [removing liquidity](#removing-liquidity)
@@ -39,9 +40,9 @@ Liquidity providers are incentivized by receiving the transaction fee (0.3% in g
 
 This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working.  
 
-Constant product or constrant sum, which are locally homeomorphic to a open unit circle, are special cases of 2-manifold. The two models work because the arbitragers will exploit tiny differences of prices between different markets, if the price deviates substantially from fair value.   
+Constant product or constant sum invariants, which are locally homeomorphic to an open unit circle, are special cases of 2-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
 
-This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
+This paper takes arbitrage into modeling, outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 
 ## liquidity pool: from discrete to continuous space 
@@ -135,6 +136,16 @@ If let:
 Then this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
 
 Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. We are now able to calculate the liquidity around any point(at any price).  
+
+### properties of local invariant model
+
+TO DO(Ben, Carmack): 
+
+1. Curvature measures how quickly the price changes.  
+2. Liquidity and orders determines the curvature.    
+3. Global (covers all price space) expression of the curve for all token pairs is unknown, and may not exist.  
+4. Arbitragers help prices go around fair values. 
+5. We should carefully calculate the parameters, to obtain lower slipage.
 
 
 ## signing an order
