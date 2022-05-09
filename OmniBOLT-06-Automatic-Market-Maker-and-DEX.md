@@ -6,7 +6,9 @@
 # Table of Contents
  * [introduction](#introduction)
  * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
- * [limit order](#limit-order) 
+ 	* [local coordinate](#local-coordinate)
+	* [limit order](#limit-order) 
+ 	* [invariant definition](#invariant-definition)
  * [signing an order](#signing-an-order)
  * [adding liquidity](#adding-liquidity)
  * [removing liquidity](#removing-liquidity)
@@ -35,11 +37,9 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle,  not predefined, but calculated during the system working.  
+This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working.  
 
-Constant product or constrant sum, which are locally homeomorphic to a open unit circle, are special cases of 2-manifold.  
-
-signing a limit order equals to commiting to the global liquidity pool. Limit Orders act similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
+Constant product or constrant sum, which are locally homeomorphic to a open unit circle, are special cases of 2-manifold. The two models work because the arbitragers will exploit tiny differences of prices between different markets, if the price deviates substantially from fair value.   
 
 This paper outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
@@ -67,10 +67,11 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
+We begin with discussion of limited order, which acts similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
 
 ### limit order
 
-A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound:   
+A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound. Signing a limit order equals to commiting to the global liquidity pool:   
 
 ```
 orderMessage  
@@ -108,7 +109,7 @@ If one token is denominated in the other token, then the price `P` is the ratio 
 
 The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
-### Invariant
+### invariant definition
 
 When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0. 
 
@@ -124,14 +125,16 @@ f^(n)= constant, if n=1,
        0       , if n>1 `
 ```
 
-The the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry).  
+Then the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry).  
 
 If let:
-<p align="center">
+<p align="left">
   <img width="128" alt="constant production function expansion" src="imgs/expansionExample.png">
 </p>
 
+Then this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
 
+Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. We are now able to calculate the liquidity around any point(at any price).  
 
 
 ## signing an order
