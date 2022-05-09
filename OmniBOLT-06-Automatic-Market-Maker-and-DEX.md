@@ -35,7 +35,7 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-AMM on lightning network is a more general model than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle,  not predefined, but calculated during the system working.  
+This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle,  not predefined, but calculated during the system working.  
 
 Constant product or constrant sum, which are locally homeomorphic to a open unit circle, are special cases of 2-manifold.  
 
@@ -56,6 +56,7 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
+### local coordinate
 Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will oftenly take loss of miner fee. 
 
 To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
@@ -66,13 +67,8 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
-Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable around a local point `(x0, y0)` on a continious space. It has a power series based on a function's derivatives:
 
-<p align="center">
-  <img width="512" alt="local expansion" src="imgs/localExpansion.png">
-</p>
- 
-## limit order
+### limit order
 
 A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound:   
 
@@ -112,7 +108,29 @@ If one token is denominated in the other token, then the price `P` is the ratio 
 
 The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
+### Invariant
+
 When liquidity providers join in a range, the basic formula above will change: token amount is 0 on an interval included in the range if and only if the interval measure is 0. 
+
+Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable around a local point `(x0, y0)` on a continious space. We build local chart around `(x0, y0)`, and It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
+
+<p align="center">
+  <img width="256" alt="local expansion" src="imgs/localExpansion.png">
+</p>
+ 
+If let:     
+```
+f^(n)= constant, if n=1, 
+       0       , if n>1 `
+```
+
+The the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry).  
+
+If let:
+<p align="center">
+  <img width="128" alt="constant production function expansion" src="imgs/expansionExample.png">
+</p>
+
 
 
 
@@ -347,7 +365,7 @@ Oracle is involved to feed the real time external price for trading. Although tr
 
 1. Vitalik Buterin. The x*y=k market maker model. https://ethresear.ch/t/improving-front-running-resistance-of-x-y-k-market-makers.  
 2. Uniswap. https://uniswap.org/
-3. Michael Egorov. Curve. Automatic market-making with dynamic peg. https://www.curve.fi/
+3. Michael Egorov. Curve. Automatic market-making with dynamic peg. https://curve.fi/files/crypto-pools-paper.pdf
 4. Fernando Martinelli, Nikolai Mushegian. A non-custodial portfolio manager, liquidity provider, and price sensor. https://balancer.finance/
 5. [Connect to a tracker](https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker): https://omnilaboratory.github.io/obd/#/OBD-README?id=step-2-connect-to-a-tracker  
 6. Uniswap whitepaper. https://uniswap.org/whitepaper.pdf
