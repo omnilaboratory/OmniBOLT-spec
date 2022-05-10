@@ -38,9 +38,9 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 2-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working.  
+This paper present an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working.  
 
-Constant product or constant sum invariants, which are locally homeomorphic to an open unit circle, are special cases of 2-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
+We introduce the concept manifold here because the globale curce is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
 
 This paper takes arbitrage into modeling, outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
