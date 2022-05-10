@@ -53,7 +53,7 @@ LN already has funded channels to support multi-hop HTLC payment. Channels funde
 In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get  commission fee according to the proportion of his contribution in the token pool.  
  
 <p align="center">
-  <img width="256" alt="Global Pool" src="imgs/Global-Pool.png">
+  <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
 </p>
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
@@ -138,7 +138,7 @@ Where `C` is a constant. Then the invariant model is constant sum model defined 
 
 If let:
 <p align="center">
-  <img width="128" alt="constant production function expansion" src="imgs/expansionExample.png">
+  <img width="128" alt="constant product function expansion" src="imgs/expansionExample.png">
 </p>
 
 Then this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
@@ -150,7 +150,7 @@ Derivatives in the above expansion can be calculated from the trading data aroun
 TO DO(Ben, Carmack): 
 
 1. Local invariant model make no assumption about pricing of underlying assets.  
-2. Constant function(sum/production) invariants are special cases of local invariant model.  
+2. Constant function(sum/product) invariants are special cases of local invariant model.  
 3. Curvature measures how quickly the price changes.  
 4. Liquidity and orders determines the curvature.    
 5. Global (covers all price space) expression of the curve for all token pairs is unknown, and may not exist.  
