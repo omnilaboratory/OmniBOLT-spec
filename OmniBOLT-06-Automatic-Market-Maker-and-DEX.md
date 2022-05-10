@@ -121,15 +121,15 @@ Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable a
 </p>
  
 If let:     
-```
-f^(n)= constant, if n=1, 
-       0       , if n>1 `
-```
 
-Then the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry).  
+<p align="center">
+  <img width="128" alt="constant function derivative" src="imgs/constantFuncDerivative.png">
+</p>
+
+Where `C` is a constant. Then the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry object).  
 
 If let:
-<p align="left">
+<p align="center">
   <img width="128" alt="constant production function expansion" src="imgs/expansionExample.png">
 </p>
 
