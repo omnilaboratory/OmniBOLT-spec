@@ -39,7 +39,7 @@ Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market make
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-This paper presents an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make assumption about pricing of underlying assets. At different price level and with the changing of the intrinsic value of the asset, shape of curve has to change.  
+This paper presents an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make assumption about pricing of underlying assets. At different price level and with the changing of the intrinsic value of assets, shape of curve has to change. This model is not only for ligtning, but also suitable for any layer 2 networks. 
 
 We introduce the concept manifold here because the global curce is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
 
