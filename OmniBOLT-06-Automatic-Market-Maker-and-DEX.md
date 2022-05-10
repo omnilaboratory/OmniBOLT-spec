@@ -8,8 +8,9 @@
  * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
  	* [local coordinate](#local-coordinate)
 	* [limit order](#limit-order) 
- 	* [invariant definition](#invariant-definition)
- 	* [properties of local invariant mode](#properties-of-local-invariant-model)
+ 	* [local invariant definition](#local-invariant-definition)
+ 	* [example: constant function invariants](#example-constant-function-invariants)
+ 	* [properties of local invariant model](#properties-of-local-invariant-model)
  * [signing an order](#signing-an-order)
  * [adding liquidity](#adding-liquidity)
  * [removing liquidity](#removing-liquidity)
@@ -108,18 +109,23 @@ If one token is denominated in the other token, then the price `P` is the ratio 
   <img width="256" alt="intervals union" src="imgs/intervalsUnion.png">
 </p>
 
-The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [p1,p2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
+The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
-### invariant definition
+### local invariant definition
 
 When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
-Let the liquidity distribution is `y=f(x)`, we assume `f(x)` is differentiable around a local point `(x0, y0)` on a continious space. We build local chart around `(x0, y0)`, and It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
+
+
+We build local chart around `(x0, y0)`, Let the liquidity distribution around it is `y=f(x)`, assume `f(x)` is differentiable locally. It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
 
 <p align="center">
   <img width="256" alt="local expansion" src="imgs/localExpansion.png">
 </p>
- 
+
+If we take `n=0,1` in the series and discard all others, then locally any curve approzimate a line.  
+
+### example: constant function invariant
 If let:     
 
 <p align="center">
@@ -141,11 +147,13 @@ Derivatives in the above expansion can be calculated from the trading data aroun
 
 TO DO(Ben, Carmack): 
 
-1. Curvature measures how quickly the price changes.  
-2. Liquidity and orders determines the curvature.    
-3. Global (covers all price space) expression of the curve for all token pairs is unknown, and may not exist.  
-4. Arbitragers help prices go around fair values. 
-5. We should carefully calculate the parameters, to obtain lower slipage.
+1. Local invariant model make no assumption about pricing of underlying assets.  
+2. Constant function(sum/production) invariants are special cases of local invariant model.  
+3. Curvature measures how quickly the price changes.  
+4. Liquidity and orders determines the curvature.    
+5. Global (covers all price space) expression of the curve for all token pairs is unknown, and may not exist.  
+6. Arbitragers help prices go around fair values. 
+7. We should carefully calculate the parameters, to obtain lower slipage.
 
 
 ## signing an order
