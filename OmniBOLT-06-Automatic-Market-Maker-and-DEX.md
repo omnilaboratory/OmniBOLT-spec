@@ -6,7 +6,7 @@
 # Table of Contents
  * [introduction](#introduction)
  * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
- 	* [local coordinate](#local-coordinate)
+ 	* [local charts](#local-charts)
 	* [limit order](#limit-order) 
  	* [local invariant definition](#local-invariant-definition)
  	* [example: constant function invariants](#example-constant-function-invariants)
@@ -41,7 +41,7 @@ Liquidity providers are incentivized by receiving the transaction fee (0.3% in g
 
 This paper presents an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make assumption about pricing of underlying assets. At different price level and with the changing of the intrinsic value of the asset, shape of curve has to change.  
 
-We introduce the concept manifold here because the globale curce is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
+We introduce the concept manifold here because the global curce is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value.   
 
 This paper takes arbitrage into modeling, outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
@@ -58,7 +58,7 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
-### local coordinate
+### local charts
 Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will oftenly take loss of miner fee. 
 
 To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
