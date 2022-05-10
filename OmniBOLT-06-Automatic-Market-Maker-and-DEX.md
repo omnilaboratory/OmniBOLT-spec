@@ -53,7 +53,7 @@ LN already has funded channels to support multi-hop HTLC payment. Channels funde
 In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get  commission fee according to the proportion of his contribution in the token pool.  
  
 <p align="center">
-  <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
+  <img width="256" alt="Global Pool" src="imgs/Global-Pool.png">
 </p>
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
@@ -116,7 +116,7 @@ The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$`
 When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
 <p align="center">
-  <img width="512" alt="atlas covers the whole price space" src="imgs/atlas.png">
+  <img width="256" alt="atlas covers the whole price space" src="imgs/atlas.png">
 </p>
 
 We build local charts around `(x_i, y_i), i=0,1,2,...` to cover the whole price space. Let the local liquidity function `y=f(x)`, assume `f(x)` is differentiable around a certain `(x_i, y_i)`. It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
