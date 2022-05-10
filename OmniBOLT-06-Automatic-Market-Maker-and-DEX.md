@@ -115,15 +115,17 @@ The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$`
 
 When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
+<p align="center">
+  <img width="512" alt="atlas covers the whole price space" src="imgs/atlas.png">
+</p>
 
-
-We build local chart around `(x0, y0)`, Let the liquidity distribution around it is `y=f(x)`, assume `f(x)` is differentiable locally. It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
+We build local charts around `(x_i, y_i), i=0,1,2,...` to cover the whole price space. Let the local liquidity function `y=f(x)`, assume `f(x)` is differentiable around a certain `(x_i, y_i)`. It has a power series based on a function's derivatives( under the convention 0^0 = 1 ):  
 
 <p align="center">
   <img width="256" alt="local expansion" src="imgs/localExpansion.png">
 </p>
 
-If we take `n=0,1` in the series and discard all others, then locally any curve approzimate a line.  
+If we take `n=0,1` in the series and discard all others, then locally any curve approximate a line.  
 
 ### example: constant function invariant
 If let:     
