@@ -197,23 +197,23 @@ The tracker network must verify the signature. If all correct, then sync it to n
 
 
 ## adding liquidity
+TO DO(Ben, Neo): (add formular for ranges in this chapter or chapter 2)
 
 Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User needs to sign a ranged liquidity of pair (x, y), and post it to a tracker. At least two channels have to be opened and funded. 
+But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User needs to sign a ranged liquidity of pair (x, y), and post it to a tracker he connects. At least two channels have to be opened and funded. 
 
-Adding liquidity must use the current exchange rate at the moment of deposit[6]. The exchange rate is calculate from global `x/y`, feed by trackers:  
+The exchange rate is calculate from global `x/y`, feed by trackers:  
 
-**Step 1**: Suppose Alice fund her BTC channel `x'`, then she should fund her USDT channel `y'= y(x+x')/x  - y`.  
+**Step 1**: Suppose Alice funded her BTC channel `x'`, then she should fund her USDT according to current local invariant, for example `y'= y(x+x')/x  - y`.  
 
-**Step 2**: If she fund more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve, which is not a "donation" as Uniswap designs.  
+**Step 2**: If she funds more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve.  
 
-**Step 3**: Alice sync her funding to her trackers, which built connections with her and record Alice's AMM liquidity of BTC and USDT.  
+**Step 3**: Alice signs and syncs her funding and specified range to her trackers, which record Alice's AMM liquidity for BTC and USDT.  
 
 The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle. 
 
-Funding a channel costs BTC gas fee. But adding(removing) liquidity has no cost. 
-
+Funding a channel costs BTC gas fee. But adding(removing) liquidity has no cost.  
 
 In section [impermanent loss](#impermanent-loss), there is a data simulation to help liquidity providers set appropriate ranges, minimize impermanent losses, and earn reliable trading fees. 
 
@@ -227,13 +227,13 @@ There are two ways to remove liquidity:
 
 Trackers calculate the remaining tokens in the global liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
 
-Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund, `y'` to be payment liquidity reserve,to make sure the global price `x/y = BTC/USDT` unchanged, where `y' = y - y(x-x')/x`.  
+Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund `y'` to be payment liquidity reserve, to make sure the global price `x/y = BTC/USDT` unchanged. For example, `y' = y - y(x-x')/x` if the current local invariant is constant product.  
 
 There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
 
 ## O(1) complexity of add and remove operations
 
-TO DO(Ben, Neo): apply binary tree to store ranged liquidity and limit orders, which has `O(1)` time complexity in adding and removing.  
+TO DO(Ben, Neo): apply binary tree and hash table to store ranged liquidity and limit orders, which has `O(1)` time complexity in adding and removing.  
 
 ## channel state transition 
 
