@@ -67,7 +67,13 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
 
+All small ranges(`U_i`) patching together is homeomorphic to real 1-space `R^(n)`:
 
+<p align="center">
+  <img width="256" alt="topological space" src="imgs/topologicalSpace.png">
+</p>
+
+For practical engineering, we can assume that the space is differentiable. 
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
@@ -115,7 +121,7 @@ The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$`
 
 ### coordinate charts and local invariant definition
 
-When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
+For each `P_i = (x_i, y_i)` has a neighborhood `U_i` homeomorphic to an open circle. The basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
 <p align="center">
   <img width="256" alt="atlas covers the whole price space" src="imgs/atlas.png">
@@ -136,16 +142,31 @@ If let:
   <img width="128" alt="constant function derivative" src="imgs/constantFuncDerivative.png">
 </p>
 
-Where `C` is a constant. Then the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry object).  
+Where `C` is a constant. Then near any point, the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry object).  
 
 If let:
 <p align="center">
   <img width="128" alt="constant product function expansion" src="imgs/expansionExample.png">
 </p>
 
-Then this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
+Then near any point, this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
 
-Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. We are now able to calculate the liquidity around any point(at any price).  
+Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. Apparently, piece wise invariants can be glued(a topological operation) together to form a global curve, as shown in the above graph. 
+
+TO DO(Ben, Neo): simulation and performance
+
+### capital efficiency
+TO DO(Ben, Neo)
+
+### slipage estimation
+TO DO(Ben, Neo)
+
+For a regular market, sometimes the more you buy the higher the marginal exchange rate that you have to pay for each additional unit， sometimes you don't need to pay for extra money. This is totally depends on the liquidity provided by the sellers(counterparties). 
+
+<p align="center">
+  <img width="512" alt="market states comparison" src="imgs/differentMarketStates.png">
+</p>
+
 
 ### properties of local invariant model
 
