@@ -6,9 +6,9 @@
 # Table of Contents
  * [introduction](#introduction)
  * [liquidity pool：from discrete to continuous space ](#liquidity-pool-from-discrete-to-continuous-space )
- 	* [local charts](#local-charts)
+ 	* [continuous space](#continuous-space)
 	* [limit order](#limit-order) 
- 	* [local invariant definition](#local-invariant-definition)
+ 	* [coordinate charts and local invariant definition](#coordinate-charts-and-local-invariant-definition)
  	* [example: constant function invariants](#example-constant-function-invariants)
  	* [properties of local invariant model](#properties-of-local-invariant-model)
  * [signing an order](#signing-an-order)
@@ -58,7 +58,7 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
 
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
-### local charts
+### continuous space
 Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will oftenly take loss of miner fee. 
 
 To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
@@ -66,6 +66,8 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
 <p align="center">
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
+
+
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
@@ -111,7 +113,7 @@ If one token is denominated in the other token, then the price `P` is the ratio 
 
 The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
 
-### local invariant definition
+### coordinate charts and local invariant definition
 
 When liquidity providers join in a range, the basic formula above will change: token amount is continuous on any continuous interval included in the range. 
 
