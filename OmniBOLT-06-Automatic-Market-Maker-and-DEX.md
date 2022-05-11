@@ -72,7 +72,7 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
 All small ranges(`U_i`) patching together is homeomorphic to real 1-space `R^(n)`:
 
 <p align="center">
-  <img width="256" alt="topological space" src="imgs/topologicalSpace.png">
+  <img width="128" alt="topological space" src="imgs/topologicalSpace.png">
 </p>
 
 For practical engineering, we can assume that the space is differentiable. 
@@ -168,6 +168,8 @@ For a regular market, sometimes the more you buy the higher the marginal exchang
 <p align="center">
   <img width="512" alt="market states comparison" src="imgs/differentMarketStates.png">
 </p>
+
+the two market states fit into two different curves. On the left market, the exchange rate won't grow fast as you buy more. But on the right side market, the slippage will be very large. 
 
 
 ### properties of local invariant model
