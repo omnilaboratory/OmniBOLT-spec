@@ -10,6 +10,8 @@
 	* [limit order](#limit-order) 
  	* [coordinate charts and local invariant definition](#coordinate-charts-and-local-invariant-definition)
  	* [example: constant function invariants](#example-constant-function-invariants)
+ 	* [capital efficiency](#capital-efficiency)
+ 	* [slipage estimation](#slipage-estimation)
  	* [properties of local invariant model](#properties-of-local-invariant-model)
  * [signing an order](#signing-an-order)
  * [adding liquidity](#adding-liquidity)
