@@ -155,7 +155,6 @@ Then near any point, this is the constant product model defined in Uniswap[2]. I
 
 Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. Apparently, piece wise invariants can be glued(a topological operation) together to form a global curve, as shown in the above graph. 
 
-TO DO(Ben, Neo): simulation and performance
 
 ### capital efficiency
 TO DO(Ben, Neo)
@@ -163,7 +162,7 @@ TO DO(Ben, Neo)
 ### slipage estimation
 TO DO(Ben, Neo)
 
-For a regular market, sometimes the more you buy the higher the marginal exchange rate that you have to pay for each additional unit， sometimes you don't need to pay for extra money. This is totally depends on the liquidity provided by the sellers(counterparties). 
+For a regular market, sometimes the more you buy the higher the marginal exchange rate that you have to pay for each additional unit, sometimes you don't need to pay extra money. This is totally depends on the liquidity provided by the sellers(counterparties). 
 
 <p align="center">
   <img width="512" alt="market states comparison" src="imgs/differentMarketStates.png">
