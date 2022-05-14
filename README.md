@@ -4,9 +4,9 @@
 
 * `Contact`: Neo Carmack(neocarmack@omnilab.online), Ben Fei(benfei@omnilab.online)
 
-Based on the fundamental theory of Lightning network, OmniBOLT specification describes how to enable OmniLayer assets to be circulated via lightning channels, and how can smart assets benefit from this noval quick payment theory.
+Based on the fundamental theory of the Lightning network, the OmniBOLT specification describes how to enable OmniLayer assets to be circulated via lightning channels, and how can smart assets benefit from this novel quick payment theory.
 
-In addition, OmniBOLT provides more flexible contracts for upper layer decentralized applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).
+In addition, OmniBOLT provides more flexible contracts for upper-layer decentralized applications. [OmniBOLT daemon](https://github.com/omnilaboratory/obd) is a golang implementation of this specification, an open source, off-chain decentralized platform, build upon BTC/OmniLayer network, implements basic HTLC payment, atomic swap of multi-currencies, and more off-chain contracts on the network of smart [assets enabled lightning channels](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-02-peer-protocol.md#omni-address).
 
  
 ## Features  
@@ -22,9 +22,9 @@ In addition, OmniBOLT provides more flexible contracts for upper layer decentral
  
 ## Why OmniBOLT
 
-Decentralized finance industry requires a much more flexible, extensible and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology to this problem. According to the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support wider range of assets for upper layer applications: payment, game, finance or scenerios need stable coins.  
+Decentralized finance industry requires a much more flexible, extensible, and cheaper smart assets circulation solution to solve the main chain scalability problem. Lightning network is a solid technology for this problem. According to the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support a wider range of assets for upper-layer applications: payment, game, finance or scenarios need stable coins.  
 
-Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is proven secure and stable. Constructing lightning channels on top of it automatically acquires the ability of issuing assets, temper resistant, and on-chain settlement. This is where OmniBOLT built upon.
+Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is proven secure and stable. Constructing lightning channels on top of it automatically acquires the ability to issue assets, tamper resistance, and on-chain settlement. This is where OmniBOLT is built upon.
  
 
 ## How it works:
@@ -34,7 +34,7 @@ Meanwhile, Omnilayer is an onchain smart assets issuance technology, which is pr
 </p>
 
 1. On-chain protocol is Omnilayer, which is the issuance and settlement level;  
-2. OmniBOLT 2, 3, 4 form the main network protocols;   
+2. OmniBOLT 2, 3, and 4 form the main network protocols;   
 3. Applications level consists of contracts for various applications; 
 
 OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
@@ -42,7 +42,7 @@ OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and e
 
 ## Chapters and Protocol Suite
 
-We not only just list messages and arguments that are used in our implementation, but also complete content that explains why we do so. Most of this spec is strictly follow the rules/logics defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
+We not only just list messages and arguments that are used in our implementation, but also complete content that explains why we do so. Most of this spec strictly follows the rules/logic defined in the lightning white paper. The original paper may be hard to read for our programmers, so we draw some diagrams for better understanding. Hope it helps :-)
 
 [OmniBOLT #01](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-01-basic-protocol-and-Terminology.md): Base Protocol and Terminology
 
