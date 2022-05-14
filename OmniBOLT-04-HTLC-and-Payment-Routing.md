@@ -15,8 +15,7 @@ where:
 [A, USDT, B] stands for the channel built by A and B, funded by USDT.
 ```
 
-Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally Carol sends 10 USDT to David in `[Carol, USDT, David]`. 
-
+Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob transfers 10 USDT to Carol inside the `[Bob, USDT, Carol]` channel, and finally, Carol sends 10 USDT to David in `[Carol, USDT, David]`.  
 
 # Table of Contents
  * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
@@ -40,7 +39,7 @@ Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob
 
 An HTLC implements this procedure:
 
-If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that some one else (Carol) in the chain shared with Bob 3 days ago in exchange of 15 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 15 USDT fund inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 15 USDT back. 
+If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that someone else (Carol) in the chain shared with Bob 3 days ago in an exchange of 15 USDT in the channel `[Bob, USDT, Carol]`, then Bob will get the 15 USDT funds inside the channel `[Alice, USDT, Bob]`, otherwise Alice gets her 15 USDT back. 
  
 
 <!-- 
@@ -58,7 +57,7 @@ There are three outputs of a commitment transaction:
 `to remote`: 1. Bob 40, 
 `to_htlc`: 2. Alice4 & Bob 15 
 
-`to_htlc` has three branches to handle the situations of time eout, breach remedy, htlc success. We put the payload and outputs together to construct the HTLC transaction: 
+`to_htlc` has three branches to handle the situations of time out, breach remedy, and htlc success. We put the payload and outputs together to construct the HTLC transaction: 
 
 ## OMNI HTLC transaction construction
 
@@ -132,7 +131,7 @@ payload in output 0:
 
 The outputs are sorted into the order by omnicore spec:  `op_return` payload is in output 0 and the receivers are ordered as in the payload definition.   
 
-On both sides, `to_rsmc` and `to_remote` are locked by redeem script and pubkey script as in chaper 3 RSMC transaction sector. `to_htlc` on sender side is locked by the `offered HTLC` and in receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
+On both sides, `to_rsmc` and `to_remote` are locked by redeem script and pubkey script as in chapter 3 RSMC transaction sector. `to_htlc` on the sender side is locked by the `offered HTLC` and on the receiver side is locked by `received HTLC` as in [BOLT 3](https://github.com/lightning/bolts/blob/master/03-transactions.md#offered-htlc-outputs):  
 
 ```bat
 # To remote node with revocation key
@@ -252,9 +251,9 @@ The amount is the number in `vout=3`( receiver `to_htlc`) of the commitment tran
 
 ### Fee rate
 
-For liquidity providers, when relay a HTLC, a channel fee could be charged in the token(not in satoshis). Generally the fee rate is known to the network when a node annouces itself and lower fee rate will attract more traffic of HTLCs.  
+For liquidity providers, when relaying an HTLC, a channel fee could be charged in the token(not in satoshis). Generally, the fee rate is known to the network when a node announces itself and a lower fee rate will attract more  HTLC traffic.  
 
-For a fee rate example of 50 basis points, an incoming HTLC is 15 USDT, then the out going HTLC is `15-15*0.5% = 14.925` USDT.  
+For a fee rate example of 50 basis points, an incoming HTLC is 15 USDT, then the outgoing HTLC is `15-15*0.5% = 14.925` USDT.  
 
 
 ## Messages
@@ -291,13 +290,13 @@ For a fee rate example of 50 basis points, an incoming HTLC is 15 USDT, then the
    
 ```
 
-ach node has multiple asset channels, it can simultaneously send out transactions，and wait fot the counter party to response.
+A node has multiple asset channels, it can simultaneously send out transactions， and wait for the counterparty to respond.
 
 ## update_add_htlc 
 
 `update_add_htlc` consists of two rounds of signing sub-transactions to forward an HTLC to the remote peer. Users should compare it to [`update_add_htlc`](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#adding-an-htlc-update_add_htlc) in `lightning-rfc`.  
 
-Please note that the payment infomation are all encoded in transaction hex.  
+Please note that the payment information is all encoded in transaction hex.  
 
 
 1. type: -40 (AddHTLC)
@@ -337,11 +336,11 @@ if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is com
 
 TO DO: Neo Carmack, Ben Fei
 
-If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload for every HTLC. If not, the node has to close the connection.  
+If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition, a node must check if the asset id is the same in the transaction `op_return` payload for every HTLC. If not, the node has to close the connection.  
 
 
 ## Terminate HTLC off-chain
-After Bob telling Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transactions `C3a/C3b` for this purpose.
+After Bob tells Alice the `R`, the balance of this channel shall be updated, and the current HTLC shall be terminated. OBD then creates a new commitment transactions `C3a/C3b` for this purpose.
 
 <p align="center">
   <img width="768" alt="Commitment Transaction to Terminate an HTLC" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/C3a-Terminate-a-HTLC-both-sides.png">
@@ -360,9 +359,9 @@ To supply the preimage:
   * [`u64`:`private_key_Alice_5`]: the private key of Alice 5, encrypted by Bob's public key when sending this message to Bob.
   * [`32*byte`:`payment_preimage`]: the R
 
-`private_key_Alice_4` and `private_key_Alice_5` are used in breach remedy transactions created in C2. If Bob find out Alice is cheating, Bob can broad these BR transactions to get the money in temporary multi-sig addresses as punishments to Alice. The procedure are the same to RSMC in chaper 2.
+`private_key_Alice_4` and `private_key_Alice_5` are used in breach remedy transactions created in C2. If Bob finds out Alice is cheating, Bob can broadcast these BR transactions to get the money in temporary multi-sig addresses as punishments to Alice. The procedure is the same as RSMC in chapter 2. 
 
-For a timed out or route-failed HTLC:
+For a timed-out or route-failed HTLC:
 
 1. type: -131 (update_fail_htlc)
 2. data:
