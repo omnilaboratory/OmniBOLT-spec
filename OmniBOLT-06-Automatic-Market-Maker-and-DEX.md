@@ -405,7 +405,7 @@ Oracle is involved to feed the real-time external price for trading. Although tr
   
 2. Trackers maintain the global prices for all token pairs, but they have no permission to execute any trade. The lightning network has no global contract that executes transactions. Every obd node should verify the incoming order to avoid price manipulation. Obd does not have to trust any tracker.  
 
-3. On-chain swaps use smart contracts to collect and allocate fees for liquidity providers. But the Lightning Network has no contract. Web instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fees directly. 
+3. On-chain swaps use smart contracts to collect and allocate fees for liquidity providers. But the Lightning Network has no contract. We instead utilize a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fees directly. 
 
 
 
