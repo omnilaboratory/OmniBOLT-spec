@@ -31,28 +31,27 @@
 
 ## introduction
 
-Automatic market maker (AMM for short) model on lightning network holds significant advantages comparing to onchain AMM[1,6] exchanges:  
+Automatic market maker (AMM for short) model on lightning network holds significant advantages compared to the onchain AMM[1,6] exchanges:  
 
 1. There is no gas fee for each swap.  
 2. Token swap is quick, so that high frequency trading is feasible.   
 3. Liquidity is for both payment and trading.  
 
-Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, by defining a global constant invariant, ensure the closing certainty and the efficient use of capital for onchain trading. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring transaction fee into calculation yet, but will add this part later in this paper.  
+Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, by defining a global constant invariant, ensure the closing certainty and the efficient use of capital for onchain trading. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in a pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in the pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring the transaction fee into calculation yet but will add this part later in this paper.  
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-This paper presents an AMM on lightning network, which is more general than current existing constant product/sum/mix models, and the infrastructure is completely different than the onchain AMM. **It is an abstraction of constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make assumption about pricing of underlying assets. At different price level and with the changing of the intrinsic value of assets, shape of curve has to change. This model is not only for lightning, but also suitable for any layer 2 networks. 
+This paper presents an AMM on lightning network, which is more general than the current existing constant product/sum/mix models, and the infrastructure is completely different from the onchain AMM. **It is an abstraction of the constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make any assumptions about the pricing of underlying assets. At different price levels and with the changing of the intrinsic value of assets, the shape of curve has to change. This model is not only for lightning network, but also suitable for any layer 2 networks.
 
-We introduce the concept manifold here because the global curce is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets, if the price deviates substantially from fair value. Without arbitrager, the curve itself can not price the asset.   
+We introduce the concept manifold here because the global curve is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets if the price deviates substantially from fair value. Without arbitragers, the curve itself can not price the asset.   
 
-This paper takes arbitrage into modeling, outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM, so that we will omit introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
-
+This paper takes arbitrage into modeling and outlines the core mechanism of how AMM on LN works. We assume readers are familiar with both LN and AMM so we will omit the introduction to basic concepts. For Bitcoin lightning network, we refer to lnd, and for smart asset lightning network, we refer to Omnibolt.
 
 ## liquidity pool: from discrete to continuous space 
 
-LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have a direct channel. Nodes on the payment path offer liquidity and receive a portion of fee if the payment is success.  
+LN already has funded channels to support multi-hop HTLC payment. Channels funded by a certain token form a logical network, where Alice is able to pay Bob even if they don't have a direct channel. Nodes on the payment path offer liquidity and receive a portion of the fee if the payment is a success.  
 
-In AMM model, liquidity providers play a similar roll: if a swap succeed, one who deposits his tokens into the contract will get  commission fee according to the proportion of his contribution in the token pool.  
+In the AMM model, liquidity providers play a similar role: if a swap succeeds, one who deposits his tokens into the contract will get commission fee according to the proportion of his contribution to the token pool.  
  
 <p align="center">
   <img width="512" alt="Global Pool" src="imgs/Global-Pool.png">
@@ -61,29 +60,29 @@ In AMM model, liquidity providers play a similar roll: if a swap succeed, one wh
 Naturally, funded channels in lightning network form a global liquidity pool, the difference is that the whole lightning network is a pool, every node maintains a portion of liquidity, while onchain AMM uses a contract address to collect liquidity: all tokens are deposited into one address.  
 
 ### continuous space
-Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is onchain, maker will oftenly take loss of miner fee. 
+Conceptually, an order book is a discrete space consisting of a series of orders at multiple prices. There must be a spread between the highest bid and the lowest ask, if the spread is too wide, then no transaction could be closed. If the order book dex is on-chain, makers will often take losses of miner fee. 
 
-To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that covers the current price. This hedges against the liquidity sparsity of order book model.  
+To gain the certainty of closing, we leverage the funded channels to fill the spreads between all prices. Thus we have a continuous space that covers the entire price space. When price moves, liquidity providers have an incentive to concentrate liquidity around the current price for higher commissions. They revoke old liquidity ranges and submit new liquidity ranges that cover the current price. This hedges against the liquidity sparsity of the order book model.  
 
 <p align="center">
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
 
-All small ranges(`U_i`) patching together is homeomorphic to real 1-space `R^(n)`:
+All small ranges(`U_i`) patching together is homeomorphic to real 1-space (`R^(n)`):
 
 <p align="center">
   <img width="128" alt="topological space" src="imgs/topologicalSpace.png">
 </p>
 
-We can assume that the space is differentiable. 
+For engineering practice, we can assume that the space is differentiable. 
 
-After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
+After a node commits a liquidity range, it will receive a commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fees directly. 
 
-We begin with discussion of limited order, which acts similar to small ranges which is defined in Uniswap V3[8] for precisly managing liquidity distribution.
+We begin with a discussion of limited order, which acts similar to a small range which is defined in Uniswap V3[8] for precisely managing liquidity distribution.
 
 ### limit order
 
-A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound. Signing a limit order equals to commiting to the global liquidity pool:   
+A limit order is an extreme case of a liquidity range, where the lower bound equals the upper bound. Signing a limit order equals committing to the global liquidity pool:   
 
 ```
 orderMessage  
@@ -119,7 +118,7 @@ If one token is denominated in the other token, then the price `P` is the ratio 
   <img width="256" alt="intervals union" src="imgs/intervalsUnion.png">
 </p>
 
-The token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1,P2)$` ( which is still an interval ) is consumed by sellers' orders, the price moves up from `P1` to the next limit `P2`.  
+If the token amount on an intersection `$[P1, \infty) \cap [P2, \infty) = [P1, P2)$` ( which is still an interval ) is consumed by sellers' orders, then the price moves up from `P1` to the next limit `P2`.   
 
 ### coordinate charts and local invariant definition
 
@@ -135,7 +134,7 @@ We build local charts around `(x_i, y_i), i=0,1,2,...` to cover the whole price 
   <img width="256" alt="local expansion" src="imgs/localExpansion.png">
 </p>
 
-If we take `n=0,1` in the series and discard all others, then locally any curve approximate a line.  
+If we take `n=0,1` in the series and discard all others, then locally any curve approximates a line.   
 
 ### example: constant function invariant
 If let:     
@@ -144,7 +143,7 @@ If let:
   <img width="128" alt="constant function derivative" src="imgs/constantFuncDerivative.png">
 </p>
 
-Where `C` is a constant. Then near any point, the invariant model is constant sum model defined in Curve[3](Curve is the project name, not the geometry object).  
+Where `C` is a constant. Then near any point, the invariant model is the constant sum model defined in Curve[3](Curve is the project name, not the geometry object).   
 
 If let:
 <p align="center">
@@ -153,7 +152,7 @@ If let:
 
 Then near any point, this is the constant product model defined in Uniswap[2]. It also models the ranged liquidity in V3.  
 
-Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. Apparently, piece wise invariants can be glued(a topological operation) together to form a global curve, as shown in the above graph. 
+Derivatives in the above expansion can be calculated from the trading data around the point. Trading data includes orders posted and ranged liquidity deposited. Apparently, piece-wise invariants can be glued(a topological operation) together to form a global curve, as shown in the above graph. 
 
 
 ### capital efficiency
@@ -190,30 +189,30 @@ TO DO(Ben, Carmack):
   <img width="512" alt="Signing Order" src="imgs/Sign-Order.png">
 </p>
 
-1. Alice gets the ratio(price) from a tracker or an oracle, sign the order.  
+1. Alice gets the ratio(price) from a tracker or an oracle and signs the order.  
 2. Alice post this order to a tracker.  
 
-The tracker network must verify the signature. If all correct, then sync it to neighbors and push it to connected nodes.  
+The tracker network must verify the signature. If all is correct, then sync it to neighbors and push it to connected nodes.  
 
 
 ## adding liquidity
 TO DO(Ben, Neo): (add formular for ranges in this chapter or chapter 2)
 
-Adding liquidity to lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
+Adding liquidity to the lightning network is simple: just open a channel with your counterparty and fund it. The lightning network discovers new channels and updates the network graph so that your channels will contribute to the global payment liquidity.  
 
-But adding liquidity to AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. User needs to sign a ranged liquidity of pair (x, y), and post it to a tracker he connects. At least two channels have to be opened and funded. 
+But adding liquidity to an AMM pool is different. Not all the tokens funded in channels can be market maker liquidity reserves. Users need to sign ranged liquidity of pair (x, y) and post it to a tracker they connect to. At least two channels have to be opened and funded. 
 
 The exchange rate is calculate from global `x/y`, feed by trackers:  
 
-**Step 1**: Suppose Alice funded her BTC channel `x'`, then she should fund her USDT according to current local invariant, for example `y'= y(x+x')/x  - y`.  
+**Step 1**: Suppose Alice funded her BTC channel `x'`, then she should fund her USDT according to the current local invariant, for example, `y'= y(x+x')/x  - y`.   
 
-**Step 2**: If she funds more or less USDT, the extra tokens, USDT or BTC, will be marked as payment liquidity reserve.  
+**Step 2**: If she deposits more or less USDT, the extra tokens, USDT or BTC, will be marked as the payment liquidity reserve.  
 
 **Step 3**: Alice signs and syncs her funding and specified range to her trackers, which record Alice's AMM liquidity for BTC and USDT.  
 
-The first AMM liquidity provider could deposite any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to price feed from an oracle. 
+The first AMM liquidity provider could deposit any amount of BTC and USDT, the tracker will calculate how much BTC or USDT will be marked as AMM liquidity according to the price feed from an oracle.  
 
-Funding a channel costs BTC gas fee. But adding(removing) liquidity has no cost.  
+Funding a channel costs BTC gas fees. But adding(removing) liquidity has no cost.  
 
 In section [impermanent loss](#impermanent-loss), there is a data simulation to help liquidity providers set appropriate ranges, minimize impermanent losses, and earn reliable trading fees. 
 
@@ -221,13 +220,14 @@ In section [impermanent loss](#impermanent-loss), there is a data simulation to 
 
 ## removing liquidity
 
-There are two ways to remove liquidity:  
-1. withdraw signed and submitted orders and ranged liquidity.  
-2. close channel and withdraw tokens to the mainchain.   
+There are two ways to remove liquidity:   
+1. withdraw signed and submitted orders and ranged liquidity.   
+2. close the channel and withdraw tokens to the mainchain.    
+
 
 Trackers calculate the remaining tokens in the global liquidity reserve, and the extra tokens will be marked payment liquidity reserve, according to exchange rate at the moment of closing channel:  
 
-Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in pool. Its tracker randomly selects some USDT channels in the graph, marks a portion of channel fund `y'` to be payment liquidity reserve, to make sure the global price `x/y = BTC/USDT` unchanged. For example, `y' = y - y(x-x')/x` if the current local invariant is constant product.  
+Suppose Alice closes her channel of `x'` BTCs, then the BTC-USDT pair will have redundant USDT in the pool. Its tracker randomly selects some USDT channels in the graph and marks a portion of channel fund `y'` to be the payment liquidity reserve, to make sure the global price `x/y = BTC/USDT` is unchanged. For example, `y' = y - y(x-x')/x`, if the current local invariant is constant product.   
 
 There is no protocol fee taken during closing a channel. Only gas fee in BTC occurs.  
 
@@ -267,16 +267,15 @@ Bob's local balance: 20 USDT as AMM balance, 25 USDT as payment balance.
 
 **Step 2**: Alice withdraws the order, then the channel state changes back to the origin.  
  
-
-
-The global AMM liquidity will not change, if Bob don't manually mark the 20 USDT as payment balance.  
-
+ 
+The global AMM liquidity will not change if Bob doesn't manually mark the 20 USDT as the payment balance.  
 
 ## trackers running a matching engine 
 
-Trackers, in the design of OmniBOLT network, not only maitain graph topology, but also maitain the global constant product model.  
+Trackers, in the design of the OmniBOLT network, not only maintain graph topology, but also maintain the global constant product model.  
 
-When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notifying its neighbors to updates its token type, amount of channels and liquidity reserves. Omnibolt applies tracker network to register nodes, update status of nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
+When an OmniBOLT node is online, it has to announce itself to the network via a tracker it connects, as the rendezvous, notifying its neighbors to update its token type, amount of channels, and liquidity reserves. Omnibolt applies a tracker network to register nodes, and update the status of the nodes graph. Any tracker can be a rendezvous[5] that allows nodes to connect.  
+
  
 Please go to the document of [Tracker network](https://omnilaboratory.github.io/obd/#/Architecture?id=tracker-network) to understand how it works.  
 
@@ -287,12 +286,12 @@ After a node sign and submit an order to a tracker, the tracker takes 6 steps to
   <img width="512" alt="Matching Engine" src="imgs/Matching-Engine.png">
 </p>
 
-1. When recieves an order A from obd 1, tracker searches its local orderbook database for matching.  
-2. If can not find matching orders, it seeks its neightbors in DHT network for order A.  
-3. If the tracker collects matching orders that can (partially) fill the order A, it pushes the nodes addresses and matching orders to obd 1.   
-4. obd 1, 3 and 4 check price via an oracle. If the price gap is found to exceed the predefined threshold, the transaction is rejected.  
+1. When receiving an order A from obd 1, the tracker searches its local order book database for matching.  
+2. If can not find matching orders, it seeks its neighbors in the DHT network for order A.  
+3. If the tracker collects matching orders that can (partially) fill the order A, it pushes the node's addresses and matching orders to obd 1.   
+4. obd 1, 3, and 4 check price via an oracle. If the price gap is found to exceed the predefined threshold, the transaction is rejected.  
 5. obd 1 Processes atomic swaps to obd 3 and 4.  
-6. The remaining of the order will be saved in the tracker's local orderbook database, waiting for further deals. 
+6. The remaining of the order will be saved in the tracker's local order book database, waiting for further deals. 
 
 ### example for matching orders
 
@@ -301,19 +300,19 @@ After a node sign and submit an order to a tracker, the tracker takes 6 steps to
 </p>
 
 
-Matching engine picks a ratio between 60000:1 to 60500:1, for example 60200:  
+The matching engine picks a ratio between 60000:1 to 60500:1, for example, 60200:  
 
 1. Alice sells 1 BTC for 60000 USDT, then the result is more than expected.  
-2. Bob plans to sell 60500 USDT for 1 BTC, then result is more than his expectation either. He only pays 60200 USDT.   
+2. Bob plans to sell 60500 USDT for 1 BTC, then the result is more than his expectation either. He only pays 60200 USDT.   
 3. An order may be partially filled. For example: if B sells 121000 USDT for 2 BTC.   
 
 ### token trading against liquidity pool
 
 Then a tracker maintains "almost" all nodes' balances and hence it is able to calculate the token price for a trade:  
 
-Alice plans to sell out `x'` token A for certain number of token B at fee rate `0.3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
+Alice plans to sell out `x'` token A for a certain number of token B at the fee rate of `0.3%`. So that the pool will have `(x+x')` token A and `(y-y')` token B. The price after trade will be updated to `price(B) = (x+x')/(y-y')`. 
 
-**Step 1**. Alice queries a tracker for the liquidity(all available orders) for both token A and token B networks. The tracker calculate the `y'` hence decide how much token B that Alice can get:
+**Step 1**. Alice queries a tracker for the liquidity(all available orders) for both token A and token B networks. The tracker calculates the `y'` hence decides how much token B that Alice can get:  
 
 ```
 fee = x * 0.3%  
@@ -328,9 +327,9 @@ ratio = x'/y'
 
 **Step 2**: The tracker seeks multiple nodes, which together can provide `y'` token B, returns Alice the payment paths.  
 
-**Step 3**. Alice creates [atomic swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and sends them to these nodes repectively, where `ratio` is the price of token B at the moment of trade. 
+**Step 3**. Alice creates [atomic swaps](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#swap)[7] and sends them to these nodes respectively, where `ratio` is the price of token B at the moment of the trade. 
 
-**Step 4**. Alice and all her counterparties finish the atomic swaps with all these nodes, get `y'` tokens in local **AMM balance**.  
+**Step 4**. Alice and all her counterparties finish the atomic swaps with all these nodes, and get `y'` tokens in the local **AMM balance**.  
 
 ```
 Suppose x'/y' = 2, Alice sells out 10 A:  
@@ -343,7 +342,7 @@ Alice ----|--atomic swap---> David: 4.5 A for 9 B
 
 ```
 
-Fees are allocated to all nodes on the paths, and are still in **AMM balance** of each node:  
+Fees are allocated to all nodes on the paths, and are still in the **AMM balance** of each node:  
 
 ```
 A pool = x + x'
@@ -352,28 +351,29 @@ B pool = x*y/(x + x' - 0.3%x')
 new invariant = (A pool) * (B pool) = (x + x')*x*y/(x + x' - 0.3%x')
 ```
 
-The invariant increases after every trade. 
+ 
 
-**Like the characteristics of lightning network, AMM is suitable for small transactions.**  
+**Like the characteristics of the lightning network, AMM is suitable for small transactions as well.**  
 
 
 
 
 ## fee structure
 
-Token A to token B trads: 0.3% fee paid in A. This fee will be apportioned among the nodes in [atomic swap payment path](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md)[7], which means although the pool has many many liquidity providers, for each transaction, not all the providers gets paid.  
+Token A to token B trades: 0.3% fee paid in A. This fee will be apportioned among the nodes in [atomic swap payment path](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md)[7], which means although the pool has many many liquidity providers, for each transaction, not all the providers get paid.  
 
 Trackers balance the workload of the whole network: If one node is busy handling HTLC, another node will be selected to be a hop and earns the swap fee.  
 
-If a liquidity provider think the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
+If a liquidity provider thinks the tracker he connects is not fair enough, he may choose another one. Each tracker shall publish its path/node selection policy.  
+
 
 ## impermanent loss
 
 Payment liquidity providers will never expose to any loss. Potential losses are only possible for AMM LPs who wish to use liquidity to earn trading fees.
 
-It is AMM LP's decision to offer a wider liquidity range to earn more trading fee, or a narrow liquidity range to be less exposed to potential impermanent losses.   
+It is AMM LP's decision to offer a wider liquidity range to earn more trading fees, or a narrow liquidity range to be less exposed to potential impermanent losses.   
 
-Expamples showing how impermanent loss happens and how much a loss could be can be found in [9,10]. The follwoing graph and summary of losses compared to holding are from [10]:
+Examples showing how impermanent loss happens and how much a loss could be can be found in [9,10]. The following graph and summary of losses compared to holding are from [10]:
 
 <p align="center">
   <img width="512" alt="Impermanent Loss" src="imgs/impermanentLoss.png">
@@ -388,26 +388,24 @@ a 4x price change results in a 20.0% loss relative to HODL
 a 5x price change results in a 25.5% loss relative to HODL  
 
 
-We use 1.50x price change as an example, given trading fee 0.3%. If the price stays within the 1.0X to 1.5x range for a month, suppose the transaction volumn during this period is 100 times of the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
+We use 1.50x price change as an example, given the trading fee of 0.3%. If the price stays within the 1.0X to 1.5x range for a month, suppose the transaction volume during this period is 100 times the liquidity in this range, then the expected earning is `0.3% * 100 = 30%`, which is significantly great than 2.0% loss. 
 
-Concentrated liquidity has 4000x capital efficiency as claimed in uniswap V3, which means LPs can fund much less liquidity to earn significantly higher fees. If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitble trading fees. If Bitcoin price rises quickly out of the range, all the liquidity will be entirely denominated in USDT, than the impermanent loss equals to the Bitcoin liquidity funded, and no trading fee will be earned anymore. 
+Concentrated liquidity has 4000x capital efficiency as claimed in uniswap V3, which means LPs can fund much less liquidity to earn significantly higher fees. If the price fluctuates in a narrow range for a long time, then the impermanent losses are negligible compared to the profitable trading fees. If the Bitcoin price rises quickly out of the range, all the liquidity will be entirely denominated in USDT, then the impermanent loss equals the Bitcoin liquidity funded, and no trading fee will be earned anymore. 
 
 
-LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction to the future market trend.  
+LP's strategy could be sticking the liquidity to the price movement. It all depends on the liquidity provider's prediction of the future market trend.  
 
 
 ## oracle
-Oracle is involved to feed the real time external price for trading. Although trackers give prices at any moment a trade occurs, obd should verify it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the trade. 
+Oracle is involved to feed the real-time external price for trading. Although trackers give prices at any moment a trade occurs, obd should verify it from at least one oracle before the moment of executing this swap. If the price is below the expectation of the order signed, obd should reject the trade.  
 
 ## differences from onchain AMM Swaps
 
-1. Price is from trackers who maintains statistics of global liquidity, but to avoid price manipulation, obd node should verify price from external oracles when trading tokens.   
+1. Price is from trackers who maintain statistics of global liquidity, but to avoid price manipulation, obd node should verify price from external oracles when trading tokens.   
+  
+2. Trackers maintain the global prices for all token pairs, but they have no permission to execute any trade. The lightning network has no global contract that executes transactions. Every obd node should verify the incoming order to avoid price manipulation. Obd does not have to trust any tracker.  
 
-
-
-2. Trackers maintain the globle prices for all token pairs, but they have no permission to execute any trade. Lightning network has no global contract that executes transactions. Every obd node should verify the incoming order to avoid price manipulation. Obd does not have to trust any tracker.  
-
-3. AMM on lightning network is in fact a mix model of order book and AMM.  
+3. On-chain swaps use smart contracts to collect and allocate fees for liquidity providers. But the Lightning Network has no contract. Web instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fees directly. 
 
 
 
