@@ -31,17 +31,17 @@
 
 ## introduction
 
-Automatic market maker (AMM for short) model on lightning network holds significant advantages compared to the onchain AMM[1,6] exchanges:  
+The automatic market maker (AMM for short) model on lightning network holds significant advantages compared to the on-chain AMM[1,6] exchanges:  
 
 1. There is no gas fee for each swap.  
-2. Token swap is quick, so that high frequency trading is feasible.   
+2. Token swap is quick so that high-frequency trading is feasible.   
 3. Liquidity is for both payment and trading.  
 
-Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, by defining a global constant invariant, ensure the closing certainty and the efficient use of capital for onchain trading. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in a pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in the pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`. We don't bring the transaction fee into calculation yet but will add this part later in this paper.  
+Uniswap[2], Curve[3], and Balancer[4], which operate on an automated market maker (AMM) model, by defining a global constant invariant, ensure the closing certainty and the efficient use of capital for on-chain trading. Their smart contracts hold liquidity reserves of various token pairs and traders execute swaps directly against these reserves. In this model, prices are set automatically according to a constant product `x*y=k` model (or its variants), where `x` is the number of token A and `y` is the number of token B in a pool. When a trader sells out `x'` token A for `y'` token B, the amount of token A in the pool increases and the amount of token B decreases,  but the product remains the same: `(x+x')*(y-y')=x*y=k`.  
 
 Liquidity providers are incentivized by receiving the transaction fee (0.3% in general).  
 
-This paper presents an AMM on lightning network, which is more general than the current existing constant product/sum/mix models, and the infrastructure is completely different from the onchain AMM. **It is an abstraction of the constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make any assumptions about the pricing of underlying assets. At different price levels and with the changing of the intrinsic value of assets, the shape of curve has to change. This model is not only for lightning network, but also suitable for any layer 2 networks.
+This paper presents an AMM on the lightning network, which is more general than the current existing constant product/sum/mix models, and the infrastructure is completely different from the on-chain AMM. **It is an abstraction of the constant invariant model**: the curve is a 1-manifold, which is locally homeomorphic to the open unit circle, not predefined, but calculated during the system working. We don't make any assumptions about the pricing of underlying assets. At different price levels and with the changing of the intrinsic value of assets, the shape of the curve has to change. This model is not only for lightning network, but also suitable for any layer 2 networks.
 
 We introduce the concept manifold here because the global curve is not proper to be predefined. Constant product or constant sum invariants are special cases of 1-manifold. The two models work because the arbitragers will exploit tiny price differences between different markets if the price deviates substantially from fair value. Without arbitragers, the curve itself can not price the asset.   
 
