@@ -1,7 +1,7 @@
 # OmniBOLT #2: Peer Protocol for Channel Management
 
 # Omni Address 
-One most important point is that addresses in OmniBOLT and its implementation must be Omnilayer addresses created by omnicore. Bitcoin-only address can not know any assets information. When users fund Omni assets to a channel with bitcoin addresses that do not support Omni Layer transactions, it can be difficult or impossible to recover the transferred Omni assets.  
+One most important point is that addresses in OmniBOLT and its implementation must be Omnilayer addresses created by omnicore. Bitcoin-only addresses can not know any asset information. When users fund Omni assets to a channel with bitcoin addresses that do not support Omni Layer transactions, it can be difficult or impossible to recover the transferred Omni assets.  
 
 So this is the main reason that current lnd channels can not be OmniBOLT channels.
 
@@ -11,28 +11,28 @@ In the soon future, OmniBOLT will update to ["Omni Layer Safe Segregated Witness
 # Channel
 The peer Poon-Dryja channel protocol has three phases: establishment, normal operation (commitment transactions, funding transactions, HTLCs, Collateral lending, etc), and closing.
 
-The basic logics are the same to [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The fields are similar to what are defined in BOLT 02, but the [key generation mechanism](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) is different, so that the various `_basepoint` fields are not used when creates channels. During our implementation, these fields may be changed.  
+The basic logic is the same as [BOLT 02](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md), but with some updates in messages to be compatible with OmniLayer protocol. The fields are similar to what are defined in BOLT 02, but the [key generation mechanism](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) is different, so that the various `_basepoint` fields are not used when creates channels. During our implementation, these fields may be changed.  
   
 
 ## `Channel ID` 
-The concept of channel ID is the same to the definition in [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#definition-of-channel_id). It is a global unique identification for a channel, used by wallets to locate and connect to users' account. Before a final channel id is created, a temporary id normally used before funding real BTC and tokens into the channel to be established.
+The concept of channel ID is the same as the definition in [BOLT](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#definition-of-channel_id). It is a globally unique identifier for a channel, used by wallets to locate and connect to users' account. Before a final channel id is created, a temporary id is normally used before funding real BTC and tokens into the channel to be established.
 
-The temporaty ids may be duplicated. In current implementation, one instance of OBD will not generate duplicated temp id, and one OBD may manage thousands of light clients(users). Only a channel id has been finalized, it can be braodcast, and can be used in operations from other OBD instances. 
+The temporary ids may be duplicated. In the current implementation, one instance of OBD will not generate duplicated temp id, and one OBD may manage thousands of light clients(users). Only a channel id has been finalized, it can be broadcast, and can be used in operations from other OBD instances. 
 
 ## [Channel Establishment]()
 
 Since OmniBOLT uses channels to transfer and exchange tokens, and on bitcoin network, only BTC can be the transaction fee, here comes the difference between OmniBOLT and other lightning specifications: We need extra messages to deposit miner fees into a channel to be established.
 
-Opening a channel seeks remote an OmniBOLT node, to create a channel according to the requests from local node.  
+Opening a channel seeks remote an OmniBOLT node, to create a channel according to the requests from the local node.  
 
 The process consists of:
 
 * funding node (funder) sends an `open_channel` message, followed by the responding node (fundee) sending `accept_channel`. 
-* The funder creates the funding satoshis transaction and get the approval from fundee. The satoshis in a channel is only for gas fee when broadcasts, we don't use satoshis as channel fee. As a HTLC transaction includes maximum 7 sub-transactions, each at least has 546 satoshis(dust) in its output, so that the funder has to fund `7*546` satoshis in creating a channel.  
+* The funder creates the funding satoshis transaction and gets approval from the fundee. The satoshis in a channel are only for the gas fee when broadcasts, we don't use satoshis as channel fee. As an HTLC transaction includes a maximum of 7 sub-transactions, each at least has 546 satoshis(dust) in its output, so that the funder has to fund `7*546` satoshis in creating a channel.  
 * The funder creates the funding token transaction and the corresponding commitment transaction, as described in [OmniBOLT #3](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-03-RSMC-and-OmniLayer-Transactions.md). 
 * The funder then sends the hex of the funding transaction with the `asset_funding_created` message, along with the hex of the first commitment transaction in the channel, to the fundee. 
-* Once the fundee learns the funding transaction have been created, and validate the hex, it's able to generate the signature for the funder's version of the commitment transaction, create his mirror commitment transaction, and send it back using the `asset_funding_signed` message.
-* Once the funder recieved the signed feedback message, he has to broadcast his asset funding transaction, so that the channel will hold the assets. 
+* Once the fundee learns the funding transaction has been created and validates the hex, it's able to generate the signature for the funder's version of the commitment transaction, create his mirror commitment transaction, and send it back using the `asset_funding_signed` message.
+* Once the funder received the signed feedback message, he has to broadcast his asset funding transaction, so that the channel will hold the assets. 
 
 
 During funding creation, OmniBOLT adds extra arguments (e.g. `[32*byte:property_id]`) to specify which omni asset is funded in creating this channel. 
@@ -66,10 +66,11 @@ Note that multiple channels can operate in parallel, as all channel messages are
 
 ### The `open_channel` Message 
 
-This message contains information about a node and indicates its desire to set up a new Omni aware channel. This is the first step toward creating the funding transaction and both versions of the commitment transaction. In order to recognize a OmniBOLT channel, we use specified `chain_hash:chain_hash` to mark the OmniBOLT specific messages.
+This message contains information about a node and indicates its desire to set up a new Omni-aware channel. This is the first step toward creating the funding transaction and both versions of the commitment transaction. In order to recognize an OmniBOLT channel, we use specified `chain_hash:chain_hash` to mark the OmniBOLT-specific messages.
 
 
-We don't specify which asset will be in this channel during creating, so there is no need to modify the existing design. Comments of this message comes from the original [BOLT #2](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-open_channel-message) spec, readers may check if the two are consistent:  
+We don't specify which asset will be in this channel during creation, so there is no need to modify the existing design. Comments of this message come from the original [BOLT #2](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#the-open_channel-message) spec, readers may check if the two are consistent:  
+
 
 1. type: -32 (open_channel)
 2. data: 
@@ -87,7 +88,7 @@ We don't specify which asset will be in this channel during creating, so there i
     * [`point`:`funding_pubkey`]: the public key in the two-of-two multisig script of the funding transaction output.  
 
  
-    **basepoint is currently ignored in non-custodial mode**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. The security mechanism used by Omnibolt is a bit different, and we will improve it based on community proposal. Reader shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the current mechanism. In exclusive mode, the following `_basepoints` are the same to BOLT.
+    **basepoint is currently ignored in non-custodial mode**: The [BOLT #3: key-derivation](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#key-derivation) uses the various `_basepoint` fields to derive unique keys for each commitment transaction. This property is used for preserving privacy when outsourcing penalty transactions to third parties. The security mechanism used by Omnibolt is a bit different, and we will improve it based on the community proposal. Readers shall go to [chapter #7 Hierarchical Deterministic wallet](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md) for the current mechanism. In exclusive mode, the following `_basepoints` are the same to BOLT.
  
     * [`point`:`revocation_basepoint`]: not used.
     * [`point`:`payment_basepoint`]:
