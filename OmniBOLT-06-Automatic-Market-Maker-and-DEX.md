@@ -75,7 +75,7 @@ All small ranges(`U_i`) patching together is homeomorphic to real 1-space `R^(n)
   <img width="128" alt="topological space" src="imgs/topologicalSpace.png">
 </p>
 
-For practical engineering, we can assume that the space is differentiable. 
+We can assume that the space is differentiable. 
 
 After a node commits a liquidity range, it will receive commission fee when swapping within the range. The Lightning Network has no contract to collect commissions fee for liquidity providers, but instead utilizes a routing protocol that enables liquidity providers' channel funds to be used for trading, hence these channels earn commission fee directly. 
 
