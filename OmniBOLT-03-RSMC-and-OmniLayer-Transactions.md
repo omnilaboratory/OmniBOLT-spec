@@ -1,8 +1,8 @@
 # OmniBOLT #3: RSMC and OmniLayer Transaction  
 
-Sometimes we use "money" instead of Omni assets for illustration purpose. Readers just image that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
+Sometimes we use "money" instead of Omni assets for illustration purposes. Readers just imagine that what we fund, transfer or trade is USDT, an important asset issued on Omnilayer.
 
-From this chapter on, our context is Omnilayer, not only bitcoin any more.
+From this chapter on, our context is Omnilayer, not only bitcoin anymore.
 
 RMSC pays tokens to the counterparty directly without any locker. The receiver is only passively receiving, and does not need any unlocking or confirming actions. This protocol can be applied to the following classic scenarios:  
 
@@ -310,11 +310,11 @@ The token amount in floating number is represented in a string, which has to be 
 
 ## The `btc_funding_created`, `btc_funding_signed`, `asset_funding_created` and `asset_funding_signed` Messages 
 
-The four messages describe the outpoint which the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
+The four messages describe the outpoint that the funder has created for the initial commitment transactions. After receiving the peer's signature, via `funding_signed`, it will broadcast the funding transaction to the Omnilayer network.
 
 We focus on omni assets in founding creation: Alice and Bob create a 2-2 P2SH payment to `scriptPubKey`, which is the hash of the **Redeem Script**.  
 
-All transactions, besides the btc funding transaction, are omni class C transaction.  
+All transactions, besides the BTC funding transaction, are omni class C transactions.  
  
 
 ```
@@ -334,19 +334,18 @@ All transactions, besides the btc funding transaction, are omni class C transact
     |       |<----------------   wait for close  ------------->|       |
     +-------+                                                  +-------+
 
-    - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee is not allowed to fund the channel. 
-    This is because the limitation of current BTC implementation. 
-    - Of course, each of them can withdraw money if the counterparty agrees, as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these onchain transactions.  
+    - where node Alice is 'funder' and node Bob is 'fundee'. Same to BOLT, the fundee is not allowed to fund the channel. This is because of the limitation of the current BTC implementation. 
+    - Of course, each of them can withdraw money if the counterparty agrees, as long as the two parties sign the correct Revocable Sequence Maturity Contracts for these on-chain transactions.  
 
 ```
 
 **2-2 P2SH**:
  
-In order to avoid malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, funder must construct a Commitment Transaction by which he is able to revoke his funding transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
+In order to avoid a malicious counterparty who rejects to sign any payment out of the P2SH transaction, so that the money is forever locked in the channel, the funder must construct a Commitment Transaction by which he is able to revoke his funding transaction. This is the first place we introduce the Revocable Sequence Maturity Contract (RSMC), invented by Poon and Dryja in their white paper, in this specification.
 
-So the `funding_created` message does not mean both parties really deposite money into the channel. The first round communication is just simply setup a P2SH address, construct an unbroadcast funding transaction, construct a RSMC and exchange signatures. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
+So the `funding_created` message does not mean both parties really deposit money into the channel. The first round of communication just simply set up a P2SH address, construct an unbroadcast funding transaction, construct an RSMC, and exchange signatures. After that, Alice or Bob can broadcast the funding transaction to transfer real Omni assets into the channel.
 
-The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions. BR1a (Breach Remedy) can be created later before the next commitment transaction is contructed.
+The following diagram shows the steps we MUST do before any participants broadcast the funding/commitment transactions. BR1a (Breach Remedy) can be created later before the next commitment transaction is constructed.
 
 
 <p align="center">
@@ -355,19 +354,19 @@ The following diagram shows the steps we MUST do before any participants broadca
 
 Alice's OBD constructs a promised transaction and a refund transaction: C1a/RD1a (Revocable Delivery), which pays out from the 2-2 P2SH transaction output:
 
-step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and waiting Bob's signature: Alice2 & Bob.
+step 1: Alice constructs a temporary 2-2 multi-sig address using Alice's temporary private key Alice2 and waits for Bob's signature: Alice2 & Bob.
 
 step 2: Alice constructs a promise payment C1a out of Alice & Bob, one output is 60 USDT to `Alice2 & Bob`, and the other output is 40 USDT to Bob.
 
 step 3: RD1a is the first output of C1a, which pays Alice 60 USDT, but with a sequence number preventing immediate payment if Alice cheats.
 
-step 4: Bob signs C1a and RD1a, constructs the symmetric C1b/RD1b, hands to Alice for signature.
+step 4: Bob signs C1a and RD1a, constructs the symmetric C1b/RD1b, and hands Alice for signature.
 
-step 5: Alice signs C1b/RD1b and send back to bob. 
+step 5: Alice signs C1b/RD1b and sends it back to bob. 
 
-Both sides verifies the signed the transactions, if all are correct, Alice and Bob update their local database. Alice broadcasts the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
+Both sides verify the signed transactions, if all are correct, Alice and Bob update their local database. Alice broadcasts the funding transaction. C1a and C1b cost the same output, only one can enter the blockchain.  
 
-Any side broadcasts C1a/C1b, the couterparty immediatly gets the output1 of C1a/C1b, but has to wait for a seq=1000 to get his fund. If C1a/C1b are revocked but broadcasted, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
+Any side broadcasts C1a/C1b, the counterparty immediately gets the output1 of C1a/C1b but has to wait for a seq=1000 to get his fund. If C1a/C1b are revoked but broadcasted, the counterparty can broadcast BR1a or BR1b immediately and get the remaining funds in the channel immediately. 
   
 
 1. type: -3400 (btc_funding_created)
@@ -389,8 +388,7 @@ Alice notifies Bob that she created the BTC funding transaction by payloads pack
     * [`32*byte`:`temporary_channel_id`]: the `temporary_channel_id` which will be replaced by channel_id in the following messeges.
   
 
-Bob's OBD verifies the btc funding transaction by its hex, and replies Alice that he knows the funding of BTC by message -3500. 
-
+Bob's OBD verifies the btc funding transaction by its hex and replies to Alice that he knows the funding of BTC by message -3500. 
 
 1. type: -34 (asset_funding_created)
 2. data:
@@ -400,8 +398,8 @@ Bob's OBD verifies the btc funding transaction by its hex, and replies Alice tha
     * [`32*byte`:`temporary_channel_id`]: the same as the `temporary_channel_id` in the `open_channel` message.
     
     
-Alice creats the asset funding transaction and asks Bob to verify and sign this transaction.
- 
+Alice creates the asset funding transaction and asks Bob to verify and sign this transaction.  
+
 1. type: -35 (asset_funding_signed)
 2. data:
     * [`channel_id`:`channel_id`]: generated by exclusive-OR of the funding_txid and the funding_output_index from the asset_funding_created message. 
@@ -410,12 +408,11 @@ Alice creats the asset funding transaction and asks Bob to verify and sign this 
     * [`byte_array`:`rsmc_signed_hex`]: rsmc signed by Bob.
      
   
-Bob signs, and send `asset_funding_signed` message back to Alice, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. 
-   
+Bob signs, and send the `asset_funding_signed` message back to Alice, hence Alice knows the 2-2 P2SH address has been created, but not broadcasted. 
    
 ## The `commitment_tx` and `revoke and acknowledge` Message
 
-The two messages describe a RSMC payment inside one channel created by Alice and Bob. We introduce HTLC and corresponding messages in the next chapter.  
+The two messages describe an RSMC payment inside one channel created by Alice and Bob. We introduce HTLC and corresponding messages in the next chapter.  
 
 ### diagram and messages
 ```
@@ -450,7 +447,7 @@ The two messages describe a RSMC payment inside one channel created by Alice and
    
 ```
 
-Each node has multiple asset channels, it can simultaneously send out transactions，and wait fot the counter party to response.  
+Each node has multiple asset channels, it can simultaneously send out transactions， and wait for the counterparty to respond.  
      
 <!-- ![RSMC](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/RSMC-diagram.png "RSMC") -->
 
@@ -462,9 +459,10 @@ There are two outputs of a commitment transaction:
 to_rsmc([to local](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_local-output)): 0. Alice2 & Bob 60,  
 [to remote](https://github.com/lightningnetwork/lightning-rfc/blob/master/03-transactions.md#to_remote-output): 1. Bob 40.  
 
-In revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be timelocked using (for example) sequence number =1000, and must has breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revocked commitment transaction.  
+In the revockable delivery(RD) branch, the `to_rsmc` output sends funds back to the owner of this commitment transaction and thus must be time-locked using (for example) sequence number =1000, and must have breach remedy(BR) transaction for Bob in the case that Alice broadcasts a revoked commitment transaction.  
 
-The RD and BR are written in a redeem script, which locks the to_local output. Put the redeem script and the omni class C transaction together to constructe the commitment transaction:   
+The RD and BR are written in a redeem script, which locks the to_local output. Put the redeem script and the omni class C transaction together to construct the commitment transaction:   
+
 
 
 ### OMNI RSMC transaction construction  
@@ -537,7 +535,7 @@ The payload on receiver side is:
 | 8 bytes	|	Amount to send			|	to_remote (= 45)	| 
  
 
-`to_rsmc` and `to_remote` are two outputs that allocates the balance of the channel. `to_remote` is locked by the pubkey script and `to_rsmc` is locked by the following `redeem script`:  
+`to_rsmc` and `to_remote` are two outputs that allocate the balance of the channel. `to_remote` is locked by the pubkey script and `to_rsmc` is locked by the following `redeem script`:  
 
 ```bat
 OP_IF
@@ -603,7 +601,7 @@ Bob constructs the symmetric transaction C2b and hands it back to Alice for sign
     * [`byte_array`:`rsmc_hex`]: the hex of RSMC transaction. From the hex, payment information can be extracted and verified by the counterparty.  
     * [`byte_array`:`to_counterparty_tx_hex`]: The hex of the transaction that pays the counterparty money.
  
-For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OBD constructs BR(1)a(Breach Remedy) and send it to Bob. Bob checks the Alice2's signature in BR1a to verify if the private key is correct. If it is, Bob signs C2a/RD2a.
+For example, Alice pays Bob the `amount` of omni asset by sending `rsmc_Hex`. Her OBD constructs BR(1)a(Breach Remedy) and sends it to Bob. Bob checks Alice2's signature in BR1a to verify if the private key is correct. If it is, Bob signs C2a/RD2a.
 
  
 1. type: -352 (Revoke and Acknowledge Commitment Transaction)
@@ -626,20 +624,20 @@ For example, Alice pays Bob `amount` of omni asset by sending `rsmc_Hex`. Her OB
 2. data: to be added  
 
 
-In all above messages, if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is compatible to current bitcoin only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet. 
+In all the above messages, if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is compatible with the current bitcoin-only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet. 
 
 
-If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
+If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition, a node must check if the asset id is the same in the transaction `op_return` payload. If not, the node has to close the connection.  
 
 Alice can only update the local state database after receiving all the signatures of C(n)a from Bob. Otherwise, if any message in the process is interrupted, Alice must cancel the established transaction and return to the state of the previous commitment tx. On Bob's side, the same logic is applied, the local state database is updated only after all Alice's signatures are received. 
 
 ## Cheat and Punishment
 
-All penalties are implemented through breach remedy transactions and Seq timelocks. If Alice tries to broadcast C1a(the older transaction) to claim more money after she pays by C2a，then by broadcasting breach remedy transaction, this money will be sent to the Bob without delay.    
+All penalties are implemented through breach remedy transactions and Seq timelocks. If Alice tries to broadcast C1a(the older transaction) to claim more money after she pays by C2a， then by broadcasting the breach remedy transaction, this money will be sent to Bob without delay.    
 
-In the above [diagram](#diagram-and-messages), the payer Alice's OBD constructs C2a and simultaneously, Alice gives up the ownership of C1a by sending her temporary private key of Alice2 to Bob. This is a critical step for Bob to be able to punish fraudulent behavior. 
+In the above [diagram](#diagram-and-messages), the payer Alice's OBD constructs C2a, and simultaneously, Alice gives up the ownership of C1a by sending her temporary private key of Alice2 to Bob. This is a critical step for Bob to be able to punish fraudulent behavior. 
 
-There has to be a daeman process that monitors Alice's behaviar. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will be success in cheating, and get the 60 USDT.
+There has to be a daemon process that monitors Alice's behavior. If it detects that Alice broadcasts C1a, it has to notify Bob to broadcast the punishment transaction BR1a using Alice2's private key. If Bob does not broadcast BR1a before the sequence number expires, Alice will succeed in cheating and get the 60 USDT.
  
  
 ## The `close_channel` Message 
@@ -649,9 +647,9 @@ There has to be a daeman process that monitors Alice's behaviar. If it detects t
 This message indicates how to withdraw money from a channel, by broadcasting a `C(n)a`, which is the latest commitment transaction in this channel. It comprises the following steps:
 
 1. Allice raises a request, to withdraw her money in P2SH, with her proof of her balance.  
-2. Alice waits OBD to approval:  
+2. Alice waits for OBD to approval:  
 2.1 if they are correct, Alice raises a transaction paying from S2SH to Alice's omni address.  
-2.2 if they are wrong/incorrect, OBD rejects the request and notify Bob.  
+2.2 if they are wrong/incorrect, OBD rejects the request and notifies Bob.  
 
 
 Before closing a channel, all HTLCs pending in this channel shall be removed, after which `close_channel` can be successfully executed.
