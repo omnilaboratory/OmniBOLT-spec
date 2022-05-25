@@ -334,9 +334,13 @@ if `asset_id = 0`, then OmniBOLT processes bitcoin lightning network, and is com
 
 ### Requirements
 
-TO DO: Neo Carmack, Ben Fei
+TO DO(Neo Carmack, Ben Fei): Complete the asset related "MUST to-do" list.  
 
-If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the connection with the remote party. In addition, a node must check if the asset id is the same in the transaction `op_return` payload for every HTLC. If not, the node has to close the connection.  
+A node MUST:
+
+1. If a node receives a commitment transaction for a certain asset, which is not the asset(ID) that the channel(ID) is built for, then the node has to close the asset(ID) channel with the remote party.  
+2. Check if the asset id in the incoming HTLC is the same in the transaction `op_return` payload for every HTLC. If not, the node has to close the asset(ID) channel.  
+3. Validate the signature. If incorrect, then the node has to close the asset(ID) channel with the remote party.   
 
 
 ## Terminate HTLC off-chain
