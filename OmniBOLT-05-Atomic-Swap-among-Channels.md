@@ -4,7 +4,7 @@
 
 > -- https://www.investopedia.com/terms/a/atomic-swaps.asp
   
-In general, atomic swaps take place between different block chains, for exchanging tokens with no trust of each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer. If one needs to trade his tokens, say USDT, for some one else's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, but refunded to original account. The latter action ensures to remove counterparty risk.  
+In general, atomic swaps take place between different blockchains, for exchanging tokens with no trust in each other. Channels defined in OmniBOLT can be funded by any token issued on OmniLayer. If one needs to trade his tokens, say USDT, for someone else's Bitcoins, both parties are required to acknowledge receipt of funds of USDT and BTC, within a specified timeframe using a cryptographic hash function. If one of the involved parties fails to confirm the transaction within the timeframe, then the entire transaction is voided, and funds are not exchanged, but refunded to the original account. The latter action ensures to the removal of counterparty risk.  
 
 The standard swap procedure between channels is:
 
@@ -80,27 +80,27 @@ Apparently it is not necessary that Alice and Bob have a direct channel between 
 
 ## Hashed TimeLock Swap Contract
 
-Hashed TimeLock Swap Contract (HTLSC), which defines a swap, consists of two separate HTLCs with extra specified exchange rate of tokens and time lockers.  
+Hashed TimeLock Swap Contract (HTLSC), which defines a swap, consists of two separate HTLCs with an extra specified exchange rate of tokens and time lockers.  
 
 Simply there are 5 steps in a swap.   
 
 **Step 0**: Alice creats `HTLC 1` to pay Bob X USDT. `HTLC 1` is locked by `Hash(R)` and time locker `t1`.  
-**Step 1**: Alice notifies Bob the details of `HTLC 1`.  
-**Step 2**: Bob either acknowledges and creates `HTLC 2` to pay Alice Y BTC, or ignors the message, in which case `HTLC 1` will be automatically canceled after timeframe `t1`.  `HTLC 2` is also locked by `Hash(R)`.  
-**Step 3**: In this step, Alice apply `R` in her BTC channel to get her BTC fund. She has to check the redeem script `HTLC 2`, to see whether or not the `HTLC 2` is locked by `Hash(R)`. If Bob is cheating, he could use a faked `Hash(R')` in redeem script. Therefor when Alice apply `R` to unlock her fund in BTC channel, she will get nothing but expose the secrete `R` to Bob.   
+**Step 1**: Alice notifies Bob of the details of `HTLC 1`.  
+**Step 2**: Bob either acknowledges and creates `HTLC 2` to pay Alice Y BTC or ignores the message, in which case `HTLC 1` will be automatically canceled after timeframe `t1`.  `HTLC 2` is also locked by `Hash(R)`.  
+**Step 3**: In this step, Alice applies `R` in her BTC channel to get her BTC fund. She has to check the redeem script `HTLC 2`, to see whether or not the `HTLC 2` is locked by `Hash(R)`. If Bob is cheating, he could use a faked `Hash(R')` in redeem script. Therefore when Alice applies `R` to unlock her fund in the BTC channel, she will get nothing but expose the secrete `R` to Bob.   
 **Step 4**: After Alice exposes `R` to Bob, Bob then can use `R` to get his fund in his USDT channel.  
-**Step 5**: If Alice changes her mind, refuse to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and in USDT channels are all refund to the original accounts. No one in this swap will take lose.   
+**Step 5**: If Alice changes her mind, and refuses to apply `R` to get her fund in BTC, then after a timeframe, funds in BTC channels and USDT channels are all refunded to the original accounts. No one in this swap will take a loss.   
  
 
-No participant is able to cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform to general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).
+No participant can cheat. After inputting `R` in each channel, the `HTLC 1` and `2` transform into general commitment transactions, which is the same procedure that how an [HTLC transforms to a commitment transaction](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-05-Atomic-Swap-among-Channels.md#terminate-htlc-off-chain).  
 
-In chain `[Alice, USDT, David_1] --> ... --> [David_n, USDT, Bob]`, Alice creates `HTLC 1` and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.
+In chain `[Alice, USDT, David_1] --> ... --> [David_n, USDT, Bob]`, Alice creates `HTLC 1` and its mirror transactions on Bob side, with time locker `t1`, which in the diagram is 3 days as an example.  
 
 <p align="center">
   <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy.png">
 </p>
 
-At the same time, Bob creates `HTLC 2` in the chain `[Bob, BTC, Carol_1] --> ... --> [Carol_n, BTC, Alice]` and its mirror transactions on Alice side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days.
+At the same time, Bob creates `HTLC 2` in the chain `[Bob, BTC, Carol_1] --> ... --> [Carol_n, BTC, Alice]` and its mirror transactions on Alice's side, sending the agreed number of BTCs to Alice. Time locker `t2` is set to be 2 days, less than `t1=3` days.  
 
 <p align="center">
   <img width="768" alt="HTLC with full Breach Remedy transactions" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/HTLC-diagram-with-Breach-Remedy-BTC-channel.png">
@@ -141,13 +141,13 @@ At the same time, Bob creates `HTLC 2` in the chain `[Bob, BTC, Carol_1] --> ...
   * [`u64`:`hashed_R`]: Hash(R).     
   * [`u64`:`time_locker`]: For example, 2 days, which must be less than the `time_locker` in message `swap`. 
 
-Bob in `channel_id_to` has to monitor the `transaction_id` in channel `channel_id_from`, to see whether or not the corresponding transactions, like RD, HED, HTRD, etc, have been correctly created. After he validates the transactions, he will create HTLSC according to the arguments `amount` in channel `channel_id_to`, and then reply Alice with message `swap_accepted`.
+Bob in `channel_id_to` has to monitor the `transaction_id` in channel `channel_id_from`, to see whether or not the corresponding transactions, like RD, HED, HTRD, etc, have been correctly created. After he validates the transactions, he will create HTLSC according to the arguments `amount` in channel `channel_id_to` and then reply to Alice with the message `swap_accepted`.
 
 
 Alice receives the message `swap_accepted`. If anything is not exactly correct, Alice will not send R to get her assets in `channel_id_to`, hence Bob is not able to get this asset in `channel_id_from`. After a timeframe, the two channels revock to their previous state.
 
 ## Remark
-Atomic swap is a foundation of lots of blockchain applications. [Next chapter](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) will see some examples, which are intuitive and will help our readers to build much more complex applications for real world businesses. 
+Atomic swap is the foundation of lots of blockchain applications. [Next chapter](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-06-Mortgage-Loan-Contracts-for-Crypto-Assets.md) will see some examples, which are intuitive and will help our readers to build much more complex applications for real-world businesses. 
 
 
  
