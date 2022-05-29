@@ -136,7 +136,7 @@ We build local charts around `(x_i, y_i), i=0,1,2,...` to cover the whole price 
 
 If we take `n=0,1` in the series and discard all others, then locally any curve approximates a line.   
 
-### example: constant function invariant
+### example: constant function invariants
 
 #### example 1：
 If let:     
