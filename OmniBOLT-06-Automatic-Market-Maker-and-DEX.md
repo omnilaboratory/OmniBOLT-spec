@@ -68,7 +68,7 @@ To gain the certainty of closing, we leverage the funded channels to fill the sp
   <img width="512" alt="order book Vs AMM" src="imgs/orderbookAMM2.png">
 </p>
 
-All small ranges(`U_i`) patching together is homeomorphic to real 1-space (`R^(n)`):
+All small ranges(`U_i`) patching together is homeomorphic to real 1-space (`R^(n)， n=1`):
 
 <p align="center">
   <img width="128" alt="topological space" src="imgs/topologicalSpace.png">
@@ -137,6 +137,8 @@ We build local charts around `(x_i, y_i), i=0,1,2,...` to cover the whole price 
 If we take `n=0,1` in the series and discard all others, then locally any curve approximates a line.   
 
 ### example: constant function invariant
+
+#### example 1：
 If let:     
 
 <p align="center">
@@ -144,6 +146,8 @@ If let:
 </p>
 
 Where `C` is a constant. Then near any point, the invariant model is the constant sum model defined in Curve[3](Curve is the project name, not the geometry object).   
+
+#### example 2：
 
 If let:
 <p align="center">
