@@ -53,11 +53,11 @@ If Bob can tell Alice `R`, which is the pre-image of `Hash(R)` that someone else
 Internal transactions in the above diagram are explained in [chapter 1](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-01-basic-protocol-and-Terminology.md#terminology).  
 
 There are three outputs of a commitment transaction:
-`to_rsmc(to local)`: 0. Alice3 & Bob 45,
-`to remote`: 1. Bob 40, 
-`to_htlc`: 2. Alice4 & Bob 15 
+`to_rsmc(to local)`: 0. Alice3 & Bob 45,  
+`to remote`: 1. Bob 40,  
+`to_htlc`: 2. Alice4 & Bob 15  
 
-`to_htlc` has three branches to handle the situations of time out, breach remedy, and htlc success. We put the payload and outputs together to construct the HTLC transaction: 
+`to_htlc` has three branches to handle the situations of time out, breach remedy, and htlc success. We put the payload and outputs together to construct the HTLC transaction:  
 
 ## OMNI HTLC transaction construction
 
