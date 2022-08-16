@@ -4,7 +4,7 @@
 
 * `OBD`: OmniBOLT Daemon.
 * `channel`: A channel refers to Poon-Dryja channel in the lightning network. Channel is denoted by `[Alice, USDT, Bob]`, which means Alice and Bob build a channel and fund it by USDT.
-* `asset id`: Each asset has an id that is published by Omnilayer on the mainnet. In most protocol messages, if `asset_id = 0`, then OmniBOLT processes bitcoin transactions, and is compatible with the current bitcoin-only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet.  
+* `asset id`: Each asset has an id(unsigned 32-bit integer) that is published by Omnilayer on the mainnet. In most protocol messages, if `asset_id = 0`, then OmniBOLT processes bitcoin transactions, and is compatible with the current bitcoin-only lightning network. Other assets, for example, `OMNI` has asset id `1`, USDT has asset id `31` on the mainnet.  
 * `[A, token symbol, B]`: stands for the channel built by A and B, funded by token `token symbol`, for example, `omni`,`usdt`.  
 * `[A --(10 USDT)--> B]`: A pays 10 usdt to B in channel `[A, USDT, B]`.  
 * `property`: refers to tokens issued on Omnilayer, the same as "asset".
