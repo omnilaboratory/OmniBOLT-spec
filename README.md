@@ -68,14 +68,11 @@ We not only just list messages and arguments that are used in our implementation
 
 ## Implementation and API for client applications
 
-Implementation of OmniBOLT specification can be found in this repository [OmniBOLT Daemon](https://github.com/omnilaboratory/obd), as well as the API online documentation can be found [here](https://api.omnilab.online).  
-
-
-[Javascript API:](https://github.com/omnilaboratory/DebuggingTool/blob/master/js/obdapi.js). The JS SDK implments a complete set of APIs for HD wallets (required by [OmniBOLT #07:](https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/OmniBOLT-07-Hierarchical-Deterministic-(HD)-wallet.md)) and client applications. It manages pub/priv keys genertion and helps developers automatically fill in the arguments which is hardly to be manually finished.  
-
-
-GUI debugging tool: [here](https://github.com/omnilaboratory/DebuggingTool).
+Implementation of OmniBOLT specification can be found in this repository [OmniBOLT Daemon](https://github.com/omnilaboratory/obd).  
  
+## Quick Start
+
+It is recommended to start with a graphic tool to play with OmniBOLT: [https://github.com/omnilaboratory/obd#quick-start](https://github.com/omnilaboratory/obd#quick-start)
 
 
 ## Contribution
