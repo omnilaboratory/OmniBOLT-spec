@@ -20,7 +20,7 @@ Alice transfers 10 USDT to Bob inside the `[Alice, USDT, Bob]` channel, then Bob
 # Table of Contents
  * [Hashed TimeLock Contract](#Hashed-TimeLock-Contract) 
  * [OMNI HTLC transaction construction](#OMNI-HTLC-transaction-construction) 
-	* [Commitment Transaction](#Commitment-Transaction)
+	* [Commitment Transaction and Concurrency](#Commitment-Transaction-and-Concurrency)
 	* [HTLC success HED1a](#HTLC-Success-HED1a )
 	* [HTLC timeout HT1a](#HTLC-Timeout-HT1a)
 	* [HTLC breach remedy](#HTLC-Breach-Remedy)
@@ -61,7 +61,7 @@ There are three outputs of a commitment transaction:
 
 ## OMNI HTLC transaction construction
 
-### Commitment Transaction
+### Commitment Transaction and Concurrency
 
 On sender side: 
 ```
@@ -75,7 +75,10 @@ tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
     	* to_rsmc/reference1:{value:dust, pkScript: RSMC redeem script},  
 	* to_remote/reference2:{value:dust, pkScript: pubkey script},  
-	* to_htlc/reference3:{value:dust, pkScript: offered htlc script}, 
+	* to_htlc_1/reference3:{value:dust, pkScript: offered htlc script}, 
+	* to_htlc_2/reference4:{value:dust, pkScript: offered htlc script}, 
+	* ...
+	* to_htlc_n/reference_n:{value:dust, pkScript: offered htlc script}, 
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
 Where:  
@@ -94,8 +97,18 @@ payload in output 0:
 | 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
 | 8 bytes	|	Amount to send			|	to_remote (e.g. 40)	|
 | 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
-| 8 bytes	|	Amount to send			|	offered_htlc (e.g. 15)	|
- 
+| 8 bytes	|	Amount to send			|	offered_htlc_1 (e.g. 10)|
+| 1 byte 	|	Receiver output #		|	4 (= vout 4)	 	|
+| 8 bytes	|	Amount to send			|	offered_htlc_2 (e.g.  5)|
+| ...    	|	...     			|	...			|
+| 1 byte 	|	Receiver output #		|	8 (= vout 8)	 	|
+| 8 bytes	|	Amount to send			|	offered_htlc_6 (e.g. 5) | 
+
+
+`op_return` has maximum 83 bytes space, so that concurrently the maximum outputs is 8, including `to_rsmc`, `to_remote`, and 6 `offered_htlc_i` outputs.  
+
+Concurrency means a channel can accept or send HTLCs at the same time. Because of the `op-return` space limitation, if a node needs a bigger throughput, it has to build more channels with more counterparties. Channels are vertical scaling: they work in parallel and will not affect each other. This is a special useful feature for liquidity providers who build thousands of channels and earn channel fees by providing liquidity to the network.  
+
 On receiver side: 
 ```
 version: 2  
@@ -108,24 +121,32 @@ tx output:
 	* op_return:{value:0, pkScript:opReturn_encode},  
     	* to_remote/reference1:{value:dust, pkScript: pubkey script},  
 	* to_local/reference2:{value:dust, pkScript: RSMC redeem script},  
-	* to_htlc/reference3:{value:dust, pkScript: received htlc script}, 
+	* to_htlc_1/reference3:{value:dust, pkScript: received htlc script}, 
+	* to_htlc_2/reference4:{value:dust, pkScript: received htlc script}, 
+	* ...
+	* to_htlc_n/reference_n:{value:dust, pkScript: received htlc script},  
 	* change:{value:change satoshis, pkScript: the channel pubkey script }    
 ```
 
 payload in output 0: 
 
-| size		|	Field				|	Receiver Value	 	|  
-| -------- 	|	-----------------------		|	-------------------	|   
-| 2 bytes	|	Transaction version		|	0			|
-| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	|
-| 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	|
-| 1 byte 	|	Number of outputs		|	3		 	|
-| 1 byte 	|	Receiver output #		|	1 (= vout 1)		|
-| 8 bytes	|	Amount to send			|	to_remote (e.g. 45)	|
-| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	|
-| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 40)	|
-| 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	|
-| 8 bytes	|	Amount to send			|	received_htlc (e.g. 15)	|
+| size		|	Field				|	Receiver Value	 	 |  
+| -------- 	|	-----------------------		|	-------------------	 |   
+| 2 bytes	|	Transaction version		|	0			 |
+| 2 bytes	|	Transaction type		|	7 (= Send-to-Many)	 |
+| 4 bytes	|	Token identifier to send	|	31 (e.g. USDT )	 	 |
+| 1 byte 	|	Number of outputs		|	3		 	 |
+| 1 byte 	|	Receiver output #		|	1 (= vout 1)		 |
+| 8 bytes	|	Amount to send			|	to_remote (e.g. 45)	 |
+| 1 byte 	|	Receiver output #		|	2 (= vout 2)	 	 |
+| 8 bytes	|	Amount to send			|	to_rsmc (e.g. 40)	 |
+| 1 byte 	|	Receiver output #		|	3 (= vout 3)	 	 |
+| 8 bytes	|	Amount to send			|	received_htlc_1 (e.g. 10)|
+| 1 byte 	|	Receiver output #		|	4 (= vout 4)	 	 |
+| 8 bytes	|	Amount to send			|	received_htlc_2 (e.g.  5)|
+| ...    	|	...     			|	...			 |
+| 1 byte 	|	Receiver output #		|	8 (= vout 8)	 	 |
+| 8 bytes	|	Amount to send			|	received_htlc_6 (e.g. 5) | 
 
 `change`: change = satoshis in channel - dust - miner fee. By default, we set dust 546 satoshis.  
 
