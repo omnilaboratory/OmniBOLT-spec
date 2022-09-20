@@ -107,7 +107,7 @@ payload in output 0:
 
 `op_return` has maximum 83 bytes space, so that concurrently the maximum outputs is 8, including `to_rsmc`, `to_remote`, and 6 `offered_htlc_i` outputs.  
 
-Concurrency means a channel can accept or send HTLCs at the same time. Because of the `op-return` space limitation, if a node needs a bigger throughput, it has to build more channels with more counterparties. Channels are vertical scaling: they work in parallel and will not affect each other. This is a special useful feature for liquidity providers who build thousands of channels and earn channel fees by providing liquidity to the network.  
+Concurrency means a channel can accept or send HTLCs at the same time. Because of the `op-return` space limitation, if a node needs a bigger throughput, it has to build more channels with more counterparties. Channels are vertical scaling: they work in parallel and will not affect each other, and adding more channels improves the TPS linearly. This is a useful feature for liquidity providers who build thousands of channels to gain a high TPS and earn channel fees by providing liquidity to the network.  
 
 On receiver side: 
 ```
