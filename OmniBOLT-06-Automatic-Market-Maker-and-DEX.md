@@ -97,21 +97,30 @@ orderMessage
 	USDT: 60000  
 	BTC: 1  
 	}  
+    expirationTimestamp: 24*90 hours
+    signature: signed by maker's private key
+    nonce: to prevent replay attacks
 }   
 
 ```
 
-**tokenSell**: The token for sale  
+**tokenSell**: The token for sale. 
 
-**amount**: The amount of token for sale  
+**amount**: The amount of token for sale.  
 
-**networkA**: the network name(ID) the token is issued  
+**networkA**: the network name(ID) the token is issued.  
 
-**tokenBuy**: The token wanted  
+**tokenBuy**: The token wanted.  
     
-**networkB**: the network name(ID) the token wanted is issued  
+**networkB**: the network name(ID) the token wanted is issued.  
 
-**ratio**: The price   
+**ratio**: The price.   
+
+**expirationTimestamp**: If the order times out, it will be automatically cancelled. 
+
+**signature**: the signature of the order.  
+
+**nouce**: to prevent replay(repeat) attacks.  
 
 If one token is denominated in the other token, then the price `P` is the ratio of the two tokens. A buyer's order is a left-closed and right-open interval `[P, $\infty$)`. The union of all buyers' intervals covers the space of Bitcoin buyer's liquidity, if tokenSell is USDT, and tokenBuy is Bitcoin:  
 
