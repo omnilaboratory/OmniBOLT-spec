@@ -118,7 +118,7 @@ orderMessage
 
 **expirationTimestamp**: If the order times out, it will be automatically cancelled. 
 
-**signature**: All signatures of orders are deterministic, using RFC6979 (using HMAC-SHA256), and the maximum length is 73 bytes.  
+**signature**: All signatures of orders are deterministic, using RFC6979 (using HMAC-SHA256), and the maximum length is 73 bytes. Signature is constructed as in the section ["signing an order"](#signing-an-order) below.  
 
 **nouce**: to prevent replay(repeat) attacks.  
 
@@ -206,9 +206,15 @@ TO DO(Ben, Carmack):
 1. Alice gets the ratio(price) from a tracker or an oracle and signs the order.  
 2. Alice post this order to a tracker.  
 
-All signatures of orders are deterministic, using [RFC6979 (Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA))](https://datatracker.ietf.org/doc/html/rfc6979).   
+All signatures of orders are deterministic, using [RFC6979 (Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA))](https://datatracker.ietf.org/doc/html/rfc6979).  
 
-The tracker network must verify the signature. If all is correct, then sync it to neighbors and push it to connected nodes.  
+The signature is constructed as:
+```
+ECDSA(H(H(H(H(H(H(H(tokenSell | tokenBuy) | amount) | networkA) | networkB) | ratio) | expirationTimestamp) | nonce), PrivateKey)
+```
+`H` is a hash function, for example, user could chosse Pedersen hash function when signing his order. 
+
+The tracker network must verify the signature. If all is correct, then sync it to neighbors, find out matching orders and push them to the maker's node.  
 
 
 ## adding liquidity
