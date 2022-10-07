@@ -2,7 +2,7 @@
 
 * Oct 04.2021: This work is in progress. 
 * Apr 27.2022: Mechanism supports both discrete and continuous models in section 2. 
-* Since Jun 23.2022, this work applies zero-knowledge proof to solve some security flaws of the original design. 
+* Since Jun 23.2022, this work applies zero-knowledge proof to solve some security flaws in the original design. 
 
 # Table of Contents
  * [introduction](#introduction)
@@ -206,16 +206,16 @@ TO DO(Ben, Carmack):
 1. Alice gets the ratio(price) from a tracker or an oracle and signs the order.  
 2. Alice post this order to a tracker.  
 
-All signatures of orders are deterministic, using [RFC6979 (Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA))](https://datatracker.ietf.org/doc/html/rfc6979).  
+All signatures of orders are deterministic, using [RFC6979 (Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA))](https://datatracker.ietf.org/doc/html/rfc6979)[11].  
 
 The signature is constructed as:
 ```
 ECDSA(H(H(H(H(H(H(H(tokenSell | tokenBuy) | amount) | networkA) | networkB) | ratio) | expirationTimestamp) | nonce), PrivateKey)
-```
-`H` is a hash function, for example, user could chosse Pedersen hash function when signing his order. 
+```  
 
-The tracker network must verify the signature. If all is correct, then sync it to neighbors, find out matching orders and push them to the maker's node.  
+`H` is a hash function.  Users should choose a hash function that the tracker network supports, for example, Pedersen hash function, when signing their order. 
 
+The tracker network must verify the signature. If all is correct, then sync the order to neighbors, find out matching orders and push them to the maker's node.    
 
 ## adding liquidity
 TO DO(Ben, Neo): (add formular for ranges in this chapter or chapter 2)
