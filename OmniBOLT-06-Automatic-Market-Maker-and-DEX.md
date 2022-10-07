@@ -118,7 +118,7 @@ orderMessage
 
 **expirationTimestamp**: If the order times out, it will be automatically cancelled. 
 
-**signature**: the signature of the order.  
+**signature**: All signatures of orders are deterministic, using RFC6979 (using HMAC-SHA256), and the maximum length is 73 bytes.  
 
 **nouce**: to prevent replay(repeat) attacks.  
 
