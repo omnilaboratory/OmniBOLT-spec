@@ -206,6 +206,8 @@ TO DO(Ben, Carmack):
 1. Alice gets the ratio(price) from a tracker or an oracle and signs the order.  
 2. Alice post this order to a tracker.  
 
+All signatures of orders are deterministic, using [RFC6979 (Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA))](https://datatracker.ietf.org/doc/html/rfc6979).   
+
 The tracker network must verify the signature. If all is correct, then sync it to neighbors and push it to connected nodes.  
 
 
@@ -435,6 +437,8 @@ Oracle is involved to feed the real-time external price for trading. Although tr
 8. Hayden Adams, Noah Zinsmeister, et. Uniswap V3 white paper. https://uniswap.org/whitepaper-v3.pdf
 9. Impermanent Loss Explained. https://academy.binance.com/en/articles/impermanent-loss-explained
 10. Pintail. Uniswap: A Good Deal for Liquidity Providers?. https://pintail.medium.com/uniswap-a-good-deal-for-liquidity-providers-104c0b6816f2
+11. rfc6979(Request for Comments: 6979): Deterministic Usage of the Digital Signature Algorithm (DSA) and Elliptic Curve Digital Signature Algorithm (ECDSA). https://datatracker.ietf.org/doc/html/rfc6979
+ 
 
  
 
