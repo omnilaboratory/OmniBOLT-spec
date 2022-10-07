@@ -173,15 +173,16 @@ Derivatives in the above expansion can be calculated from the trading data aroun
 TO DO(Ben, Neo)
 
 ### slipage estimation
-TO DO(Ben, Neo)
 
-For a regular market, sometimes the more you buy the higher the marginal exchange rate that you have to pay for each additional unit, sometimes you don't need to pay extra money. This is totally depends on the liquidity provided by the sellers(counterparties). 
+In a regular market, sometimes the more you buy the higher the marginal exchange rate that you have to pay for additional units, sometimes the exchange rate is stable, and you don't need to pay higher prices when you buy more. This totally depends on the liquidity provided by the sellers(counterparties).
 
 <p align="center">
   <img width="512" alt="market states comparison" src="imgs/differentMarketStates.png">
 </p>
 
-the two market states fit into two different curves. On the left market, the exchange rate won't grow fast as you buy more. But on the right side market, the slippage will be very large. 
+the two market states fit into two different curves. On the left market, the exchange rate won't grow fast as you buy more. But on the right side market, the slippage will be very large.  The right market does not offer a deep market depth for large orders.  
+
+TO BE DONE(Ben, Neo)
 
 
 ### properties of local invariant model
