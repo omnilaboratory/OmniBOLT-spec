@@ -87,19 +87,19 @@ Non-hardened child keys will [compromise the parent keys](https://github.com/bit
 			  -------|___________________________|-------   
                          /                                           \   
                         /                                             \   
-                | reomote obd |                                  | remote obd |   
+                | reomote obd |                                       |
                        |		                              |    
                        |		                              |    
-        -----------------------------                  -------------------------------  
-        |              |	    |   	       |              |              |  
-        |              |	    |   	       |              |              |  
-    +---------+    +--------+    +--------+         +--------+    +--------+     +--------+  
-    | desktop |    | mobile |    | mobile |	    | mobile |    | desktop|     | mobile |  
-    | wallet  |    | wallet |    | wallet |	    | wallet |    | wallet |     | wallet |  
-    +---------+    +--------+    +--------+         +--------+    +--------+     +--------+  
-    | obd SDK |                                                                  | obd SDK |  
-    |  seeds  |                       ....................                       |  seeds  |  
-    |  keys   |                                                                  |  keys   |  
+        -----------------------------                  ------------------------------------------  
+        |              |	    |   	       |                  |                     |  
+        |              |	    |   	       |                  |                     |  
+    +---------+    +--------+    +--------+         +--------+        +--------+           +--------+  
+    | desktop |    | mobile |    | mobile |	    | mobile |        | desktop|           | mobile |  
+    | wallet  |    | wallet |    | wallet |	    | wallet |        | wallet |           | wallet |  
+    +---------+    +--------+    +--------+         +--------+        +--------+           +--------+  
+    | obd SDK |                                     | mobile obd |    | desktop obd |      | mobile obd |  
+    |  seeds  |             ......................................                         | seeds  |  
+    |  keys   |                                                                            | keys   |  
 
 ```
 
