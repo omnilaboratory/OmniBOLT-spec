@@ -130,7 +130,7 @@ prefix: ob + [SLIP-0173 registered Human Readable Part (prefix)](https://github.
 |  prefix  |       obo 		| 	obto 	     |       obort 	  |
  
 
-asset ID: the omni asset id.   
+asset ID: the omni asset id. `id=0` is the Bitcoin. 
 
 amount: optional, number in that currency, followed by an optional multiplier letter. The unit encoded here is one token, for example: 1 usdt or 0.1 usdt.  
 
