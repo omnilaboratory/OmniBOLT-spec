@@ -1,6 +1,6 @@
 # OmniBOLT #7: Hierarchical Deterministic(HD) wallet, Non Custodial Daemon, Invoice Encoding.
 
-* `correct me`: neocarmack@omnilab.online  or join our slack channel to discuss:  https://omnibolt.slack.com/archives/CNJ0PMUMV
+* `correct me`: neo.carmack@gmail.com  or join our slack channel to discuss:  https://omnibolt.slack.com/archives/CNJ0PMUMV
 
 # Table of Contents
  * [Hierarchical Deterministic(HD) wallet](#hierarchical-deterministichd-wallet)
