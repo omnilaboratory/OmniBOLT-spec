@@ -22,7 +22,7 @@ In addition, OmniBOLT provides more flexible contracts for upper-layer decentral
  
 ## Why OmniBOLT
 
-The decentralized finance industry requires a much more flexible, extensible, and cheaper smart assets circulation solution to solve the main chain scalability problem. The Lightning Network is a solid technology for this problem. According to the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support a wider range of assets for upper-layer applications: payment, game, finance, or scenarios that need stablecoins.  
+The decentralized finance industry requires a much more flexible, extensible, and cheaper smart assets circulation solution to solve the main chain scalability problem. The Lightning Network is a solid technology for this problem. Besides the layer-2 protocol [BOLT (Basis of Lightning Technology)](https://github.com/lightningnetwork/lightning-rfc/blob/master/00-introduction.md) specification for off-chain bitcoin transfer, we need a protocol to support a wider range of assets for upper-layer applications: payment, game, finance, or scenarios that need stablecoins.  
 
 Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is proven secure and stable. Constructing lightning channels on top of it automatically acquires the ability to issue assets, tamper resistance, and on-chain settlement. This is where OmniBOLT is built upon.
 
