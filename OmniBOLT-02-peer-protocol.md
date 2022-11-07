@@ -1,5 +1,12 @@
 # OmniBOLT #2: Peer Protocol for Channel Management
 
+# Omnilayer Assets
+
+OmniBOLT itself does not issue tokens. All tokens are issued on [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
+
+Please go to the [token creation](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#smart-property) section in the Omnilayer spec to check all the types of tokens the spec can create. 
+
+
 # Omni Address 
 One most important point is that addresses in OmniBOLT and its implementation must be Omnilayer addresses created by omnicore. Bitcoin-only addresses can not know any asset information. When users fund Omni assets to a channel with bitcoin addresses that do not support Omni Layer transactions, it can be difficult or impossible to recover the transferred Omni assets.  
 
