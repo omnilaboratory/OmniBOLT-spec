@@ -36,7 +36,7 @@ Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is p
 2. OmniBOLT 2, 3, and 4 form the main network protocols;   
 3. Applications level consists of contracts for various applications; 
 
-OmniBOLT itself does not issue tokens. All tokens are issued on Omnilayer, and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
+OmniBOLT itself does not issue tokens. All tokens are issued on [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
  
 
 ## Chapters and Protocol Suite
