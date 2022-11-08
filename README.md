@@ -32,12 +32,17 @@ Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is p
   <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
 </p>
 
-1. On-chain protocol is Omnilayer, which is the issuance and settlement level;  
+1. On-chain protocol is [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), which is the token issuance and settlement level;  
 2. OmniBOLT 2, 3, and 4 form the main network protocols;   
 3. Applications level consists of contracts for various applications; 
 
-OmniBOLT itself does not issue tokens. All tokens are issued on [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), and enter the OmniBOLT network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
- 
+OmniBOLT does not issue tokens. All tokens are issued on [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), and enter the OmniBOLT lightning network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
+
+Currently supported tokens are:  
+1. [fixed number tokens](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#731-new-property-creation-with-fixed-number-of-tokens): [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
+2. [Variable number Tokens]: [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
+
+
 
 ## Chapters and Protocol Suite
 
