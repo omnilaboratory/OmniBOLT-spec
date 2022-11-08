@@ -38,10 +38,11 @@ Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is p
 
 OmniBOLT does not issue tokens. All tokens are issued on [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), and enter the OmniBOLT lightning network through P2(W)SH backed channels, being locked on the main chain, and can be redeemed on the Omnilayer main chain at any time.  
 
-Currently supported tokens are:  
-1. [fixed number tokens](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#731-new-property-creation-with-fixed-number-of-tokens): [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
-2. [Variable number Tokens]: [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
+Currently supported assets are of:  
+1. [Fixed number tokens](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#731-new-property-creation-with-fixed-number-of-tokens): [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
+2. [Variable number tokens](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#732-new-property-creation-via-crowdsale-with-variable-number-of-tokens): [divisible or indivisible](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#field-property-type)
 
+All assets are fungible assets.
 
 
 ## Chapters and Protocol Suite
