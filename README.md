@@ -32,7 +32,7 @@ Meanwhile, Omnilayer is an on-chain smart assets issuance technology, which is p
   <img width="500" alt="OmniBOLT-Protocol-Suite" src="https://github.com/omnilaboratory/OmniBOLT-spec/blob/master/imgs/OmniBOLT-Protocol-Suite.png">
 </p>
 
-1. On-chain protocol is [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), which is the token issuance and settlement level;  
+1. On-chain protocol is [Omnilayer](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc), which is the token issuance and settlement layer;  
 2. OmniBOLT 2, 3, and 4 form the main network protocols;   
 3. Applications level consists of contracts for various applications; 
 
