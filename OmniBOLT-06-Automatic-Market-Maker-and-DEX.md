@@ -1,5 +1,6 @@
 # OmniBOLT #6: Automatic Market Maker model, Liquidity Pool and DEX on Lightning Network 
 
+* correct me: neo.carmack@gmail.com or join our slack channel to discuss: https://omnibolt.slack.com/archives/CNJ0PMUMV
 * Oct 04.2021: This work is in progress. 
 * Apr 27.2022: Mechanism supports both discrete and continuous models in section 2. 
 * Since Jun 23.2022, this work applies zero-knowledge proof to solve some security flaws in the original design. 
