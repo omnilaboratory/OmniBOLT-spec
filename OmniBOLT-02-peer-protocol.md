@@ -7,13 +7,23 @@ OmniBOLT itself does not issue tokens. All tokens are issued on [Omnilayer](http
 Please go to the [token creation](https://github.com/OmniLayer/spec/blob/master/OmniSpecification.adoc#smart-property) section in the Omnilayer spec to check all the types of tokens the spec can create. 
 
 
-# Omni Address 
+# Omni Addresses 
 One most important point is that addresses in OmniBOLT and its implementation must be Omnilayer addresses created by omnicore. Bitcoin-only addresses can not know any asset information. When users fund Omni assets to a channel with bitcoin addresses that do not support Omni Layer transactions, it can be difficult or impossible to recover the transferred Omni assets.  
 
-So this is the main reason that current lnd channels can not be OmniBOLT channels.
+So this is the main reason that current lnd channels can not be OmniBOLT channels.  
+ 
+Addresses that are currently supported by OmniBOLT are of types:  
+
+| Network		                      |	Coin				                 |	Script(address type) 	|                       |     
+| ---------------------------    |	-----------------------		|	-------------------	  | -------------------	  |  
+| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2pkh                 | funding address               		|
+| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2sh                  | multisig channel address      		|
+| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2pkh                 | settlement address             	|
+| layer 2 (lightning)      	     |	Omni, Bitcoin		          |	p2sh               		 | pay to HTLC, RSMC, internal multisig addresses  |
+ 
+Bech32 is not supported by Omnilayer, hence is not by OmniBOLT.  
 
 In the soon future, OmniBOLT will update to ["Omni Layer Safe Segregated Witness Address Format"](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#motivation).  
- 
 
 # Channel
 The peer Poon-Dryja channel protocol has three phases: establishment, normal operation (commitment transactions, funding transactions, HTLCs, Collateral lending, etc), and closing.
@@ -119,7 +129,9 @@ Rationale is the same to [BOLT-02-rationale](https://github.com/lightningnetwork
 
 Future is the same to [BOLT-02-future](https://github.com/lightningnetwork/lightning-rfc/blob/master/02-peer-protocol.md#future).
 
- 
+
+
+
 
 ### The `accept_channel` Message 
 
