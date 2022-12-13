@@ -14,14 +14,17 @@ So this is the main reason that current lnd channels can not be OmniBOLT channel
  
 Addresses that are currently supported by OmniBOLT are of types:  
 
-| Network		                      |	Coin				                 |	Script(address type) 	|                       |     
-| ---------------------------    |	-----------------------		|	-------------------	  | -------------------	  |  
-| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2pkh                 | funding address               		|
-| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2sh                  | multisig channel address      		|
-| Mainnet, Testnet, Regtest	     |	Omni, Bitcoin		          |	p2pkh                 | settlement address             	|
-| layer 2 (lightning)      	     |	Omni, Bitcoin		          |	p2sh               		 | pay to HTLC, RSMC, internal multisig addresses  |
+| Network		                      |	Coin				                 |	Script(address type) 	| Leading symbol(s)     |                       |     
+| ---------------------------    |	-----------------------		|	-------------------	  | -------------------	  |  -------------------	  |  
+| Mainnet                  	     |	Omni, Bitcoin		          |	p2pkh                 | 1                  	  |  funding address               		|
+| Testnet, Regtest	              |	Omni, Bitcoin		          |	p2pkh                 | `m` or `n`         	  |  funding address               		|
+| Mainnet                        |	Omni, Bitcoin		          |	p2sh                  | 3                  	  |  multisig channel address, pay to HTLC, RSMC, internal multisig addresses      		|
+| Testnet, Regtest	              |	Omni, Bitcoin		          |	p2sh                  | 2                  	  |  multisig channel address, pay to HTLC, RSMC, internal multisig addresses      		|
+| Mainnet                  	     |	Omni, Bitcoin		          |	p2pkh                 | 1                  	  |  settlement address             	|
+| Testnet, Regtest	              |	Omni, Bitcoin		          |	p2pkh                 | `m` or `n`         	  |  settlement address             	|   
+
  
-Bech32 is not supported by Omnilayer, hence is not by OmniBOLT.  
+Bech32 (start with `bc`) is not supported by Omnilayer, hence is not by OmniBOLT.  
 
 In the soon future, OmniBOLT will update to ["Omni Layer Safe Segregated Witness Address Format"](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#motivation).  
 
