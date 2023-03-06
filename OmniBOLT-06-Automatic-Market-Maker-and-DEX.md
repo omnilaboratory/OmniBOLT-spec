@@ -403,7 +403,7 @@ Examples showing how impermanent loss happens and how much a loss could be can b
   <img width="512" alt="Impermanent Loss" src="imgs/impermanentLoss.png">
 </p>
   
-a 1.25x price change results in a 0.6% loss relative to HODL  
+a 1.25x price change results in a 0.6% loss relative to HODL(Hold On for Dear Life)
 a 1.50x price change results in a 2.0% loss relative to HODL  
 a 1.75x price change results in a 3.8% loss relative to HODL  
 a 2x price change results in a 5.7% loss relative to HODL  
