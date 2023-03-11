@@ -77,7 +77,7 @@ Implementation of OmniBOLT specification can be found in this repository [OmniBO
  
 ## Quick Start
 
-It is recommended to start with a graphic tool to play with OmniBOLT: [https://github.com/omnilaboratory/obd#quick-start](https://github.com/omnilaboratory/obd#quick-start)
+It is recommended to start with a graphic tool to play with OmniBOLT: [https://github.com/omnilaboratory/obd#quick-start-on-regtest](https://github.com/omnilaboratory/obd#quick-start-on-regtest)
 
 
 ## Contribution
