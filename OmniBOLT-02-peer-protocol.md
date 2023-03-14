@@ -23,8 +23,8 @@ Addresses that are currently supported by OmniBOLT are of types:
 | Mainnet                  	     |	Omni, Bitcoin		          |	p2pkh                 | 1                  	  |  settlement address             	|
 | Testnet, Regtest	              |	Omni, Bitcoin		          |	p2pkh                 | `m` or `n`         	  |  settlement address             	|   
 
- 
-Bech32 (start with `bc`) is not supported by Omnilayer, hence is not by OmniBOLT.  
+
+BECH32 addresses(pubkey hash or script hash starting with `bc1` on mainnet, `tb1` on testnet) are not supported by Omnilayer, hence is not by OmniBOLT.  
 
 In the soon future, OmniBOLT will update to ["Omni Layer Safe Segregated Witness Address Format"](https://github.com/OmniLayer/Documentation/blob/master/OLEs/ole-300.adoc#motivation).  
 
